@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "Show consents - welcome screen"; ObjectID = "0oe-8q-wRf"; */
+"0oe-8q-wRf.normalTitle" = "Show consents - welcome screen";
+
+/* Class = "UILabel"; text = "false"; ObjectID = "OoK-Cw-5aT"; */
+"OoK-Cw-5aT.text" = "false";
+
+/* Class = "UIButton"; normalTitle = "Show consents - settings screen"; ObjectID = "Rcb-Lc-d7H"; */
+"Rcb-Lc-d7H.normalTitle" = "Show consents - settings screen";
+
+/* Class = "UILabel"; text = "Did we ask user for consents?"; ObjectID = "rti-Ip-cQa"; */
+"rti-Ip-cQa.text" = "Did we ask user for consents?";

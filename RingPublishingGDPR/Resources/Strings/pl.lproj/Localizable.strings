@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  RingPublishingGDPR
+
+  Created by Szeremeta Adam on 12.10.2020.
+  Copyright © 2020 Ringier Axel Springer Polska. All rights reserved.
+*/
+
+"RingPublishingGDPR.errorView.errorNoInternet" = "Nie udało się pobrać danych. Spróbuj za chwilę lub sprawdź połączenie z internetem.";
+"RingPublishingGDPR.errorView.retryButton" = "Spróbuj ponownie";

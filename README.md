@@ -34,7 +34,7 @@ Reference guide:
 `RingPublishingGDPR` is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following lines to your Podfile (using our private Cocoapods Specs repository):
 
 ```ruby
-source 'git@github.com:ringpublishing/RingPublishing-CocoaPods-Specs.git'
+source 'ssh://git@github.com:ringpublishing/RingPublishing-CocoaPods-Specs.git'
 
 pod 'RingPublishingGDPR'
 ```

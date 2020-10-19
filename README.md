@@ -6,15 +6,19 @@ Module which collects and saves user's consent in accordance with the standard T
 
 ## Documentation
 
-The documentation can be found at [https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/index.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/index.html).
+The documentation can be found at
+[https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/index.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/index.html).
 
 Integration tutorial:
+
 [https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/howto/integrate-using-ios-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/howto/integrate-using-ios-sdk.html).
 
 How consents are stored:
+
 [https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-ios-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-ios-sdk.html).
 
 Reference guide:
+
 [https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/reference/gdpr-ios-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/reference/gdpr-ios-sdk.html).
 
 ## Requirements
@@ -27,9 +31,13 @@ Reference guide:
 
 ### CocoaPods
 
-`RingPublishingGDPR` is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
+`RingPublishingGDPR` is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following lines to your Podfile (using our private Cocoapods Specs repository):
+`RingPublishingGDPR` is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following lines to your Podfile using our private Cocoapods Specs repository. Please make sure you have access to this repository granted by us.
 
+Additions to your Podfile:
 ```ruby
+source 'ssh://git@github.com:ringpublishing/RingPublishing-CocoaPods-Specs.git'
+
 pod 'RingPublishingGDPR'
 ```
 

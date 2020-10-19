@@ -36,7 +36,7 @@ Reference guide:
 
 Additions to your Podfile:
 ```ruby
-source 'ssh://git@github.com:ringpublishing/RingPublishing-CocoaPods-Specs.git'
+source 'ssh://git@github.com/ringpublishing/RingPublishing-CocoaPods-Specs.git'
 
 pod 'RingPublishingGDPR'
 ```

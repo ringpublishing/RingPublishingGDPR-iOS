@@ -68,6 +68,18 @@ public class RingPublishingGDPR: NSObject {
         GDPRStorage.clearAllConsentData()
     }
 
+    /// In addition to standard, SDK stores additional values, which can be used by other Ring Publishing modules, e.g. Ad Server
+    @objc
+    public var ringPublishingConsents: [String: Any]? {
+        return GDPRStorage.ringPublishingConsents
+    }
+
+    /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
+    @objc
+    public var ringPublishingVendorConsents: Bool {
+        return GDPRStorage.ringPublishingVendorsConsent == 1
+    }
+
     // MARK: Private properties
 
     /// Module delegate

@@ -90,6 +90,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func showAppContent() {
         let demoController = UIStoryboard(name: "Main", bundle: .main).instantiateInitialViewController()
         window?.rootViewController = demoController
+
+        // Here you can check if user agreed for all available vendors
+        let areVendorConsentsGiven = RingPublishingGDPR.shared.areVendorConsentsGiven
+
+        guard areVendorConsentsGiven else { return }
+        // From this moment consents are given
+
+        // If you app uses SDK's from vendors, which are not part of the official TCF 2.0 vendor list
+        // you can use this flag to check if you can enable / initialize them as user agreed for all vendors
     }
 }
 

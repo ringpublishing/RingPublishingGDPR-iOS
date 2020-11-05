@@ -87,6 +87,24 @@ class GDPRManager: NSObject {
         webview?.navigationDelegate = nil
     }
 
+    // MARK: GDPR Applies
+
+    /// Configure manager & module state
+    ///
+    /// This method sets "IABTCF_CmpSdkID" and "IABTCF_gdprApplies" values in User Defaults
+    /// If GDPR does NOT apply in current context, this will also clear all stored consents
+    /// - Parameter gdprApplies: Bool
+    func configure(gdprApplies: Bool) {
+        // Access cmpSDKId so our default value can be set
+        _ = GDPRStorage.cmpSdkID
+        GDPRStorage.gdprApplies = gdprApplies ? 1 : 0
+
+        guard !gdprApplies else { return }
+
+        Logger.log("Clearing stored consents as GDPR does not apply.")
+        GDPRStorage.clearAllConsentData()
+    }
+
     // MARK: WebView
 
     func initializeWebView() {

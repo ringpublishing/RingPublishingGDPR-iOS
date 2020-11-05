@@ -16,6 +16,11 @@ class GDPRStorage {
     private static let iabtcfKeyPrefix = "IABTCF_"
     private static let publisherRestrictionsKeyPrefix = "IABTCF_PublisherRestrictions"
 
+    private static let consentsDataClearExceptionKeys = [
+        "IABTCF_CmpSdkID",
+        "IABTCF_gdprApplies"
+    ]
+
     // MARK: Init
 
     private init() {
@@ -24,9 +29,13 @@ class GDPRStorage {
 
     // MARK: Storage clearing
 
+    /// Clear all consent data except for: "IABTCF_CmpSdkID" and "IABTCF_gdprApplies"
     static func clearAllConsentData() {
         let allKeys = UserDefaults.standard.dictionaryRepresentation().keys.map { String($0) }
-        let consentsKeys = allKeys.filter { $0.starts(with: Self.iabtcfKeyPrefix) || $0.starts(with: ringPublishingKeyPrefix) }
+        var consentsKeys = allKeys.filter { $0.starts(with: Self.iabtcfKeyPrefix) || $0.starts(with: ringPublishingKeyPrefix) }
+
+        // Filter exceptions which should not be cleared
+        consentsKeys = consentsKeys.filter { !consentsDataClearExceptionKeys.contains($0) }
 
         consentsKeys.forEach {
             UserDefaults.standard.removeObject(forKey: $0)
@@ -36,7 +45,7 @@ class GDPRStorage {
 
     // MARK: Standardized consents
 
-    @ConsentStorage(key: "IABTCF_CmpSdkID")
+    @ConsentStorage(key: "IABTCF_CmpSdkID", defaultValue: GDPRConstants.cmpSdkID)
     static var cmpSdkID: Int?
 
     @ConsentStorage(key: "IABTCF_CmpSdkVersion")

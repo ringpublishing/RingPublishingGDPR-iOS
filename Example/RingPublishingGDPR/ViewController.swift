@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let didAskForUserConsents = RingPublishingGDPR.shared.didAskUserForConsents
-        didAskForConsentsLabel.text = "\(didAskForUserConsents)"
+        let shouldAskUserForConsents = RingPublishingGDPR.shared.shouldAskUserForConsents
+        didAskForConsentsLabel.text = "\(!shouldAskUserForConsents)"
     }
 
     // MARK: Helper methods

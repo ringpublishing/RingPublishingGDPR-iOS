@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
         // - delegate: your delegate implementation to react for module events
+        // - gdprApplies: true if GDPR applies in given context and consents form should be shown to the user
 
         // Module should be initialized as early as possible so it can check if user consents are up to date
         // or those have to be saved again (by showing consent form to the user)
@@ -38,23 +39,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .red,
                                                   font: .systemFont(ofSize: 10))
+        let gdprApplies = false
 
-        RingPublishingGDPR.shared.initialize(with: tenantId, brandName: brandName, uiConfig: uiConfig, delegate: self)
+        RingPublishingGDPR.shared.initialize(with: tenantId,
+                                             brandName: brandName,
+                                             uiConfig: uiConfig,
+                                             delegate: self,
+                                             gdprApplies: gdprApplies)
 
         // At this point you can check if application should show consent form immediately at app launch
-        // This covers use case when on this device user did not saw consent form yet
+        // This covers use case when on this device user did not saw consent form yet and GDPR applies
 
-        let didAskForUserConsents = RingPublishingGDPR.shared.didAskUserForConsents
+        let shouldAskUserForConsents = RingPublishingGDPR.shared.shouldAskUserForConsents
 
-        switch didAskForUserConsents {
-        case true:
+        switch shouldAskUserForConsents {
+        case false:
             // User already did see consent form - module will inform host application using delegate, if form
             // should be presented to the user again (for example when vendor list changed)
 
             // We can show application's content and initialize vendor SDKs
             showAppContent()
 
-        case false:
+        case true:
             // User did not saw consent form yet - it should be shown to him immediately
 
             // Tell SDK that consent welcome screen should be shown

@@ -15,7 +15,7 @@ Integration tutorial:
 
 How consents are stored:
 
-[https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-ios-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-ios-sdk.html).
+[https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-ios-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-mobile-sdk.html).
 
 Reference guide:
 

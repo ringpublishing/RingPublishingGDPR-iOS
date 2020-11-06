@@ -64,6 +64,11 @@ class GDPRManager: NSObject {
     /// What actions responses must be received from JS to close form
     var actionsRequiredToCloseCMP: [GDPRAction] = []
 
+    /// Should we check if stored consents are still valid? (Could be outdated for example)
+    var shouldCheckConsentStatus: Bool {
+        return GDPRStorage.tcString != nil && GDPRStorage.gdprApplies == 1
+    }
+
     // MARK: Init
 
     /// Initializer
@@ -98,11 +103,6 @@ class GDPRManager: NSObject {
         // Access cmpSDKId so our default value can be set
         _ = GDPRStorage.cmpSdkID
         GDPRStorage.gdprApplies = gdprApplies ? 1 : 0
-
-        guard !gdprApplies else { return }
-
-        Logger.log("Clearing stored consents as GDPR does not apply.")
-        GDPRStorage.clearAllConsentData()
     }
 
     // MARK: WebView

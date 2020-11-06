@@ -107,17 +107,17 @@ public extension RingPublishingGDPR {
 
     /// Configure RingPublishingGDPR module
     ///
+    /// - Parameter gdprApplies: Does GDPR applies in current context? Defaults to true
     /// - Parameter tenantId: CMP Tenant Id
     /// - Parameter brandName: App site id used to brand CMP form
     /// - Parameter uiConfig: Module UI config
     /// - Parameter delegate: RingPublishingGDPRDelegate
-    /// - Parameter gdprApplies: Does GDPR applies in current context? Defaults to true
     @objc
-    func initialize(with tenantId: String,
+    func initialize(gdprApplies: Bool = true,
+                    tenantId: String,
                     brandName: String,
                     uiConfig: RingPublishingGDPRUIConfig,
-                    delegate: RingPublishingGDPRDelegate,
-                    gdprApplies: Bool = true) {
+                    delegate: RingPublishingGDPRDelegate) {
         self.delegate = delegate
         self.manager = GDPRManager(tenantId: tenantId, brandName: brandName, delegate: self, timeoutInterval: networkingTimeout)
 
@@ -130,9 +130,9 @@ public extension RingPublishingGDPR {
         ringPublishingGDPRViewController.setInternalDelegate(manager)
 
         // Check if app should show again consents form (if form was already displayed once)
-        guard GDPRStorage.tcString != nil && gdprApplies else { return }
+        guard let manager = manager, manager.shouldCheckConsentStatus else { return }
 
-        manager?.checkUserConsentsStatus()
+        manager.checkUserConsentsStatus()
     }
 }
 

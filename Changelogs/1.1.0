@@ -1,7 +1,7 @@
 1.1.0 Release notes (2020-11-06)
 =============================================================
 
-Update adding support for opt out from consents form by providing initialization flag, that GDPR does not apply in current context.
+Update adding support for "opt out" from consents form by providing initialization flag, that GDPR does not apply in current context.
 
 ### Features
 
@@ -13,4 +13,4 @@ Update adding support for opt out from consents form by providing initialization
 ### Changes
 
 * Removed: 'didAskUserForConsents' property
-* Added: 'shouldAskUserForConsents' property which respects GDPR setting
+* Added: 'shouldAskUserForConsents' property which respects GDPR setting and stored consents. If 'gdprApplies' is false, this flag will return false.

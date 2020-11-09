@@ -31,8 +31,12 @@ struct ConsentStorage<T> {
 
     // MARK: Init
 
-    init(key: String, logableAsConsent: Bool = true) {
+    init(key: String, defaultValue: T? = nil, logableAsConsent: Bool = true) {
         self.key = key
         self.logableAsConsent = logableAsConsent
+
+        if let value = defaultValue {
+            wrappedValue = value
+        }
     }
 }

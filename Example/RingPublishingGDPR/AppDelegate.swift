@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Example
 
         // First you should initialize RingPublishingGDPR module with following data:
+        // - gdprApplies: true if GDPR applies in given context and consents form should be shown to the user
         // - tenantId: unique identifier assigned to your organization
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
@@ -33,28 +34,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // or those have to be saved again (by showing consent form to the user)
         // It will make your vendor SDKs to be setup in proper consents state from the very beginning
 
+        let gdprApplies = true
         let tenantId = "<YOUR_TENANT_ID>"
         let brandName = "<YOUR_BRAND_NAME>"
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .red,
                                                   font: .systemFont(ofSize: 10))
 
-        RingPublishingGDPR.shared.initialize(with: tenantId, brandName: brandName, uiConfig: uiConfig, delegate: self)
+        RingPublishingGDPR.shared.initialize(gdprApplies: gdprApplies,
+                                             tenantId: tenantId,
+                                             brandName: brandName,
+                                             uiConfig: uiConfig,
+                                             delegate: self)
 
         // At this point you can check if application should show consent form immediately at app launch
-        // This covers use case when on this device user did not saw consent form yet
+        // This covers use case when on this device user did not saw consent form yet and GDPR applies
 
-        let didAskForUserConsents = RingPublishingGDPR.shared.didAskUserForConsents
+        let shouldAskUserForConsents = RingPublishingGDPR.shared.shouldAskUserForConsents
 
-        switch didAskForUserConsents {
-        case true:
+        switch shouldAskUserForConsents {
+        case false:
             // User already did see consent form - module will inform host application using delegate, if form
             // should be presented to the user again (for example when vendor list changed)
 
             // We can show application's content and initialize vendor SDKs
             showAppContent()
 
-        case false:
+        case true:
             // User did not saw consent form yet - it should be shown to him immediately
 
             // Tell SDK that consent welcome screen should be shown

@@ -24,6 +24,7 @@ class GDPRStorage {
 
     // MARK: Storage clearing
 
+    /// Clear all consent data except for: "IABTCF_CmpSdkID" and "IABTCF_gdprApplies"
     static func clearAllConsentData() {
         let allKeys = UserDefaults.standard.dictionaryRepresentation().keys.map { String($0) }
         let consentsKeys = allKeys.filter { $0.starts(with: Self.iabtcfKeyPrefix) || $0.starts(with: ringPublishingKeyPrefix) }
@@ -36,7 +37,7 @@ class GDPRStorage {
 
     // MARK: Standardized consents
 
-    @ConsentStorage(key: "IABTCF_CmpSdkID")
+    @ConsentStorage(key: "IABTCF_CmpSdkID", defaultValue: GDPRConstants.cmpSdkID)
     static var cmpSdkID: Int?
 
     @ConsentStorage(key: "IABTCF_CmpSdkVersion")

@@ -52,14 +52,17 @@ public class RingPublishingGDPR: NSObject {
         }
     }
 
-    /// Check if user was already asked about consents and tcString is stored on the device.
+    /// Check if user should be asked about consents and tcString is NOT stored on the device.
     ///
-    /// Returns True if user was already asked and submitted the RingPublishingGDPR form and consent String is stored in UserDefaults
+    /// Returns true if consents are not stored on the device in UserDefaults and GDPR applies
     /// This flag should be only used to check if initial consents are stored.
     /// To know whether or not consents form should be shown again use RingPublishingGDPRDelegate
     @objc
-    public var didAskUserForConsents: Bool {
-        return GDPRStorage.tcString != nil
+    public var shouldAskUserForConsents: Bool {
+        // Nil as true here in case someone uses this property before module initialization
+        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+
+        return GDPRStorage.tcString == nil && gdprApplies
     }
 
     /// Allows you to clear all stored consent data in UserDefaults prefixed with IABTCF_ && RingPublishing_
@@ -104,17 +107,21 @@ public extension RingPublishingGDPR {
 
     /// Configure RingPublishingGDPR module
     ///
+    /// - Parameter gdprApplies: Does GDPR applies in current context? Defaults to true
     /// - Parameter tenantId: CMP Tenant Id
     /// - Parameter brandName: App site id used to brand CMP form
     /// - Parameter uiConfig: Module UI config
     /// - Parameter delegate: RingPublishingGDPRDelegate
     @objc
-    func initialize(with tenantId: String,
+    func initialize(gdprApplies: Bool = true,
+                    tenantId: String,
                     brandName: String,
                     uiConfig: RingPublishingGDPRUIConfig,
                     delegate: RingPublishingGDPRDelegate) {
         self.delegate = delegate
         self.manager = GDPRManager(tenantId: tenantId, brandName: brandName, delegate: self, timeoutInterval: networkingTimeout)
+
+        manager?.configure(gdprApplies: gdprApplies)
 
         // Configure ringPublishingGDPR view controller
         ringPublishingGDPRViewController.configure(withThemeColor: uiConfig.themeColor,
@@ -123,9 +130,9 @@ public extension RingPublishingGDPR {
         ringPublishingGDPRViewController.setInternalDelegate(manager)
 
         // Check if app should show again consents form (if form was already displayed once)
-        guard didAskUserForConsents else { return }
+        guard let manager = manager, manager.shouldCheckConsentStatus else { return }
 
-        manager?.checkUserConsentsStatus()
+        manager.checkUserConsentsStatus()
     }
 }
 

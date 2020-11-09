@@ -1,3 +1,20 @@
+1.1.0 Release notes (2020-11-06)
+=============================================================
+
+Update adding support for "opt out" from consents form by providing initialization flag, that GDPR does not apply in current context.
+
+### Features
+
+* RingPublishingGDPR 'initialize' method now accepts additional parameter: 'gdprApplies'
+* Immidiatelly after module initialization, in User Defaults are stored two properties:
+   - 'IABTCF_CmpSdkID' with official CMP SDK ID
+   - 'IABTCF_gdprApplies' with passed to module boolean flag if GDPR should apply
+
+### Changes
+
+* Removed: 'didAskUserForConsents' property
+* Added: 'shouldAskUserForConsents' property which respects GDPR setting and stored consents. If 'gdprApplies' is false, this flag will return false.
+
 1.0.1 Release notes (2020-10-29)
 =============================================================
 

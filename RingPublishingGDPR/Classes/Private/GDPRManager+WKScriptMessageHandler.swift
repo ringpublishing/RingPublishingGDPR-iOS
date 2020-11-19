@@ -160,6 +160,7 @@ private extension GDPRManager {
 
         // RingPublishing consents
         GDPRStorage.ringPublishingConsents = dictionary?.value(byKey: "consents")
+        GDPRStorage.ringPublishingPublicConsents = dictionary?.value(byKey: "publicConsents")
         GDPRStorage.ringPublishingVendorsConsent = dictionary?.value(byKey: "vendorsConsent")
 
         // Mark that action required to close form view was received

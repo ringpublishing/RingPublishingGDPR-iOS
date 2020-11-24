@@ -3,5 +3,5 @@
 
 ### Features
 
-* Consents property removed from Public interface
+* Consents property removed from Public interface as they are for non-public usage only.
 * New dictionary 'RingPublishing_PublicConsents' stored in user defaults (should be used for other purposes than Ad Server (public))

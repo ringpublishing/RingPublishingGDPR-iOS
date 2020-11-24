@@ -1,3 +1,11 @@
+1.2.0 Release notes (2020-11-19)
+=============================================================
+
+### Features
+
+* Consents property removed from Public interface as they are for non-public usage only.
+* New dictionary 'RingPublishing_PublicConsents' stored in user defaults (should be used for other purposes than Ad Server (public))
+
 1.1.0 Release notes (2020-11-06)
 =============================================================
 

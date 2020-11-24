@@ -122,6 +122,9 @@ class GDPRStorage {
     @ConsentStorage(key: "RingPublishing_Consents")
     static var ringPublishingConsents: [String: Any]?
 
+    @ConsentStorage(key: "RingPublishing_PublicConsents")
+    static var ringPublishingPublicConsents: [String: Any]?
+
     @ConsentStorage(key: "RingPublishing_VendorsConsent")
     static var ringPublishingVendorsConsent: Int?
 }

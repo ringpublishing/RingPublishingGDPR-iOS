@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "RingPublishingGDPR"
-    s.version      = "1.1.1"
+    s.version      = "1.2.0"
     s.homepage     = "https://github.com/ringpublishing/RingPublishingGDPR-iOS"
     s.summary      = "Collects and saves user's consent in accordance with the standard TCF2.0"
     s.license      = { :type => 'Copyright. Ringier Axel Springer Polska', :file => 'LICENSE' }

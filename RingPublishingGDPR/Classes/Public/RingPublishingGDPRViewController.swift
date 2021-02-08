@@ -23,6 +23,11 @@ public class RingPublishingGDPRViewController: UIViewController {
         return ErrorView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
     }()
 
+    /// App Tracking Transparency View
+    private lazy var appTrackingTransparencyView: AppTrackingTransparencyView = {
+        return AppTrackingTransparencyView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+    }()
+
     /// Current state
     private var state: ViewState = .content
 

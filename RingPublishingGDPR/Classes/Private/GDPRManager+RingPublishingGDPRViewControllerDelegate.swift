@@ -24,8 +24,4 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
         delegate?.gdprManager(self, isRequestingToChangeViewState: .loading)
         loadCMPSite()
     }
-
-    func ringPublishingGDPRViewControllerDidRequestClose() {
-        delegate?.gdrpManagerDidRequestToHideConsentsController(self)
-    }
 }

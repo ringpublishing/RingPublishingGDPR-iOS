@@ -20,7 +20,4 @@ protocol RingPublishingGDPRViewControllerDelegate: class {
 
     /// View controller wants to reload CMP site
     func ringPublishingGDPRViewControllerDidRequestReload()
-
-    /// View controller wants to close itself
-    func ringPublishingGDPRViewControllerDidRequestClose()
 }

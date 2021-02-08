@@ -67,6 +67,17 @@ class GDPRManager: NSObject {
     /// What actions responses must be received from JS to close form
     var actionsRequiredToCloseCMP: [GDPRAction] = []
 
+    /// Is GDPR consents status not determined?
+    private var gdprConsentsNotDetermined: Bool {
+        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+        return GDPRStorage.tcString == nil && gdprApplies
+    }
+
+    /// Is App Tracking Transparency status not determined?
+    private var attConsentsNotDetermined: Bool {
+        return !appTrackingManager.trackingStatusDetermined
+    }
+
     /// Should we check if stored consents are still valid? (Could be outdated for example)
     var shouldCheckConsentStatus: Bool {
         return !shouldAskUserForConsents
@@ -74,10 +85,6 @@ class GDPRManager: NSObject {
 
     /// Combines GDPR status & App Tracking Trabsparency status
     var shouldAskUserForConsents: Bool {
-        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
-        let gdprConsentsNotDetermined = GDPRStorage.tcString == nil && gdprApplies
-        let attConsentsNotDetermined = !appTrackingManager.trackingStatusDetermined
-
         return gdprConsentsNotDetermined || attConsentsNotDetermined
     }
 

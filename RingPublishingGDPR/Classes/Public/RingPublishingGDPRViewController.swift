@@ -29,7 +29,7 @@ public class RingPublishingGDPRViewController: UIViewController {
     }()
 
     /// Current state
-    private var state: ViewState = .content
+    private var state: ViewState = .gdprConsents
 
     /// Currently shown state view
     private weak var currentlyShownStateView: UIView?
@@ -66,8 +66,12 @@ extension RingPublishingGDPRViewController {
         self.state = state
 
         switch state {
-        case .content:
+        case .gdprConsents:
             currentlyShownStateView = nil
+
+        case .appTrackingTransparency:
+            view.addSubviewFullscreen(appTrackingTransparencyView)
+            currentlyShownStateView = appTrackingTransparencyView
 
         case .loading:
             loadingView.startAnimation()
@@ -98,14 +102,12 @@ extension RingPublishingGDPRViewController {
         errorView.delegate = delegate
     }
 
-    /// Configure loading view and error view using theme color
+    /// Configure internal views using RingPublishingGDPRUIConfig
     ///
     /// - Parameters:
-    ///   - color: UIColor
-    ///   - buttonTextColor: UIColor
-    ///   - font: UIFont
-    func configure(withThemeColor color: UIColor, buttonTextColor: UIColor, font: UIFont) {
-        loadingView.configure(color)
-        errorView.configure(withThemeColor: color, buttonTextColor: buttonTextColor, font: font)
+    ///   - uiConfig: RingPublishingGDPRUIConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
+        loadingView.configure(uiConfig.themeColor)
+        errorView.configure(withThemeColor: uiConfig.themeColor, buttonTextColor: uiConfig.buttonTextColor, font: uiConfig.font)
     }
 }

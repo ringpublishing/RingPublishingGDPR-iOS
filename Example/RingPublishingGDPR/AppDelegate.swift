@@ -35,15 +35,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // It will make your vendor SDKs to be setup in proper consents state from the very beginning
 
         let gdprApplies = true
+        let supportsAppTrackingTransparency = true
         let tenantId = "<YOUR_TENANT_ID>"
         let brandName = "<YOUR_BRAND_NAME>"
+
+        let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
+                                              tenantId: tenantId,
+                                              brandName: brandName,
+                                              supportsAppTrackingTransparency: supportsAppTrackingTransparency)
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .red,
                                                   font: .systemFont(ofSize: 10))
 
-        RingPublishingGDPR.shared.initialize(gdprApplies: gdprApplies,
-                                             tenantId: tenantId,
-                                             brandName: brandName,
+        RingPublishingGDPR.shared.initialize(config: config,
                                              uiConfig: uiConfig,
                                              delegate: self)
 

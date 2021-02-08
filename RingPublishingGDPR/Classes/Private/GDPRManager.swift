@@ -19,6 +19,9 @@ class GDPRManager: NSObject {
     /// Manager delegate
     weak var delegate: GDPRManagerDelegate?
 
+    /// Module config
+    let config: RingPublishingGDPRConfig
+
     /// CMP API
     var cmpApi: GDPRApi?
 
@@ -74,15 +77,15 @@ class GDPRManager: NSObject {
     /// Initializer
     /// 
     /// - Parameters:
-    ///   - tenantId: CMP Tenant Id
-    ///   - brandName: App site id used to brand CMP form
+    ///   - config: RingPublishingGDPRConfig
     ///   - delegate: RingPublishingGDPRManagerDelegate
     ///   - timeoutInterval: WebView and API timeout
-    init(tenantId: String, brandName: String, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval) {
+    init(config: RingPublishingGDPRConfig, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval) {
+        self.config = config
         self.moduleState = .initialized
         self.delegate = delegate
         self.timeoutInterval = timeoutInterval
-        self.cmpApi = GDPRApi(tenantId: tenantId, brandName: brandName, timeoutInterval: timeoutInterval)
+        self.cmpApi = GDPRApi(tenantId: config.tenantId, brandName: config.brandName, timeoutInterval: timeoutInterval)
     }
 
     // MARK: Deinit

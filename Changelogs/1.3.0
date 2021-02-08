@@ -1,0 +1,11 @@
+1.3.0 Release notes (2021-02-08)
+=============================================================
+
+### Features
+
+* Added support for Apple App Tracking Transparency
+* New config option: 'supportsAppTrackingTransparency' in 'RingPublishingGDPRConfig' class
+
+### Changes
+
+* Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName' moved to 'RingPublishingGDPRConfig' class

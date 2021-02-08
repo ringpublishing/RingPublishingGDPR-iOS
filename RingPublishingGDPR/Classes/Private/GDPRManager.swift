@@ -19,11 +19,11 @@ class GDPRManager: NSObject {
     /// Manager delegate
     weak var delegate: GDPRManagerDelegate?
 
-    /// Module config
-    let config: RingPublishingGDPRConfig
+    /// AppTrackingTransparencyManager
+    let appTrackingManager: AppTrackingTransparencyManager
 
     /// CMP API
-    var cmpApi: GDPRApi?
+    let cmpApi: GDPRApi
 
     /// Configuration for given tenant id (fetched from API)
     var tenantConfiguration: TenantConfiguration?
@@ -69,7 +69,16 @@ class GDPRManager: NSObject {
 
     /// Should we check if stored consents are still valid? (Could be outdated for example)
     var shouldCheckConsentStatus: Bool {
-        return GDPRStorage.tcString != nil && GDPRStorage.gdprApplies == 1
+        return !shouldAskUserForConsents
+    }
+
+    /// Combines GDPR status & App Tracking Trabsparency status
+    var shouldAskUserForConsents: Bool {
+        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+        let gdprConsentsNotDetermined = GDPRStorage.tcString == nil && gdprApplies
+        let attConsentsNotDetermined = !appTrackingManager.trackingStatusDetermined
+
+        return gdprConsentsNotDetermined || attConsentsNotDetermined
     }
 
     // MARK: Init
@@ -81,10 +90,10 @@ class GDPRManager: NSObject {
     ///   - delegate: RingPublishingGDPRManagerDelegate
     ///   - timeoutInterval: WebView and API timeout
     init(config: RingPublishingGDPRConfig, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval) {
-        self.config = config
         self.moduleState = .initialized
         self.delegate = delegate
         self.timeoutInterval = timeoutInterval
+        self.appTrackingManager = AppTrackingTransparencyManager(supportsAppTrackingTransparency: config.supportsAppTrackingTransparency)
         self.cmpApi = GDPRApi(tenantId: config.tenantId, brandName: config.brandName, timeoutInterval: timeoutInterval)
     }
 

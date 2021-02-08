@@ -56,13 +56,11 @@ public class RingPublishingGDPR: NSObject {
     ///
     /// Returns true if consents are not stored on the device in UserDefaults and GDPR applies
     /// This flag should be only used to check if initial consents are stored.
+    /// If App Tracking Tracking Transparency is enabled in module config - this flag also includes ATT status.
     /// To know whether or not consents form should be shown again use RingPublishingGDPRDelegate
     @objc
     public var shouldAskUserForConsents: Bool {
-        // Nil as true here in case someone uses this property before module initialization
-        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
-
-        return GDPRStorage.tcString == nil && gdprApplies
+        return manager?.shouldAskUserForConsents ?? true
     }
 
     /// Allows you to clear all stored consent data in UserDefaults prefixed with IABTCF_ && RingPublishing_

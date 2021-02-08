@@ -23,7 +23,7 @@ extension GDPRManager {
 
         Logger.log("Asking CMP API for tenant configuration...")
 
-        cmpApi?.getCMPTenantConfiguration(completion: { [weak self] (config, error) in
+        cmpApi.getCMPTenantConfiguration(completion: { [weak self] (config, error) in
             Logger.log("CMP API did return tenant configuration? -> \(config != nil)")
 
             DispatchQueue.main.async {
@@ -56,7 +56,7 @@ private extension GDPRManager {
     func checkUserConsentsStatusInAPI() {
         let ringPublishingConsents = GDPRStorage.ringPublishingConsents
 
-        cmpApi?.getConsentsStatus(for: ringPublishingConsents, completion: { [weak self] status in
+        cmpApi.getConsentsStatus(for: ringPublishingConsents, completion: { [weak self] status in
             defer {
                 GDPRStorage.lastAPIConsentsCheckStatus = status?.rawValue
             }

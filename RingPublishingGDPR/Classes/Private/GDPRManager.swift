@@ -188,6 +188,13 @@ class GDPRManager: NSObject {
         webViewLoadingTimer?.invalidate()
         webViewLoadingTimer = nil
 
+        guard !attConsentsNotDetermined else {
+            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show onboarding view...")
+            delegate?.gdprManager(self, isRequestingToChangeViewState: .appTrackingTransparency)
+            moduleState = .initialized
+            return
+        }
+
         if [NSURLErrorNotConnectedToInternet, NSURLErrorDataNotAllowed].contains((error as NSError).code) {
             // Show error state only if we know that there was no Internet access
             delegate?.gdprManager(self, isRequestingToChangeViewState: .error)

@@ -60,7 +60,9 @@ class AppTrackingTransparencyManager {
                 Logger.log("ATTrackingManager returned unknown status, rawValue: \(status.rawValue)")
             }
 
-            completion()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
 }

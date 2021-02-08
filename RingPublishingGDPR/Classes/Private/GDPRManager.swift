@@ -68,13 +68,13 @@ class GDPRManager: NSObject {
     var actionsRequiredToCloseCMP: [GDPRAction] = []
 
     /// Is GDPR consents status not determined?
-    private var gdprConsentsNotDetermined: Bool {
+    var gdprConsentsNotDetermined: Bool {
         let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
         return GDPRStorage.tcString == nil && gdprApplies
     }
 
     /// Is App Tracking Transparency status not determined?
-    private var attConsentsNotDetermined: Bool {
+    var attConsentsNotDetermined: Bool {
         return !appTrackingManager.trackingStatusDetermined
     }
 
@@ -280,6 +280,12 @@ class GDPRManager: NSObject {
     func closeCMPFormAfterReceivingConsents() {
         // Remove last stored consents status after consents save
         GDPRStorage.lastAPIConsentsCheckStatus = nil
+
+        guard !attConsentsNotDetermined else {
+            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show onboarding view...")
+            delegate?.gdprManager(self, isRequestingToChangeViewState: .appTrackingTransparency)
+            return
+        }
 
         // Request to close form
         Logger.log("Requesting to close form view controller...")

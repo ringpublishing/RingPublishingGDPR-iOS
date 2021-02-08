@@ -20,4 +20,7 @@ protocol RingPublishingGDPRViewControllerDelegate: class {
 
     /// View controller wants to reload CMP site
     func ringPublishingGDPRViewControllerDidRequestReload()
+
+    /// View controller wants to show App Tracking Transparency alert
+    func ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
 }

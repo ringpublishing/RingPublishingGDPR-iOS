@@ -18,6 +18,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZA1-Af-fgh">
                     <rect key="frame" x="184" y="812" width="46" height="30"/>
                     <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="onActionButtonTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="k8C-Rc-dKv"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -27,6 +30,9 @@
                 <constraint firstItem="ZA1-Af-fgh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Vnc-pq-9al"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="actionButton" destination="ZA1-Af-fgh" id="WSk-z6-UV8"/>
+            </connections>
             <point key="canvasLocation" x="138" y="129"/>
         </view>
     </objects>

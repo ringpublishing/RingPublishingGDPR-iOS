@@ -99,7 +99,9 @@ extension RingPublishingGDPRViewController {
     /// - Parameter delegate: RingPublishingGDPRViewControllerDelegate
     func setInternalDelegate(_ delegate: RingPublishingGDPRViewControllerDelegate?) {
         self.delegate = delegate
+
         errorView.delegate = delegate
+        appTrackingTransparencyView.delegate = delegate
     }
 
     /// Configure internal views using RingPublishingGDPRUIConfig

@@ -79,11 +79,14 @@ class GDPRManager: NSObject {
     }
 
     /// Should we check if stored consents are still valid? (Could be outdated for example)
+    /// Determines if we should check contents status in API
     var shouldCheckConsentStatus: Bool {
-        return !shouldAskUserForConsents
+        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+        return !shouldAskUserForConsents && gdprApplies
     }
 
     /// Combines GDPR status & App Tracking Trabsparency status
+    /// Determined if app should should consent form at app start
     var shouldAskUserForConsents: Bool {
         return gdprConsentsNotDetermined || attConsentsNotDetermined
     }

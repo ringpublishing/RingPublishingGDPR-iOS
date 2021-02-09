@@ -17,6 +17,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZA1-Af-fgh">
                     <rect key="frame" x="184" y="812" width="46" height="30"/>
+                    <accessibility key="accessibilityConfiguration" identifier="AppTrackingTransparencyView_actionButton"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="onActionButtonTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="k8C-Rc-dKv"/>

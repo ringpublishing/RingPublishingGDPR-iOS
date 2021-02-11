@@ -12,17 +12,45 @@ import UIKit
 /// RingPublishingGDPR module UI configuration
 public class RingPublishingGDPRUIConfig: NSObject {
 
-    /// Theme color used for loading indicator and retry button color
-    @objc
-    public let themeColor: UIColor
+    // MARK: Required config options
 
-    /// Color used for retry button text
+    /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency onboarding)
     @objc
-    public let buttonTextColor: UIColor
+    public var themeColor: UIColor
 
-    /// Font used in error view
+    /// Color used for action button texts (in error view & App Tracking Transparency onboarding)
     @objc
-    public let font: UIFont
+    public var buttonTextColor: UIColor
+
+    /// Font used in error view & App Tracking Transparency onboarding
+    @objc
+    public var font: UIFont
+
+    // MARK: Optional config options
+
+    /// Brand logo image which can be shown on App Tracking Transparency onboarding
+    @objc
+    public var brandLogoImage: UIImage?
+
+    /// Text which will be displayed as title for App Tracking Transparency onboarding
+    ///
+    /// This can be plain text or text with HTML attributes.
+    @objc
+    public var attOnboardingTitle: String?
+
+    /// Text which will be displayed as description for App Tracking Transparency onboarding
+    ///
+    /// This can be plain text or text with HTML attributes.
+    @objc
+    public var attOnboardingDescription: String?
+
+    /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency onboarding
+    @objc
+    public var attOnboardingCancelButtonText: String?
+
+    /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency onboarding
+    @objc
+    public var attOnboardingAllowButtonText: String?
 
     // MARK: Init
 

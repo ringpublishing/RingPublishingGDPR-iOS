@@ -39,13 +39,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tenantId = "<YOUR_TENANT_ID>"
         let brandName = "<YOUR_BRAND_NAME>"
 
+
         let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
                                               tenantId: tenantId,
                                               brandName: brandName,
                                               supportsAppTrackingTransparency: supportsAppTrackingTransparency)
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
-                                                  buttonTextColor: .red,
+                                                  buttonTextColor: .white,
                                                   font: .systemFont(ofSize: 10))
+        uiConfig.attOnboardingAllowButtonText = "Allow"
+        uiConfig.attOnboardingCancelButtonText = "Not now"
+        uiConfig.attOnboardingTitle = "Allow RingPublishing to use your app and website activity?"
+        uiConfig.attOnboardingDescription = """
+            To provide a better ads experience, we need permission to use future activity that other apps and websites
+            send us from this device.This won’t give us access to new types of information.
+
+            Learn more about how we limit our use of your activity if you turn off this device setting,
+            and related settings on RingPublishing.
+        """
+
+        uiConfig.brandLogoImage = UIImage(named: "AppIcon")
 
         RingPublishingGDPR.shared.initialize(config: config,
                                              uiConfig: uiConfig,

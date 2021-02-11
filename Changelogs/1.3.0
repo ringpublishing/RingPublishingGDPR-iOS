@@ -10,3 +10,4 @@
 
 * Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName' moved to 'RingPublishingGDPRConfig' class
 * 'RingPublishingGDPR.shouldAskUserForConsents' flag takes into consideration App Tracking Transparency status if it is enabled in configuration
+* 'RingPublishingGDPRUIConfig' class has now mutable fields to allow for easier configuration as it has many more options then before. Only initializer with required properties is provided.

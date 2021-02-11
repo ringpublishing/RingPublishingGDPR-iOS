@@ -18,9 +18,15 @@ class AppTrackingTransparencyView: UIView {
 
     // MARK: Set up
 
-    
+    /// Configure internal views using RingPublishingGDPRUIConfig
+    ///
+    /// - Parameters:
+    ///   - uiConfig: RingPublishingGDPRUIConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
 
 
+        
+    }
 
 }
 

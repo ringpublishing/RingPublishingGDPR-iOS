@@ -109,7 +109,8 @@ extension RingPublishingGDPRViewController {
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
     func configure(with uiConfig: RingPublishingGDPRUIConfig) {
-        loadingView.configure(uiConfig.themeColor)
-        errorView.configure(withThemeColor: uiConfig.themeColor, buttonTextColor: uiConfig.buttonTextColor, font: uiConfig.font)
+        loadingView.configure(with: uiConfig)
+        errorView.configure(with: uiConfig)
+        appTrackingTransparencyView.configure(with: uiConfig)
     }
 }

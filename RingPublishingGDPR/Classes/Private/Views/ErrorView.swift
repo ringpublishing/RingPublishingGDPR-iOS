@@ -33,7 +33,7 @@ class ErrorView: UIView {
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
     func configure(with uiConfig: RingPublishingGDPRUIConfig) {
-        errorRetryButton.layer.borderColor = uiConfig.themeColor.cgColor
+        errorRetryButton.backgroundColor = uiConfig.themeColor
         errorRetryButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
 
         let attributedString = NSMutableAttributedString(string: errorLabel.text ?? "")

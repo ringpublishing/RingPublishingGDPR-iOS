@@ -12,6 +12,10 @@ import UIKit
 class AppTrackingTransparencyView: UIView {
 
     @IBOutlet private weak var actionButton: UIButton!
+    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var descriptionTextView: UITextView!
+    @IBOutlet private weak var titleTextView: UITextView!
+    @IBOutlet private weak var logoImageView: UIImageView!
 
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
@@ -23,17 +27,50 @@ class AppTrackingTransparencyView: UIView {
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
     func configure(with uiConfig: RingPublishingGDPRUIConfig) {
-
-
-        
+        configureButtons(with: uiConfig)
+        configureLogo(with: uiConfig)
+        configureTexts(with: uiConfig)
     }
-
 }
 
 // MARK: Private
 private extension AppTrackingTransparencyView {
 
+    // MARK: UI
+
+    func configureButtons(with uiConfig: RingPublishingGDPRUIConfig) {
+        let buttonFontSize = actionButton.titleLabel?.font.pointSize
+
+        actionButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
+        actionButton.backgroundColor = uiConfig.themeColor
+        actionButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
+        actionButton.setTitle(uiConfig.attOnboardingAllowButtonText, for: .normal)
+
+        cancelButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
+        cancelButton.setTitle(uiConfig.attOnboardingCancelButtonText, for: .normal)
+    }
+
+    func configureLogo(with uiConfig: RingPublishingGDPRUIConfig) {
+        logoImageView.image = uiConfig.brandLogoImage
+    }
+
+    func configureTexts(with uiConfig: RingPublishingGDPRUIConfig) {
+        let titleFontSize = titleTextView.font?.pointSize
+        let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
+        titleTextView.attributedText = uiConfig.attOnboardingTitle?.convertfromHTML(using: titleFont)
+
+        let descriptionFontSize = descriptionTextView.font?.pointSize
+        let descriptionFont = uiConfig.font.withSize(descriptionFontSize ?? uiConfig.font.pointSize)
+        descriptionTextView.attributedText = uiConfig.attOnboardingDescription?.convertfromHTML(using: descriptionFont )
+    }
+
+    // MARK: Actions
+
     @IBAction func onActionButtonTouch(_ sender: Any) {
         delegate?.ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
+    }
+
+    @IBAction func onCancelButtonTouch(_ sender: Any) {
+        
     }
 }

@@ -15,24 +15,91 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZA1-Af-fgh">
-                    <rect key="frame" x="184" y="812" width="46" height="30"/>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZA1-Af-fgh">
+                    <rect key="frame" x="32" y="798" width="350" height="44"/>
                     <accessibility key="accessibilityConfiguration" identifier="AppTrackingTransparencyView_actionButton"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Bg8-q4-G4Y"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="Button"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="7"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="onActionButtonTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="k8C-Rc-dKv"/>
                     </connections>
                 </button>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-sk-xuU">
+                    <rect key="frame" x="32" y="738" width="350" height="44"/>
+                    <color key="backgroundColor" name="ringPublishingGDPRSecondaryBackground"/>
+                    <accessibility key="accessibilityConfiguration" identifier="AppTrackingTransparencyView_actionButton"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="soB-96-ZhC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" name="ringPublishingGDPRLabel"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="7"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="onCancelButtonTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="cHV-Hx-jvl"/>
+                    </connections>
+                </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xIp-j7-AMp">
+                    <rect key="frame" x="32" y="92" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" placeholder="YES" id="M3Z-Mr-B6Z"/>
+                        <constraint firstAttribute="width" secondItem="xIp-j7-AMp" secondAttribute="height" multiplier="1:1" placeholder="YES" id="bqv-ei-vwj"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="cWW-J3-SUa"/>
+                    </constraints>
+                </imageView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gLW-6X-Gea">
+                    <rect key="frame" x="32" y="220" width="350" height="73.5"/>
+                    <color key="textColor" name="ringPublishingGDPRLabel"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MKB-Ic-BER">
+                    <rect key="frame" x="32" y="329.5" width="350" height="37.5"/>
+                    <color key="textColor" name="ringPublishingGDPRLabel"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="ringPublishingGDPRBackground"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZA1-Af-fgh" secondAttribute="bottom" constant="20" id="Gkv-3P-wPB"/>
-                <constraint firstItem="ZA1-Af-fgh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Vnc-pq-9al"/>
+                <constraint firstItem="xIp-j7-AMp" firstAttribute="width" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="87p-Zw-8du"/>
+                <constraint firstItem="MKB-Ic-BER" firstAttribute="trailing" secondItem="gLW-6X-Gea" secondAttribute="trailing" id="8Cd-jc-hpC"/>
+                <constraint firstItem="vYu-sk-xuU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MKB-Ic-BER" secondAttribute="bottom" constant="32" id="Ad6-ca-4uX"/>
+                <constraint firstItem="xIp-j7-AMp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="BDi-Hf-ZHU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZA1-Af-fgh" secondAttribute="bottom" constant="20" id="Bpt-q5-iHm"/>
+                <constraint firstItem="ZA1-Af-fgh" firstAttribute="top" secondItem="vYu-sk-xuU" secondAttribute="bottom" constant="16" id="HSs-ji-dGH"/>
+                <constraint firstItem="gLW-6X-Gea" firstAttribute="top" secondItem="xIp-j7-AMp" secondAttribute="bottom" constant="48" id="MCp-Fb-6u2"/>
+                <constraint firstItem="gLW-6X-Gea" firstAttribute="trailing" secondItem="ZA1-Af-fgh" secondAttribute="trailing" id="RLU-zU-pNT"/>
+                <constraint firstItem="ZA1-Af-fgh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="SPw-f6-axX"/>
+                <constraint firstItem="gLW-6X-Gea" firstAttribute="leading" secondItem="ZA1-Af-fgh" secondAttribute="leading" id="U8H-wz-Pna"/>
+                <constraint firstItem="xIp-j7-AMp" firstAttribute="leading" secondItem="ZA1-Af-fgh" secondAttribute="leading" id="UOM-sE-YNp"/>
+                <constraint firstItem="MKB-Ic-BER" firstAttribute="top" secondItem="gLW-6X-Gea" secondAttribute="bottom" constant="36" id="hVA-Lq-TdS"/>
+                <constraint firstItem="vYu-sk-xuU" firstAttribute="trailing" secondItem="ZA1-Af-fgh" secondAttribute="trailing" id="lHH-C3-1ZO"/>
+                <constraint firstItem="MKB-Ic-BER" firstAttribute="leading" secondItem="gLW-6X-Gea" secondAttribute="leading" id="mvA-Wx-OyL"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZA1-Af-fgh" secondAttribute="trailing" constant="32" id="qfu-pp-pGn"/>
+                <constraint firstItem="vYu-sk-xuU" firstAttribute="leading" secondItem="ZA1-Af-fgh" secondAttribute="leading" id="s9i-MJ-z31"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="actionButton" destination="ZA1-Af-fgh" id="WSk-z6-UV8"/>
+                <outlet property="cancelButton" destination="vYu-sk-xuU" id="LlB-Hz-Pm6"/>
+                <outlet property="descriptionTextView" destination="MKB-Ic-BER" id="Ff4-Sy-atg"/>
+                <outlet property="logoImageView" destination="xIp-j7-AMp" id="3bg-CA-o1R"/>
+                <outlet property="titleTextView" destination="gLW-6X-Gea" id="OO6-PX-gbu"/>
             </connections>
             <point key="canvasLocation" x="138" y="129"/>
         </view>
@@ -40,6 +107,12 @@
     <resources>
         <namedColor name="ringPublishingGDPRBackground">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <namedColor name="ringPublishingGDPRLabel">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <namedColor name="ringPublishingGDPRSecondaryBackground">
+            <color red="0.77999997138977051" green="0.77999997138977051" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

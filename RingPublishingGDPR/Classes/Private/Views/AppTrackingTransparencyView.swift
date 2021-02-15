@@ -16,7 +16,7 @@ class AppTrackingTransparencyView: UIView {
     @IBOutlet private weak var descriptionTextView: UITextView!
     @IBOutlet private weak var titleTextView: UITextView!
     @IBOutlet private weak var logoImageView: UIImageView!
-    @IBOutlet weak var logoImageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
     
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
@@ -88,11 +88,11 @@ private extension AppTrackingTransparencyView {
 
     // MARK: Actions
 
-    @IBAction func onActionButtonTouch(_ sender: Any) {
-        delegate?.ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
+    @IBAction func onCancelButtonTouch(_ sender: Any) {
+        delegate?.ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyOnboarding()
     }
 
-    @IBAction func onCancelButtonTouch(_ sender: Any) {
-
+    @IBAction func onActionButtonTouch(_ sender: Any) {
+        delegate?.ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
     }
 }

@@ -21,6 +21,9 @@ protocol RingPublishingGDPRViewControllerDelegate: class {
     /// View controller wants to reload CMP site
     func ringPublishingGDPRViewControllerDidRequestReload()
 
+    /// View controller informs that user did not want to answer ATT permission question
+    func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyOnboarding()
+
     /// View controller wants to show App Tracking Transparency alert
     func ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
 }

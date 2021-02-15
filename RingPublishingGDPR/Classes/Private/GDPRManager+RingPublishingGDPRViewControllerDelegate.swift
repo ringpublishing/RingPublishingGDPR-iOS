@@ -25,7 +25,13 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
         loadCMPSite()
     }
 
+    func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyOnboarding() {
+        appTrackingManager.markOnboardingAsShown()
+        delegate?.gdrpManagerDidRequestToHideConsentsController(self)
+    }
+
     func ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency() {
+        appTrackingManager.markOnboardingAsShown()
         appTrackingManager.showAppTrackingTransparencyAlert { [weak self] in
             guard let self = self else { return }
 

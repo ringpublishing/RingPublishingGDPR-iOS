@@ -141,4 +141,8 @@ extension RingPublishingGDPR: GDPRManagerDelegate {
     func gdprManager(_ manager: GDPRManager, isRequestingToEmbedWebView webView: WKWebView) {
         ringPublishingGDPRViewController.configure(with: webView)
     }
+
+    func gdprManager(_ manager: GDPRManager, isRequestingToOpenUrl url: URL) {
+        delegate?.ringPublishingGDPR?(self, didRequestToOpenUrl: url)
+    }
 }

@@ -55,8 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites
             send us from this device.This won’t give us access to new types of information.
             <br><br>
-            Learn more about how we limit our use of your activity if you turn off this device setting,
-            and related settings on <b>RingPublishing</b>.
+            <i><a href="https://ringpublishing.com/">Learn more</a></i> about how we limit our use of your activity
+            if you turn off this device setting, and related settings on <b>RingPublishing</b>.
         """
 
         RingPublishingGDPR.shared.initialize(config: config,
@@ -128,6 +128,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: RingPublishingGDPRDelegate {
 
+    // MARK: Required methods
+
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
                             shouldShowConsentsController viewController: RingPublishingGDPRViewController) {
         // This will be called when consent form should be shown again to the user, (for example when vendors list changed)
@@ -145,5 +147,13 @@ extension AppDelegate: RingPublishingGDPRDelegate {
         // - content of app can be shown
 
         showAppContent()
+    }
+
+    // MARK: Optional methods
+
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL) {
+        // In demo app we are just opening url in Safari - in your app you can show it inside you app navigation hierarchy
+
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }

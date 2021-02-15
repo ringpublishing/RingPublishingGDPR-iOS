@@ -13,11 +13,14 @@ import UIKit
 @objc
 public protocol RingPublishingGDPRDelegate: class {
 
+    // MARK: Required methods
+
     /// Delegate method saying that application should show again consents form
     ///
     /// - Parameters:
     ///   - ringPublishingGDPR: RingPublishingGDPR
     ///   - viewController: RingPublishingGDPRViewController
+    @objc
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
                             shouldShowConsentsController viewController: RingPublishingGDPRViewController)
 
@@ -26,6 +29,17 @@ public protocol RingPublishingGDPRDelegate: class {
     /// - Parameters:
     ///   - ringPublishingGDPR: RingPublishingGDPR
     ///   - viewController: RingPublishingGDPRViewController
+    @objc
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
                             shouldHideConsentsController viewController: RingPublishingGDPRViewController)
+
+    // MARK: Optional methods
+
+    /// Delegate method saying that application should open url selected by the user
+    ///
+    /// - Parameters:
+    ///   - ringPublishingGDPR: RingPublishingGDPR
+    ///   - url: URL
+    @objc optional
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
 }

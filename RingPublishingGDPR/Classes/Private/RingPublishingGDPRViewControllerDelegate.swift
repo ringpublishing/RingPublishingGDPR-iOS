@@ -26,4 +26,7 @@ protocol RingPublishingGDPRViewControllerDelegate: class {
 
     /// View controller wants to show App Tracking Transparency alert
     func ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
+
+    /// View controller wants to open url selected from text
+    func ringPublishingGDPRViewControllerDidRequestToOpenURL(_ url: URL)
 }

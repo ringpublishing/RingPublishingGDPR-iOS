@@ -3,11 +3,13 @@
 
 ### Features
 
-* Added support for Apple App Tracking Transparency
-* New config option: 'supportsAppTrackingTransparency' in 'RingPublishingGDPRConfig' class
+* New config option: 'supportsAppTrackingTransparency' in 'RingPublishingGDPRConfig' class.
+* Added support for Apple App Tracking Transparency & onboarding screen before system permission alert is shown.
+* New configuration options in 'RingPublishingGDPRUIConfig' related to added ATT onboarding screen.
+* New optional delegate methods in 'RingPublishingGDPRDelegate' related to Apple App Tracking Transparency & onboarding screen
 
 ### Changes
 
-* Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName' moved to 'RingPublishingGDPRConfig' class
-* 'RingPublishingGDPR.shouldAskUserForConsents' flag takes into consideration App Tracking Transparency status if it is enabled in configuration
+* Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName' moved to 'RingPublishingGDPRConfig' class.
+* 'RingPublishingGDPR.shouldAskUserForConsents' flag takes into consideration App Tracking Transparency status if it is enabled in configuration.
 * 'RingPublishingGDPRUIConfig' class has now mutable fields to allow for easier configuration as it has many more options then before. Only initializer with required properties is provided.

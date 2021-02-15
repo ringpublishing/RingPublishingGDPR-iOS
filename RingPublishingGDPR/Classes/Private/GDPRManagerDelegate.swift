@@ -29,8 +29,16 @@ protocol GDPRManagerDelegate: class {
     func gdprManager(_ manager: GDPRManager, isRequestingToChangeViewState state: ViewState)
 
     /// Manager is requesting to embed web view inside view controller
+    ///
     /// - Parameters:
     ///   - manager: GDPRManager
     ///   - webView: WKWebView
     func gdprManager(_ manager: GDPRManager, isRequestingToEmbedWebView webView: WKWebView)
+
+    /// Manager is requesting to open url selected inside view controller by the user
+    ///
+    /// - Parameters:
+    ///   - manager: GDPRManager
+    ///   - url: URL
+    func gdprManager(_ manager: GDPRManager, isRequestingToOpenUrl url: URL)
 }

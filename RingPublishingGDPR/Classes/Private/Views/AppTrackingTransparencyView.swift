@@ -21,6 +21,15 @@ class AppTrackingTransparencyView: UIView {
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
 
+    // MARK: Life cycle
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        titleTextView.delegate = self
+        descriptionTextView.delegate = self
+    }
+
     // MARK: Set up
 
     /// Configure internal views using RingPublishingGDPRUIConfig
@@ -94,5 +103,15 @@ private extension AppTrackingTransparencyView {
 
     @IBAction func onActionButtonTouch(_ sender: Any) {
         delegate?.ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()
+    }
+}
+
+// MARK: UITextViewDelegate
+extension AppTrackingTransparencyView: UITextViewDelegate {
+
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        delegate?.ringPublishingGDPRViewControllerDidRequestToOpenURL(URL)
+
+        return false
     }
 }

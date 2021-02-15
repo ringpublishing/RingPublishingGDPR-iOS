@@ -49,11 +49,11 @@ class AppTrackingTransparencyManager {
     /// Showsr App Tracking Transparency alert
     ///
     /// - Parameter completion: Completion handler
-    func showAppTrackingTransparencyAlert(completion: @escaping () -> Void) {
+    func showAppTrackingTransparencyAlert(completion: @escaping (_ trackingAllowed: Bool) -> Void) {
         guard #available(iOS 14, *), supportsAppTrackingTransparency else {
             // This should never happen
             Logger.log("Requests to show AppTrackingTransparency alert was performed below iOS 14!", level: .error)
-            completion()
+            completion(false)
             return
         }
 
@@ -71,8 +71,10 @@ class AppTrackingTransparencyManager {
                 Logger.log("ATTrackingManager returned unknown status, rawValue: \(status.rawValue)")
             }
 
+            let trackingAllowed = status == .authorized
+
             DispatchQueue.main.async {
-                completion()
+                completion(trackingAllowed)
             }
         }
     }

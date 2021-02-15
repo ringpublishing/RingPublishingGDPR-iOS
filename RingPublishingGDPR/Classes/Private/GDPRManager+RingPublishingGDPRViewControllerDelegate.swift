@@ -29,6 +29,7 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
         Logger.log("AppTrackingTransparency - user selected 'cancel' on onboarding screen.")
 
         appTrackingManager.markOnboardingAsShown()
+        delegate?.gdprManager(self, userSelectedATTOnboardingOptionAllowingTracking: false)
         delegate?.gdrpManagerDidRequestToHideConsentsController(self)
     }
 
@@ -36,10 +37,12 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
         Logger.log("AppTrackingTransparency - user selected 'allow' on onboarding screen.")
 
         appTrackingManager.markOnboardingAsShown()
-        appTrackingManager.showAppTrackingTransparencyAlert { [weak self] in
+        delegate?.gdprManager(self, userSelectedATTOnboardingOptionAllowingTracking: true)
+        appTrackingManager.showAppTrackingTransparencyAlert { [weak self] trackingAllowed in
             guard let self = self else { return }
 
             Logger.log("AppTrackingTransparency consent received. Requesting to close view controller...")
+            self.delegate?.gdprManager(self, userSelectedATTAlertPermisionAllowingTracking: trackingAllowed)
             self.delegate?.gdrpManagerDidRequestToHideConsentsController(self)
         }
     }

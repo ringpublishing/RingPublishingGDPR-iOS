@@ -156,4 +156,22 @@ extension AppDelegate: RingPublishingGDPRDelegate {
 
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
+
+    func ringPublishingGDPRDidPresentATTOnboardingScreen(_ ringPublishingGDPR: RingPublishingGDPR) {
+        // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
+
+        print("DEMO - RingPublishingGDPR: didPresentATTOnboardingScreen")
+    }
+
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTOnboardingOptionAllowingTracking allow: Bool) {
+        // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
+
+        print("DEMO - RingPublishingGDPR: userSelectedATTOnboardingOptionAllowingTracking -> \(allow)")
+    }
+
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermisionAllowingTracking allow: Bool) {
+        // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
+
+        print("DEMO - RingPublishingGDPR: userSelectedATTAlertPermisionAllowingTracking -> \(allow)")
+    }
 }

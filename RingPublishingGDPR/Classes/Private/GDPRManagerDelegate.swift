@@ -41,4 +41,18 @@ protocol GDPRManagerDelegate: class {
     ///   - manager: GDPRManager
     ///   - url: URL
     func gdprManager(_ manager: GDPRManager, isRequestingToOpenUrl url: URL)
+
+    /// Manager is informing that user selected on of the options on ATT onboarding screen
+    ///
+    /// - Parameters:
+    ///   - manager: GDPRManager
+    ///   - allow: Bool
+    func gdprManager(_ manager: GDPRManager, userSelectedATTOnboardingOptionAllowingTracking allow: Bool)
+
+    /// Manager is informing that user selected on of the options on Apple permission alert for ATT
+    ///
+    /// - Parameters:
+    ///   - manager: GDPRManager
+    ///   - allow: Bool
+    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermisionAllowingTracking allow: Bool)
 }

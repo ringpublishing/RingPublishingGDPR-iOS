@@ -136,6 +136,10 @@ extension RingPublishingGDPR: GDPRManagerDelegate {
 
     func gdprManager(_ manager: GDPRManager, isRequestingToChangeViewState state: ViewState) {
         ringPublishingGDPRViewController.show(state: state)
+
+        guard state == .appTrackingTransparency else { return }
+
+        delegate?.ringPublishingGDPRDidPresentATTOnboardingScreen?(self)
     }
 
     func gdprManager(_ manager: GDPRManager, isRequestingToEmbedWebView webView: WKWebView) {
@@ -144,5 +148,13 @@ extension RingPublishingGDPR: GDPRManagerDelegate {
 
     func gdprManager(_ manager: GDPRManager, isRequestingToOpenUrl url: URL) {
         delegate?.ringPublishingGDPR?(self, didRequestToOpenUrl: url)
+    }
+
+    func gdprManager(_ manager: GDPRManager, userSelectedATTOnboardingOptionAllowingTracking allow: Bool) {
+        delegate?.ringPublishingGDPR?(self, userSelectedATTOnboardingOptionAllowingTracking: allow)
+    }
+
+    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermisionAllowingTracking allow: Bool) {
+        delegate?.ringPublishingGDPR?(self, userSelectedATTAlertPermisionAllowingTracking: allow)
     }
 }

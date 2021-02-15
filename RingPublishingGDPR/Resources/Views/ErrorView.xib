@@ -21,6 +21,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                     <color key="textColor" name="ringPublishingGDPRLabel"/>
                     <nil key="highlightedColor"/>
+                    <variation key="widthClass=regular">
+                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                    </variation>
                 </label>
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlH-Wc-Vnl" userLabel="retryButton">
                     <rect key="frame" x="56" y="535" width="302" height="38"/>
@@ -48,13 +51,17 @@
             <viewLayoutGuide key="safeArea" id="ecl-Hf-6bc"/>
             <color key="backgroundColor" name="ringPublishingGDPRBackground"/>
             <constraints>
-                <constraint firstItem="ud0-8d-JE9" firstAttribute="top" secondItem="0xc-Zh-hjl" secondAttribute="bottom" constant="32" id="8h2-yk-s9u"/>
+                <constraint firstItem="ud0-8d-JE9" firstAttribute="top" secondItem="0xc-Zh-hjl" secondAttribute="bottom" constant="32" id="8h2-yk-s9u">
+                    <variation key="widthClass=regular" constant="64"/>
+                </constraint>
                 <constraint firstItem="0xc-Zh-hjl" firstAttribute="bottom" secondItem="PU6-fV-w0d" secondAttribute="centerY" id="Dk7-3R-Sh6"/>
                 <constraint firstItem="ud0-8d-JE9" firstAttribute="leading" secondItem="PU6-fV-w0d" secondAttribute="leading" constant="56" id="Ote-Vh-mmI"/>
                 <constraint firstAttribute="trailing" secondItem="ud0-8d-JE9" secondAttribute="trailing" constant="56" id="Z4B-l3-gko"/>
                 <constraint firstItem="TlH-Wc-Vnl" firstAttribute="leading" secondItem="ecl-Hf-6bc" secondAttribute="leading" constant="56" id="hpt-cz-cqd"/>
                 <constraint firstItem="ecl-Hf-6bc" firstAttribute="trailing" secondItem="TlH-Wc-Vnl" secondAttribute="trailing" constant="56" id="nH4-Jc-Snq"/>
-                <constraint firstItem="TlH-Wc-Vnl" firstAttribute="top" secondItem="ud0-8d-JE9" secondAttribute="bottom" constant="32" id="qv1-VM-DLd"/>
+                <constraint firstItem="TlH-Wc-Vnl" firstAttribute="top" secondItem="ud0-8d-JE9" secondAttribute="bottom" constant="32" id="qv1-VM-DLd">
+                    <variation key="widthClass=regular" constant="64"/>
+                </constraint>
                 <constraint firstItem="0xc-Zh-hjl" firstAttribute="centerX" secondItem="PU6-fV-w0d" secondAttribute="centerX" id="r52-W2-Ed7"/>
             </constraints>
             <connections>

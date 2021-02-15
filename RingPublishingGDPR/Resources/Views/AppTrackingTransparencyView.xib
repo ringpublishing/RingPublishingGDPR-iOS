@@ -55,9 +55,13 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xIp-j7-AMp">
                     <rect key="frame" x="32" y="92" width="80" height="80"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" placeholder="YES" id="M3Z-Mr-B6Z"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" placeholder="YES" id="M3Z-Mr-B6Z">
+                            <variation key="widthClass=regular" constant="120"/>
+                        </constraint>
                         <constraint firstAttribute="width" secondItem="xIp-j7-AMp" secondAttribute="height" multiplier="1:1" placeholder="YES" id="bqv-ei-vwj"/>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="cWW-J3-SUa"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="cWW-J3-SUa">
+                            <variation key="widthClass=regular" constant="120"/>
+                        </constraint>
                         <constraint firstAttribute="width" priority="999" constant="414" id="ycy-Yf-zFY"/>
                     </constraints>
                 </imageView>
@@ -66,12 +70,18 @@
                     <color key="textColor" name="ringPublishingGDPRLabel"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <variation key="widthClass=regular">
+                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                    </variation>
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MKB-Ic-BER">
                     <rect key="frame" x="32" y="329.5" width="350" height="37.5"/>
                     <color key="textColor" name="ringPublishingGDPRLabel"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <variation key="widthClass=regular">
+                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                    </variation>
                 </textView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

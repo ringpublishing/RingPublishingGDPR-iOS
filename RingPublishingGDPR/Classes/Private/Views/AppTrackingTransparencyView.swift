@@ -55,13 +55,15 @@ private extension AppTrackingTransparencyView {
     }
 
     func configureTexts(with uiConfig: RingPublishingGDPRUIConfig) {
+        let textColor = UIColor(named: "ringPublishingGDPRLabel", in: Bundle.ringPublishingGDPRBundle, compatibleWith: nil)
+
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
-        titleTextView.attributedText = uiConfig.attOnboardingTitle?.convertfromHTML(using: titleFont)
+        titleTextView.attributedText = uiConfig.attOnboardingTitle?.convertfromHTML(using: titleFont, textColor: textColor)
 
         let descriptionFontSize = descriptionTextView.font?.pointSize
         let descriptionFont = uiConfig.font.withSize(descriptionFontSize ?? uiConfig.font.pointSize)
-        descriptionTextView.attributedText = uiConfig.attOnboardingDescription?.convertfromHTML(using: descriptionFont )
+        descriptionTextView.attributedText = uiConfig.attOnboardingDescription?.convertfromHTML(using: descriptionFont, textColor: textColor)
     }
 
     // MARK: Actions

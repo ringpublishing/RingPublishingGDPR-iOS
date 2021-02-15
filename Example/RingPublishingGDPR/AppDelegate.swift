@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         uiConfig.attOnboardingCancelButtonText = "Not now".uppercased()
         uiConfig.attOnboardingTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
         uiConfig.attOnboardingDescription = """
-            To provide a better ads experience, we need permission to use future activity that other apps and websites
+            To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites
             send us from this device.This won’t give us access to new types of information.
             <br><br>
             Learn more about how we limit our use of your activity if you turn off this device setting,

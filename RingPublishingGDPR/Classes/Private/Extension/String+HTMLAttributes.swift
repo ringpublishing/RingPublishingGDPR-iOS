@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
 
-    func convertfromHTML(using font: UIFont) -> NSAttributedString? {
+    func convertfromHTML(using font: UIFont, textColor color: UIColor?) -> NSAttributedString? {
         let textData = Data(self.utf8)
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
@@ -33,6 +33,9 @@ extension String {
                 modifiedString.addAttribute(.font, value: newFont, range: range)
             }
         })
+
+        // We have to override color so it looks good in dark mode
+        modifiedString.addAttribute(.foregroundColor, value: color ?? .black, range: wholeRange)
 
         return modifiedString
     }

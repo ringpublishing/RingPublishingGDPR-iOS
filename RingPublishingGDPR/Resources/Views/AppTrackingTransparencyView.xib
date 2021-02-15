@@ -58,6 +58,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" placeholder="YES" id="M3Z-Mr-B6Z"/>
                         <constraint firstAttribute="width" secondItem="xIp-j7-AMp" secondAttribute="height" multiplier="1:1" placeholder="YES" id="bqv-ei-vwj"/>
                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="cWW-J3-SUa"/>
+                        <constraint firstAttribute="width" priority="999" constant="414" id="ycy-Yf-zFY"/>
                     </constraints>
                 </imageView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gLW-6X-Gea">
@@ -76,7 +77,6 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="ringPublishingGDPRBackground"/>
             <constraints>
-                <constraint firstItem="xIp-j7-AMp" firstAttribute="width" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="87p-Zw-8du"/>
                 <constraint firstItem="MKB-Ic-BER" firstAttribute="trailing" secondItem="gLW-6X-Gea" secondAttribute="trailing" id="8Cd-jc-hpC"/>
                 <constraint firstItem="vYu-sk-xuU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MKB-Ic-BER" secondAttribute="bottom" constant="32" id="Ad6-ca-4uX"/>
                 <constraint firstItem="xIp-j7-AMp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="BDi-Hf-ZHU"/>
@@ -88,6 +88,7 @@
                 <constraint firstItem="gLW-6X-Gea" firstAttribute="leading" secondItem="ZA1-Af-fgh" secondAttribute="leading" id="U8H-wz-Pna"/>
                 <constraint firstItem="xIp-j7-AMp" firstAttribute="leading" secondItem="ZA1-Af-fgh" secondAttribute="leading" id="UOM-sE-YNp"/>
                 <constraint firstItem="MKB-Ic-BER" firstAttribute="top" secondItem="gLW-6X-Gea" secondAttribute="bottom" constant="36" id="hVA-Lq-TdS"/>
+                <constraint firstItem="xIp-j7-AMp" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="ZA1-Af-fgh" secondAttribute="trailing" id="lFW-qJ-BP5"/>
                 <constraint firstItem="vYu-sk-xuU" firstAttribute="trailing" secondItem="ZA1-Af-fgh" secondAttribute="trailing" id="lHH-C3-1ZO"/>
                 <constraint firstItem="MKB-Ic-BER" firstAttribute="leading" secondItem="gLW-6X-Gea" secondAttribute="leading" id="mvA-Wx-OyL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZA1-Af-fgh" secondAttribute="trailing" constant="32" id="qfu-pp-pGn"/>
@@ -99,6 +100,7 @@
                 <outlet property="cancelButton" destination="vYu-sk-xuU" id="LlB-Hz-Pm6"/>
                 <outlet property="descriptionTextView" destination="MKB-Ic-BER" id="Ff4-Sy-atg"/>
                 <outlet property="logoImageView" destination="xIp-j7-AMp" id="3bg-CA-o1R"/>
+                <outlet property="logoImageViewWidthConstraint" destination="ycy-Yf-zFY" id="e4G-x7-ZKK"/>
                 <outlet property="titleTextView" destination="gLW-6X-Gea" id="OO6-PX-gbu"/>
             </connections>
             <point key="canvasLocation" x="138" y="129"/>

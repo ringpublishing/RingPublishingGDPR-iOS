@@ -35,7 +35,7 @@
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-sk-xuU">
                     <rect key="frame" x="32" y="738" width="350" height="44"/>
                     <color key="backgroundColor" name="ringPublishingGDPRSecondaryBackground"/>
-                    <accessibility key="accessibilityConfiguration" identifier="AppTrackingTransparencyView_actionButton"/>
+                    <accessibility key="accessibilityConfiguration" identifier="AppTrackingTransparencyView_cancelButton"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="soB-96-ZhC"/>
                     </constraints>

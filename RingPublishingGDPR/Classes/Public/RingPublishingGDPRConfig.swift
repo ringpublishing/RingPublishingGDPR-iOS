@@ -11,22 +11,19 @@ import Foundation
 public class RingPublishingGDPRConfig: NSObject {
 
     /// Does GDPR applies in current context? Defaults to true
-    @objc
-    public let gdprApplies: Bool
+    @objc public let gdprApplies: Bool
 
     /// CMP Tenant Id
-    @objc
-    public let tenantId: String
+    @objc public let tenantId: String
 
     /// App site id used to brand CMP form
-    @objc
-    public let brandName: String
+    @objc public let brandName: String
 
     /// Should Apple App Tracking Transparency permission alert be shown after GDPR consents screen?
     ///
-    /// If this option is enabled, texts for "onboarding" (screen before alert is shown) should be provided inside 'RingPublishingGDPRUIConfig'
-    @objc
-    public let supportsAppTrackingTransparency: Bool
+    /// If this option is enabled, texts for "onboarding" (screen before apple alert is shown) should be provided
+    /// inside 'RingPublishingGDPRUIConfig'
+    @objc public let supportsAppTrackingTransparency: Bool
 
     // MARK: Init
 
@@ -35,7 +32,8 @@ public class RingPublishingGDPRConfig: NSObject {
     /// - Parameter gdprApplies: Does GDPR applies in current context? Defaults to true
     /// - Parameter tenantId: CMP Tenant Id
     /// - Parameter brandName: App site id used to brand CMP form
-    /// - Parameter supportsAppTrackingTransparency: Should Apple App Tracking Transparency permission alert be shown after GDPR consents screen?
+    /// - Parameter supportsAppTrackingTransparency: Should Apple App Tracking Transparency permission alert be shown
+    ///     after GDPR consents screen?
     @objc
     public init(gdprApplies: Bool = true, tenantId: String, brandName: String, supportsAppTrackingTransparency: Bool) {
         self.gdprApplies = gdprApplies

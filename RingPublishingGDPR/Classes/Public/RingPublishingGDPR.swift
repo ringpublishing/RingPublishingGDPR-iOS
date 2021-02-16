@@ -16,14 +16,12 @@ public class RingPublishingGDPR: NSObject {
     // MARK: Public properties
 
     /// Shared instance
-    @objc
-    public static let shared = RingPublishingGDPR()
+    @objc public static let shared = RingPublishingGDPR()
 
     /// View controller which should be presented by application to the users
     ///
     /// Contains consents form & loading view
-    @objc
-    public let ringPublishingGDPRViewController: RingPublishingGDPRViewController
+    @objc public let ringPublishingGDPRViewController: RingPublishingGDPRViewController
 
     /// Closure which can be used to gather module logs inside host application
     ///
@@ -31,8 +29,7 @@ public class RingPublishingGDPR: NSObject {
     /// For os_log there is defined:
     /// - subsystem: Bundle.main.bundleIdentifier
     /// - category: RingPublishingGDPR
-    @objc
-    public var loggerOutput: ((_ message: String) -> Void)? {
+    @objc public var loggerOutput: ((_ message: String) -> Void)? {
         get {
             return Logger.shared.loggerOutput
         }
@@ -45,8 +42,7 @@ public class RingPublishingGDPR: NSObject {
     ///
     /// Default value is 10s
     /// If you want to change this - set this value before module initialization
-    @objc
-    public var networkingTimeout: TimeInterval = 10 {
+    @objc public var networkingTimeout: TimeInterval = 10 {
         didSet {
             manager?.timeoutInterval = networkingTimeout
         }
@@ -58,21 +54,19 @@ public class RingPublishingGDPR: NSObject {
     /// This flag should be only used to check if initial consents are stored.
     /// If App Tracking Tracking Transparency is enabled in module config - this flag also includes ATT status.
     /// To know whether or not consents form should be shown again use RingPublishingGDPRDelegate
-    @objc
-    public var shouldAskUserForConsents: Bool {
+    @objc public var shouldAskUserForConsents: Bool {
         return manager?.shouldAskUserForConsents ?? true
+    }
+
+    /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
+    @objc public var areVendorConsentsGiven: Bool {
+        return GDPRStorage.ringPublishingVendorsConsent == 1
     }
 
     /// Allows you to clear all stored consent data in UserDefaults prefixed with IABTCF_ && RingPublishing_
     @objc
     public func clearConsentsData() {
         GDPRStorage.clearAllConsentData()
-    }
-
-    /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
-    @objc
-    public var areVendorConsentsGiven: Bool {
-        return GDPRStorage.ringPublishingVendorsConsent == 1
     }
 
     // MARK: Private properties

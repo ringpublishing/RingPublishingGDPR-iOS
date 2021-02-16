@@ -17,7 +17,7 @@ class AppTrackingTransparencyView: UIView {
     @IBOutlet private weak var titleTextView: UITextView!
     @IBOutlet private weak var logoImageView: UIImageView!
     @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
-    
+
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
 
@@ -88,11 +88,13 @@ private extension AppTrackingTransparencyView {
 
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
-        titleTextView.attributedText = uiConfig.attOnboardingTitle?.convertfromHTML(using: titleFont, textColor: textColor)
+        titleTextView.attributedText = uiConfig.attOnboardingTitle?.convertfromHTML(using: titleFont,
+                                                                                    textColor: textColor)
 
         let descriptionFontSize = descriptionTextView.font?.pointSize
         let descriptionFont = uiConfig.font.withSize(descriptionFontSize ?? uiConfig.font.pointSize)
-        descriptionTextView.attributedText = uiConfig.attOnboardingDescription?.convertfromHTML(using: descriptionFont, textColor: textColor)
+        descriptionTextView.attributedText = uiConfig.attOnboardingDescription?.convertfromHTML(using: descriptionFont,
+                                                                                                textColor: textColor)
     }
 
     // MARK: Actions
@@ -109,7 +111,10 @@ private extension AppTrackingTransparencyView {
 // MARK: UITextViewDelegate
 extension AppTrackingTransparencyView: UITextViewDelegate {
 
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView,
+                  shouldInteractWith URL: URL,
+                  in characterRange: NSRange,
+                  interaction: UITextItemInteraction) -> Bool {
         delegate?.ringPublishingGDPRViewControllerDidRequestToOpenURL(URL)
 
         return false

@@ -13,8 +13,8 @@ class GDPRConstants {
     static let cmpSdkID = 280
 
     // MARK: Init
-    
+
     private init() {
-        
+
     }
 }

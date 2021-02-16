@@ -85,7 +85,7 @@ class GDPRApi {
         }
 
         var urlComponents = URLComponents(string: "\(apiBaseUrl)/\(tenantId)/func/verify")
-        urlComponents?.queryItems = consents.sorted(by: { $0.key <= $1.key} ).map { (key, value) in
+        urlComponents?.queryItems = consents.sorted(by: { $0.key <= $1.key }).map { (key, value) in
             return URLQueryItem(name: key, value: "\(value)")
         }
 

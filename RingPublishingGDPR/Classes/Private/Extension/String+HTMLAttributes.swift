@@ -25,10 +25,10 @@ extension String {
         // Change font attribute
         let modifiedString = NSMutableAttributedString(attributedString: attributedString)
 
-        let wholeRange = NSMakeRange(0, attributedString.length)
+        let wholeRange = NSRange(location: 0, length: attributedString.length)
         let enumerationOptions: NSAttributedString.EnumerationOptions = .longestEffectiveRangeNotRequired
 
-        attributedString.enumerateAttribute(.font, in: wholeRange, options: enumerationOptions, using: { (value, range, stop) in
+        attributedString.enumerateAttribute(.font, in: wholeRange, options: enumerationOptions, using: { (value, range, _) in
             if let currentFont = value as? UIFont, let newFont = applyTraitsFromFont(currentFont, to: font) {
                 modifiedString.addAttribute(.font, value: newFont, range: range)
             }

@@ -15,42 +15,34 @@ public class RingPublishingGDPRUIConfig: NSObject {
     // MARK: Required config options
 
     /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency onboarding)
-    @objc
-    public var themeColor: UIColor
+    @objc public var themeColor: UIColor
 
     /// Color used for action button texts (in error view & App Tracking Transparency onboarding)
-    @objc
-    public var buttonTextColor: UIColor
+    @objc public var buttonTextColor: UIColor
 
     /// Font used in error view & App Tracking Transparency onboarding
-    @objc
-    public var font: UIFont
+    @objc public var font: UIFont
 
     // MARK: Optional config options
 
     /// Brand logo image which can be shown on App Tracking Transparency onboarding
-    @objc
-    public var brandLogoImage: UIImage?
+    @objc public var brandLogoImage: UIImage?
 
     /// Text which will be displayed as title for App Tracking Transparency onboarding
     ///
     /// This can be plain text or text with HTML attributes.
-    @objc
-    public var attOnboardingTitle: String?
+    @objc public var attOnboardingTitle: String?
 
     /// Text which will be displayed as description for App Tracking Transparency onboarding
     ///
     /// This can be plain text or text with HTML attributes.
-    @objc
-    public var attOnboardingDescription: String?
+    @objc public var attOnboardingDescription: String?
 
     /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency onboarding
-    @objc
-    public var attOnboardingCancelButtonText: String?
+    @objc public var attOnboardingCancelButtonText: String?
 
     /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency onboarding
-    @objc
-    public var attOnboardingAllowButtonText: String?
+    @objc public var attOnboardingAllowButtonText: String?
 
     // MARK: Init
 

@@ -4,7 +4,7 @@ excluded:
 - build
 included:
 - ./
-- ../Pod/
+- ../RingPublishingGDPR/
 force_cast: warning
 force_try: warning
 opt_in_rules:

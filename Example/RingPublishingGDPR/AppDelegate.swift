@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tenantId = "<YOUR_TENANT_ID>"
         let brandName = "<YOUR_BRAND_NAME>"
 
-
         let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
                                               tenantId: tenantId,
                                               brandName: brandName,

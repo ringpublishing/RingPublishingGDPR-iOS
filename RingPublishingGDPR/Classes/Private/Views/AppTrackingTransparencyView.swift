@@ -12,11 +12,27 @@ import UIKit
 class AppTrackingTransparencyView: UIView {
 
     @IBOutlet private weak var actionButton: UIButton!
-    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var notNowButton: UIButton!
     @IBOutlet private weak var descriptionTextView: UITextView!
     @IBOutlet private weak var titleTextView: UITextView!
     @IBOutlet private weak var logoImageView: UIImageView!
     @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
+
+    private var realLogoSizeConstrainedToHeight: CGSize {
+        guard let image = logoImageView.image, image.size.width > 0 && image.size.height > 0 else {
+            return logoImageView.bounds.size
+        }
+
+        let scale = image.size.width > image.size.height ?
+            logoImageView.bounds.width / image.size.width : logoImageView.bounds.height / image.size.height
+
+        var size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+
+        let heightLimitRatio = logoImageView.bounds.height / size.height
+        size = CGSize(width: size.width * heightLimitRatio, height: size.height * heightLimitRatio)
+
+        return size
+    }
 
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
@@ -56,31 +72,15 @@ private extension AppTrackingTransparencyView {
         actionButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
         actionButton.setTitle(uiConfig.attExplainationAllowButtonText, for: .normal)
 
-        cancelButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
-        cancelButton.setTitle(uiConfig.attExplainationCancelButtonText, for: .normal)
+        notNowButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
+        notNowButton.setTitle(uiConfig.attExplainationNotNowButtonText, for: .normal)
     }
 
     func configureLogo(with uiConfig: RingPublishingGDPRUIConfig) {
         logoImageView.image = uiConfig.brandLogoImage
         logoImageView.layoutIfNeeded()
 
-        logoImageViewWidthConstraint.constant = getRealLogoSizeConstrainedToHeight().width
-    }
-
-    func getRealLogoSizeConstrainedToHeight() -> CGSize {
-        guard let image = logoImageView.image, image.size.width > 0 && image.size.height > 0 else {
-            return logoImageView.bounds.size
-        }
-
-        let scale = image.size.width > image.size.height ?
-            logoImageView.bounds.width / image.size.width : logoImageView.bounds.height / image.size.height
-
-        var size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
-
-        let heightLimitRatio = logoImageView.bounds.height / size.height
-        size = CGSize(width: size.width * heightLimitRatio, height: size.height * heightLimitRatio)
-
-        return size
+        logoImageViewWidthConstraint.constant = realLogoSizeConstrainedToHeight.width
     }
 
     func configureTexts(with uiConfig: RingPublishingGDPRUIConfig) {
@@ -99,7 +99,7 @@ private extension AppTrackingTransparencyView {
 
     // MARK: Actions
 
-    @IBAction func onCancelButtonTouch(_ sender: Any) {
+    @IBAction func onNotNowButtonButtonTouch(_ sender: Any) {
         delegate?.ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplaination()
     }
 

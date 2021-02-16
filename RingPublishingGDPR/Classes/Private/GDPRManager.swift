@@ -103,7 +103,10 @@ class GDPRManager: NSObject {
         self.moduleState = .initialized
         self.delegate = delegate
         self.timeoutInterval = timeoutInterval
-        self.appTrackingManager = AppTrackingTransparencyManager(supportsAppTrackingTransparency: config.supportsAppTrackingTransparency)
+
+        let attEnabled = config.appTrackingTransparencySupportEnabled
+        self.appTrackingManager = AppTrackingTransparencyManager(appTrackingTransparencySupportEnabled: attEnabled)
+
         self.cmpApi = GDPRApi(tenantId: config.tenantId, brandName: config.brandName, timeoutInterval: timeoutInterval)
     }
 

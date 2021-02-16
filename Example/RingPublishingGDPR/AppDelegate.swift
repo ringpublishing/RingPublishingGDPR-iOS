@@ -35,20 +35,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // It will make your vendor SDKs to be setup in proper consents state from the very beginning
 
         let gdprApplies = true
-        let supportsAppTrackingTransparency = true
+        let appTrackingTransparencySupportEnabled = true
         let tenantId = "<YOUR_TENANT_ID>"
         let brandName = "<YOUR_BRAND_NAME>"
 
         let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
                                               tenantId: tenantId,
                                               brandName: brandName,
-                                              supportsAppTrackingTransparency: supportsAppTrackingTransparency)
+                                              appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .white,
                                                   font: .systemFont(ofSize: 10))
         uiConfig.brandLogoImage = UIImage(named: "brangLogo")
         uiConfig.attExplainationAllowButtonText = "Allow".uppercased()
-        uiConfig.attExplainationCancelButtonText = "Not now".uppercased()
+        uiConfig.attExplainationNotNowButtonText = "Not now".uppercased()
         uiConfig.attExplainationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
         uiConfig.attExplainationDescription = """
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites

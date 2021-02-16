@@ -3,7 +3,7 @@
 
 ### Features
 
-* New config option: 'supportsAppTrackingTransparency' in 'RingPublishingGDPRConfig' class.
+* New config option: 'appTrackingTransparencySupportEnabled' in 'RingPublishingGDPRConfig' class.
 * Added support for Apple App Tracking Transparency & explaination screen before system permission alert is shown.
 * New configuration options in 'RingPublishingGDPRUIConfig' related to added ATT explaination screen:
     - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
@@ -14,7 +14,7 @@
     - brandLogoImage
     - attExplainationTitle
     - attExplainationDescription
-    - attExplainationCancelButtonText
+    - attExplainationNotNowButtonText
     - attExplainationAllowButtonText
 
 ### Changes

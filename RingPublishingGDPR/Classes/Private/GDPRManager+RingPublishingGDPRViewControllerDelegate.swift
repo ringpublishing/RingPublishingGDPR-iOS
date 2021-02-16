@@ -26,7 +26,7 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
     }
 
     func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplaination() {
-        Logger.log("AppTrackingTransparency - user selected 'cancel' on explaination screen.")
+        Logger.log("AppTrackingTransparency - user selected 'not now' on explaination screen.")
 
         appTrackingManager.markExplainationAsShown()
         delegate?.gdprManager(self, userSelectedATTExplainationOptionAllowingTracking: false)
@@ -59,10 +59,10 @@ private extension GDPRManager {
     func detectUpdateFlowWithAppleAppTransparencyTracking(for action: GDPRAction) {
         // Detect if we have already stored GDPR consents but not Apple tracking consent
         // If this is such case we should only show Apple tracking agreement
-        let isUpdateToAppTrackingTransparency = shouldAskUserForConsents && !gdprConsentsNotDetermined
-        Logger.log("RingPublishingGDPRViewController starting consents flow, update to ATT? -> \(isUpdateToAppTrackingTransparency)")
+        let shouldAppTrackingTransparencyBePresented = shouldAskUserForConsents && !gdprConsentsNotDetermined
+        Logger.log("RingPublishingGDPRViewController starting consents flow, update to ATT? -> \(shouldAppTrackingTransparencyBePresented)")
 
-        guard isUpdateToAppTrackingTransparency else {
+        guard shouldAppTrackingTransparencyBePresented else {
             performAction(action)
             return
         }

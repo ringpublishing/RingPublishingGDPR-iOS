@@ -49,7 +49,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="onCancelButtonTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="cHV-Hx-jvl"/>
+                        <action selector="onNotNowButtonButtonTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="VhS-xi-5LO"/>
                     </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xIp-j7-AMp">
@@ -107,10 +107,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="actionButton" destination="ZA1-Af-fgh" id="WSk-z6-UV8"/>
-                <outlet property="cancelButton" destination="vYu-sk-xuU" id="LlB-Hz-Pm6"/>
                 <outlet property="descriptionTextView" destination="MKB-Ic-BER" id="Ff4-Sy-atg"/>
                 <outlet property="logoImageView" destination="xIp-j7-AMp" id="3bg-CA-o1R"/>
                 <outlet property="logoImageViewWidthConstraint" destination="ycy-Yf-zFY" id="e4G-x7-ZKK"/>
+                <outlet property="notNowButton" destination="vYu-sk-xuU" id="Y8S-Vv-DhW"/>
                 <outlet property="titleTextView" destination="gLW-6X-Gea" id="OO6-PX-gbu"/>
             </connections>
             <point key="canvasLocation" x="138" y="129"/>

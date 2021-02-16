@@ -29,7 +29,7 @@ extension String {
         let enumerationOptions: NSAttributedString.EnumerationOptions = .longestEffectiveRangeNotRequired
 
         attributedString.enumerateAttribute(.font, in: wholeRange, options: enumerationOptions, using: { (value, range, _) in
-            if let currentFont = value as? UIFont, let newFont = applyTraitsFromFont(currentFont, to: font) {
+            if let currentFont = value as? UIFont, let newFont = applyTraitsBasedOnFont(currentFont, to: font) {
                 modifiedString.addAttribute(.font, value: newFont, range: range)
             }
         })
@@ -44,7 +44,7 @@ extension String {
 // MARK: Private
 private extension String {
 
-    func applyTraitsFromFont(_ originalFont: UIFont, to newFont: UIFont) -> UIFont? {
+    func applyTraitsBasedOnFont(_ originalFont: UIFont, to newFont: UIFont) -> UIFont? {
         let originalTraits = originalFont.fontDescriptor.symbolicTraits
         var traitsToApply = [UIFontDescriptor.SymbolicTraits]()
 

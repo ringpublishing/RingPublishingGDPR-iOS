@@ -39,7 +39,7 @@ public class RingPublishingGDPRUIConfig: NSObject {
     @objc public var attExplainationDescription: String?
 
     /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency explaination screen
-    @objc public var attExplainationCancelButtonText: String?
+    @objc public var attExplainationNotNowButtonText: String?
 
     /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency explaination screen
     @objc public var attExplainationAllowButtonText: String?

@@ -43,19 +43,19 @@ public protocol RingPublishingGDPRDelegate: class {
     @objc optional
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
 
-    /// Delegate method saying that App Tracking Transparency onboarding screen was presented to the user
+    /// Delegate method saying that App Tracking Transparency explaination screen was presented to the user
     ///
     /// - Parameter ringPublishingGDPR: RingPublishingGDPR
     @objc optional
-    func ringPublishingGDPRDidPresentATTOnboardingScreen(_ ringPublishingGDPR: RingPublishingGDPR)
+    func ringPublishingGDPRDidPresentATTExplainationScreen(_ ringPublishingGDPR: RingPublishingGDPR)
 
-    /// Delegate method saying that  user selected one of the ATT onboarding options
+    /// Delegate method saying that  user selected one of the ATT explaination options
     ///
     /// - Parameters:
     ///   - ringPublishingGDPR: RingPublishingGDPR
     ///   - allow: Bool
     @objc optional
-    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTOnboardingOptionAllowingTracking allow: Bool)
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTExplainationOptionAllowingTracking allow: Bool)
 
     /// Delegate method saying that  user selected one of the ATT system alert permission options
     ///

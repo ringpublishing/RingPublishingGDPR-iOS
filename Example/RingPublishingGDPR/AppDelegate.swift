@@ -47,10 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   buttonTextColor: .white,
                                                   font: .systemFont(ofSize: 10))
         uiConfig.brandLogoImage = UIImage(named: "brangLogo")
-        uiConfig.attOnboardingAllowButtonText = "Allow".uppercased()
-        uiConfig.attOnboardingCancelButtonText = "Not now".uppercased()
-        uiConfig.attOnboardingTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
-        uiConfig.attOnboardingDescription = """
+        uiConfig.attExplainationAllowButtonText = "Allow".uppercased()
+        uiConfig.attExplainationCancelButtonText = "Not now".uppercased()
+        uiConfig.attExplainationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
+        uiConfig.attExplainationDescription = """
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites
             send us from this device.This won’t give us access to new types of information.
             <br><br>
@@ -156,19 +156,21 @@ extension AppDelegate: RingPublishingGDPRDelegate {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
-    func ringPublishingGDPRDidPresentATTOnboardingScreen(_ ringPublishingGDPR: RingPublishingGDPR) {
+    func ringPublishingGDPRDidPresentATTExplainationScreen(_ ringPublishingGDPR: RingPublishingGDPR) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
-        print("DEMO - RingPublishingGDPR: didPresentATTOnboardingScreen")
+        print("DEMO - RingPublishingGDPR: didPresentATTExplainationScreen")
     }
 
-    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTOnboardingOptionAllowingTracking allow: Bool) {
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
+                            userSelectedATTExplainationOptionAllowingTracking allow: Bool) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
-        print("DEMO - RingPublishingGDPR: userSelectedATTOnboardingOptionAllowingTracking -> \(allow)")
+        print("DEMO - RingPublishingGDPR: userSelectedATTExplainationOptionAllowingTracking -> \(allow)")
     }
 
-    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermisionAllowingTracking allow: Bool) {
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
+                            userSelectedATTAlertPermisionAllowingTracking allow: Bool) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
         print("DEMO - RingPublishingGDPR: userSelectedATTAlertPermisionAllowingTracking -> \(allow)")

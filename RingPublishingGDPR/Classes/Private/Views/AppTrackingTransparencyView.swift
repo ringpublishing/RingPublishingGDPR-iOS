@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-/// "Onboarding" view for App Tracking Transparency
+/// Explaination view for App Tracking Transparency
 class AppTrackingTransparencyView: UIView {
 
     @IBOutlet private weak var actionButton: UIButton!
@@ -54,10 +54,10 @@ private extension AppTrackingTransparencyView {
         actionButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
         actionButton.backgroundColor = uiConfig.themeColor
         actionButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
-        actionButton.setTitle(uiConfig.attOnboardingAllowButtonText, for: .normal)
+        actionButton.setTitle(uiConfig.attExplainationAllowButtonText, for: .normal)
 
         cancelButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
-        cancelButton.setTitle(uiConfig.attOnboardingCancelButtonText, for: .normal)
+        cancelButton.setTitle(uiConfig.attExplainationCancelButtonText, for: .normal)
     }
 
     func configureLogo(with uiConfig: RingPublishingGDPRUIConfig) {
@@ -88,19 +88,19 @@ private extension AppTrackingTransparencyView {
 
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
-        titleTextView.attributedText = uiConfig.attOnboardingTitle?.convertfromHTML(using: titleFont,
-                                                                                    textColor: textColor)
+        titleTextView.attributedText = uiConfig.attExplainationTitle?.convertfromHTML(using: titleFont,
+                                                                                      textColor: textColor)
 
         let descriptionFontSize = descriptionTextView.font?.pointSize
         let descriptionFont = uiConfig.font.withSize(descriptionFontSize ?? uiConfig.font.pointSize)
-        descriptionTextView.attributedText = uiConfig.attOnboardingDescription?.convertfromHTML(using: descriptionFont,
-                                                                                                textColor: textColor)
+        descriptionTextView.attributedText = uiConfig.attExplainationDescription?.convertfromHTML(using: descriptionFont,
+                                                                                                  textColor: textColor)
     }
 
     // MARK: Actions
 
     @IBAction func onCancelButtonTouch(_ sender: Any) {
-        delegate?.ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyOnboarding()
+        delegate?.ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplaination()
     }
 
     @IBAction func onActionButtonTouch(_ sender: Any) {

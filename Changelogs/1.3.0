@@ -4,18 +4,18 @@
 ### Features
 
 * New config option: 'supportsAppTrackingTransparency' in 'RingPublishingGDPRConfig' class.
-* Added support for Apple App Tracking Transparency & onboarding screen before system permission alert is shown.
-* New configuration options in 'RingPublishingGDPRUIConfig' related to added ATT onboarding screen:
+* Added support for Apple App Tracking Transparency & explaination screen before system permission alert is shown.
+* New configuration options in 'RingPublishingGDPRUIConfig' related to added ATT explaination screen:
     - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
-    - ringPublishingGDPRDidPresentATTOnboardingScreen(_ ringPublishingGDPR: RingPublishingGDPR)
-    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTOnboardingOptionAllowingTracking allow: Bool)
+    - ringPublishingGDPRDidPresentATTExplainationScreen(_ ringPublishingGDPR: RingPublishingGDPR)
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTExplainationOptionAllowingTracking allow: Bool)
     - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermisionAllowingTracking allow: Bool)
-* New optional delegate methods in 'RingPublishingGDPRDelegate' related to Apple App Tracking Transparency & onboarding screen:
+* New optional delegate methods in 'RingPublishingGDPRDelegate' related to Apple App Tracking Transparency & explaination screen:
     - brandLogoImage
-    - attOnboardingTitle
-    - attOnboardingDescription
-    - attOnboardingCancelButtonText
-    - attOnboardingAllowButtonText
+    - attExplainationTitle
+    - attExplainationDescription
+    - attExplainationCancelButtonText
+    - attExplainationAllowButtonText
 
 ### Changes
 

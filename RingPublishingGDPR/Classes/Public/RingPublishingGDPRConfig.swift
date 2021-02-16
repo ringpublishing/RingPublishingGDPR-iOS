@@ -21,7 +21,7 @@ public class RingPublishingGDPRConfig: NSObject {
 
     /// Should Apple App Tracking Transparency permission alert be shown after GDPR consents screen?
     ///
-    /// If this option is enabled, texts for "onboarding" (screen before apple alert is shown) should be provided
+    /// If this option is enabled, texts for explaination (screen before apple alert is shown) should be provided
     /// inside 'RingPublishingGDPRUIConfig'
     @objc public let supportsAppTrackingTransparency: Bool
 

@@ -14,35 +14,35 @@ public class RingPublishingGDPRUIConfig: NSObject {
 
     // MARK: Required config options
 
-    /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency onboarding)
+    /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency explaination screens)
     @objc public var themeColor: UIColor
 
-    /// Color used for action button texts (in error view & App Tracking Transparency onboarding)
+    /// Color used for action button texts (in error view & App Tracking Transparency explaination screens)
     @objc public var buttonTextColor: UIColor
 
-    /// Font used in error view & App Tracking Transparency onboarding
+    /// Font used in error view & App Tracking Transparency explaination screens
     @objc public var font: UIFont
 
     // MARK: Optional config options
 
-    /// Brand logo image which can be shown on App Tracking Transparency onboarding
+    /// Brand logo image which can be shown on App Tracking Transparency explaination screens
     @objc public var brandLogoImage: UIImage?
 
-    /// Text which will be displayed as title for App Tracking Transparency onboarding
+    /// Text which will be displayed as title for App Tracking Transparency explaination screen
     ///
     /// This can be plain text or text with HTML attributes.
-    @objc public var attOnboardingTitle: String?
+    @objc public var attExplainationTitle: String?
 
-    /// Text which will be displayed as description for App Tracking Transparency onboarding
+    /// Text which will be displayed as description for App Tracking Transparency explaination screen
     ///
     /// This can be plain text or text with HTML attributes.
-    @objc public var attOnboardingDescription: String?
+    @objc public var attExplainationDescription: String?
 
-    /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency onboarding
-    @objc public var attOnboardingCancelButtonText: String?
+    /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency explaination screen
+    @objc public var attExplainationCancelButtonText: String?
 
-    /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency onboarding
-    @objc public var attOnboardingAllowButtonText: String?
+    /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency explaination screen
+    @objc public var attExplainationAllowButtonText: String?
 
     // MARK: Init
 

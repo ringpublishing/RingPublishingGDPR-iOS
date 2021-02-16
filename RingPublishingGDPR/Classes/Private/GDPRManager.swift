@@ -192,7 +192,7 @@ class GDPRManager: NSObject {
         webViewLoadingTimer = nil
 
         guard !attConsentsNotDetermined else {
-            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show onboarding view...")
+            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show explaination view...")
             delegate?.gdprManager(self, isRequestingToChangeViewState: .appTrackingTransparency)
             moduleState = .initialized
             return
@@ -292,7 +292,7 @@ class GDPRManager: NSObject {
         GDPRStorage.lastAPIConsentsCheckStatus = nil
 
         guard !attConsentsNotDetermined else {
-            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show onboarding view...")
+            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show explaination view...")
             delegate?.gdprManager(self, isRequestingToChangeViewState: .appTrackingTransparency)
             return
         }

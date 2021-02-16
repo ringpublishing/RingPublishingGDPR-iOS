@@ -25,19 +25,19 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
         loadCMPSite()
     }
 
-    func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyOnboarding() {
-        Logger.log("AppTrackingTransparency - user selected 'cancel' on onboarding screen.")
+    func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplaination() {
+        Logger.log("AppTrackingTransparency - user selected 'cancel' on explaination screen.")
 
-        appTrackingManager.markOnboardingAsShown()
-        delegate?.gdprManager(self, userSelectedATTOnboardingOptionAllowingTracking: false)
+        appTrackingManager.markExplainationAsShown()
+        delegate?.gdprManager(self, userSelectedATTExplainationOptionAllowingTracking: false)
         delegate?.gdrpManagerDidRequestToHideConsentsController(self)
     }
 
     func ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency() {
-        Logger.log("AppTrackingTransparency - user selected 'allow' on onboarding screen.")
+        Logger.log("AppTrackingTransparency - user selected 'allow' on explaination screen.")
 
-        appTrackingManager.markOnboardingAsShown()
-        delegate?.gdprManager(self, userSelectedATTOnboardingOptionAllowingTracking: true)
+        appTrackingManager.markExplainationAsShown()
+        delegate?.gdprManager(self, userSelectedATTExplainationOptionAllowingTracking: true)
         appTrackingManager.showAppTrackingTransparencyAlert { [weak self] trackingAllowed in
             guard let self = self else { return }
 

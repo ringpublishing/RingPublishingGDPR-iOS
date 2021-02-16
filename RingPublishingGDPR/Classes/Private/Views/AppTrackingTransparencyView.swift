@@ -34,6 +34,11 @@ class AppTrackingTransparencyView: UIView {
         return size
     }
 
+    private var uiConfig: RingPublishingGDPRUIConfig?
+    private var attConfig: RingPublishingGDPRATTConfig?
+
+    private var descriptionTextViewSizeForShrinking: CGSize?
+
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
 
@@ -46,6 +51,26 @@ class AppTrackingTransparencyView: UIView {
         descriptionTextView.delegate = self
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        guard descriptionTextViewSizeForShrinking == nil
+            || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width else { return }
+
+        configureTexts(with: uiConfig, attConfig: attConfig)
+        descriptionTextViewSizeForShrinking = descriptionTextView.frame.size
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard #available(iOS 12.0, *),
+              traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
+
+        // Reconfigure texts as style (like bold) is lost when appearance changes
+        configureTexts(with: uiConfig, attConfig: attConfig)
+    }
+
     // MARK: Set up
 
     /// Configure internal views using RingPublishingGDPRUIConfig
@@ -54,6 +79,9 @@ class AppTrackingTransparencyView: UIView {
     ///   - uiConfig: RingPublishingGDPRUIConfig
     ///   - attConfig: RingPublishingGDPRATTConfig
     func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+        self.uiConfig = uiConfig
+        self.attConfig = attConfig
+
         configureButtons(with: uiConfig, attConfig: attConfig)
         configureLogo(with: uiConfig, attConfig: attConfig)
         configureTexts(with: uiConfig, attConfig: attConfig)
@@ -84,7 +112,9 @@ private extension AppTrackingTransparencyView {
         logoImageViewWidthConstraint.constant = realLogoSizeConstrainedToHeight.width
     }
 
-    func configureTexts(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+    func configureTexts(with uiConfig: RingPublishingGDPRUIConfig?, attConfig: RingPublishingGDPRATTConfig?) {
+        guard let uiConfig = uiConfig else { return }
+
         let textColor = UIColor(named: "ringPublishingGDPRLabel", in: Bundle.ringPublishingGDPRBundle, compatibleWith: nil)
 
         let titleFontSize = titleTextView.font?.pointSize
@@ -92,10 +122,26 @@ private extension AppTrackingTransparencyView {
         titleTextView.attributedText = attConfig?.attExplainationTitle?.convertfromHTML(using: titleFont,
                                                                                         textColor: textColor)
 
-        let descriptionFontSize = descriptionTextView.font?.pointSize
-        let descriptionFont = uiConfig.font.withSize(descriptionFontSize ?? uiConfig.font.pointSize)
-        descriptionTextView.attributedText = attConfig?.attExplainationDescription?.convertfromHTML(using: descriptionFont,
-                                                                                                    textColor: textColor)
+        configureDescriptionText(attConfig?.attExplainationDescription, textColor: textColor, uiConfig: uiConfig)
+    }
+
+    func configureDescriptionText(_ text: String?,
+                                  textColor: UIColor?,
+                                  uiConfig: RingPublishingGDPRUIConfig?,
+                                  desiredFontSize: CGFloat? = nil) {
+        guard let fontSize = desiredFontSize ?? descriptionTextView.font?.pointSize,
+              let descriptionFont = uiConfig?.font.withSize(fontSize) else { return }
+
+        descriptionTextView.attributedText = text?.convertfromHTML(using: descriptionFont, textColor: textColor)
+        descriptionTextView.layoutIfNeeded()
+
+        // Check if we have to shrink description font
+        let textViewSize = descriptionTextView.frame.size
+        let expectedSize = descriptionTextView.sizeThatFits(CGSize(width: textViewSize.width, height: CGFloat(MAXFLOAT)))
+
+        guard expectedSize.height > textViewSize.height else { return }
+
+        configureDescriptionText(text, textColor: textColor, uiConfig: uiConfig, desiredFontSize: fontSize - 1)
     }
 
     // MARK: Actions

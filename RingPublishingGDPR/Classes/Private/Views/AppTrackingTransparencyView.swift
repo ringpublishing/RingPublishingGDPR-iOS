@@ -52,10 +52,11 @@ class AppTrackingTransparencyView: UIView {
     ///
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
-    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
-        configureButtons(with: uiConfig)
-        configureLogo(with: uiConfig)
-        configureTexts(with: uiConfig)
+    ///   - attConfig: RingPublishingGDPRATTConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+        configureButtons(with: uiConfig, attConfig: attConfig)
+        configureLogo(with: uiConfig, attConfig: attConfig)
+        configureTexts(with: uiConfig, attConfig: attConfig)
     }
 }
 
@@ -64,37 +65,37 @@ private extension AppTrackingTransparencyView {
 
     // MARK: UI
 
-    func configureButtons(with uiConfig: RingPublishingGDPRUIConfig) {
+    func configureButtons(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
         let buttonFontSize = actionButton.titleLabel?.font.pointSize
 
         actionButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
         actionButton.backgroundColor = uiConfig.themeColor
         actionButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
-        actionButton.setTitle(uiConfig.attExplainationAllowButtonText, for: .normal)
+        actionButton.setTitle(attConfig?.attExplainationAllowButtonText, for: .normal)
 
         notNowButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
-        notNowButton.setTitle(uiConfig.attExplainationNotNowButtonText, for: .normal)
+        notNowButton.setTitle(attConfig?.attExplainationNotNowButtonText, for: .normal)
     }
 
-    func configureLogo(with uiConfig: RingPublishingGDPRUIConfig) {
-        logoImageView.image = uiConfig.brandLogoImage
+    func configureLogo(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+        logoImageView.image = attConfig?.brandLogoImage
         logoImageView.layoutIfNeeded()
 
         logoImageViewWidthConstraint.constant = realLogoSizeConstrainedToHeight.width
     }
 
-    func configureTexts(with uiConfig: RingPublishingGDPRUIConfig) {
+    func configureTexts(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
         let textColor = UIColor(named: "ringPublishingGDPRLabel", in: Bundle.ringPublishingGDPRBundle, compatibleWith: nil)
 
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
-        titleTextView.attributedText = uiConfig.attExplainationTitle?.convertfromHTML(using: titleFont,
-                                                                                      textColor: textColor)
+        titleTextView.attributedText = attConfig?.attExplainationTitle?.convertfromHTML(using: titleFont,
+                                                                                        textColor: textColor)
 
         let descriptionFontSize = descriptionTextView.font?.pointSize
         let descriptionFont = uiConfig.font.withSize(descriptionFontSize ?? uiConfig.font.pointSize)
-        descriptionTextView.attributedText = uiConfig.attExplainationDescription?.convertfromHTML(using: descriptionFont,
-                                                                                                  textColor: textColor)
+        descriptionTextView.attributedText = attConfig?.attExplainationDescription?.convertfromHTML(using: descriptionFont,
+                                                                                                    textColor: textColor)
     }
 
     // MARK: Actions

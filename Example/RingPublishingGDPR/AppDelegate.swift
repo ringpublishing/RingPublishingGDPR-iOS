@@ -23,34 +23,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Example
 
+        // Module should be initialized as early as possible so it can check if user consents are up to date
+        // or those have to be saved again (by showing consent form to the user)
+        // It will make your vendor SDKs to be setup in proper consents state from the very beginning
+
         // First you should initialize RingPublishingGDPR module with following data:
+        // - config: RingPublishingGDPRUIConfig
+        // - delegate: your delegate implementation to react for module events
+
+        // In RingPublishingGDPRUIConfig you have to provide:
         // - gdprApplies: true if GDPR applies in given context and consents form should be shown to the user
         // - tenantId: unique identifier assigned to your organization
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
-        // - delegate: your delegate implementation to react for module events
+        // - attConfig: (Optional) configuration used to show explaination screen for Apple App Tracking Transparency
+        // and display system alert asking for permission. This requires also entry in your .plist file for
+        // NSUserTrackingUsageDescription key
 
-        // Module should be initialized as early as possible so it can check if user consents are up to date
-        // or those have to be saved again (by showing consent form to the user)
-        // It will make your vendor SDKs to be setup in proper consents state from the very beginning
+        // In RingPublishingGDPRATTConfig (which is optional) you have to provide only boolean flag saying if support
+        // for ATT should be enabled, but realistically you should provide all configuration options so explaination screen
+        // in your app looks as expected. See demo below for an example & how this can look like in runtime.
 
         let gdprApplies = true
         let appTrackingTransparencySupportEnabled = true
         let tenantId = "<YOUR_TENANT_ID>"
         let brandName = "<YOUR_BRAND_NAME>"
 
-        let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
-                                              tenantId: tenantId,
-                                              brandName: brandName,
-                                              appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .white,
                                                   font: .systemFont(ofSize: 10))
-        uiConfig.brandLogoImage = UIImage(named: "brangLogo")
-        uiConfig.attExplainationAllowButtonText = "Allow".uppercased()
-        uiConfig.attExplainationNotNowButtonText = "Not now".uppercased()
-        uiConfig.attExplainationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
-        uiConfig.attExplainationDescription = """
+
+        let attConfig = RingPublishingGDPRATTConfig(appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
+        attConfig.brandLogoImage = UIImage(named: "brangLogo")
+        attConfig.attExplainationAllowButtonText = "Allow".uppercased()
+        attConfig.attExplainationNotNowButtonText = "Not now".uppercased()
+        attConfig.attExplainationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
+        attConfig.attExplainationDescription = """
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites
             send us from this device.This won’t give us access to new types of information.
             <br><br>
@@ -58,9 +66,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if you turn off this device setting, and related settings on <b>RingPublishing</b>.
         """
 
-        RingPublishingGDPR.shared.initialize(config: config,
-                                             uiConfig: uiConfig,
-                                             delegate: self)
+        let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
+                                              tenantId: tenantId,
+                                              brandName: brandName,
+                                              uiConfig: uiConfig,
+                                              attConfig: attConfig)
+
+        RingPublishingGDPR.shared.initialize(config: config, delegate: self)
 
         // At this point you can check if application should show consent form immediately at app launch
         // This covers use case when on this device user did not saw consent form yet and GDPR applies

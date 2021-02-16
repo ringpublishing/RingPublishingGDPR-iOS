@@ -108,9 +108,10 @@ extension RingPublishingGDPRViewController {
     ///
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
-    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
+    ///   - attConfig: RingPublishingGDPRATTConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
         loadingView.configure(with: uiConfig)
         errorView.configure(with: uiConfig)
-        appTrackingTransparencyView.configure(with: uiConfig)
+        appTrackingTransparencyView.configure(with: uiConfig, attConfig: attConfig)
     }
 }

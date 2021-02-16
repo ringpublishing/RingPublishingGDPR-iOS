@@ -3,22 +3,22 @@
 
 ### Features
 
-* New config option: 'appTrackingTransparencySupportEnabled' in 'RingPublishingGDPRConfig' class.
 * Added support for Apple App Tracking Transparency & explaination screen before system permission alert is shown.
-* New configuration options in 'RingPublishingGDPRUIConfig' related to added ATT explaination screen:
-    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
-    - ringPublishingGDPRDidPresentATTExplainationScreen(_ ringPublishingGDPR: RingPublishingGDPR)
-    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTExplainationOptionAllowingTracking allow: Bool)
-    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermisionAllowingTracking allow: Bool)
-* New optional delegate methods in 'RingPublishingGDPRDelegate' related to Apple App Tracking Transparency & explaination screen:
+* New config class: 'RingPublishingGDPRATTConfig' related to Apple App Tracking Transparency & explaination screen with following options:
+    - appTrackingTransparencySupportEnabled
     - brandLogoImage
     - attExplainationTitle
     - attExplainationDescription
     - attExplainationNotNowButtonText
     - attExplainationAllowButtonText
+* 'RingPublishingGDPRATTConfig' has only one initializer with required 'appTrackingTransparencySupportEnabled' property. Other properties are mutable and can be assigned to config class allowing easier customization.
+* New optional delegate methods in 'RingPublishingGDPRDelegate' related to Apple App Tracking Transparency & explaination screen:
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
+    - ringPublishingGDPRDidPresentATTExplainationScreen(_ ringPublishingGDPR: RingPublishingGDPR)
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTExplainationOptionAllowingTracking allow: Bool)
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermisionAllowingTracking allow: Bool)
 
 ### Changes
 
-* Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName' moved to 'RingPublishingGDPRConfig' class.
+* Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName', 'RingPublishingGDPRUIConfig' moved to 'RingPublishingGDPRConfig' class.
 * 'RingPublishingGDPR.shouldAskUserForConsents' flag takes into consideration App Tracking Transparency status if it is enabled in configuration.
-* 'RingPublishingGDPRUIConfig' class has now mutable fields to allow for easier configuration as it has many more options then before. Only initializer with required properties is provided.

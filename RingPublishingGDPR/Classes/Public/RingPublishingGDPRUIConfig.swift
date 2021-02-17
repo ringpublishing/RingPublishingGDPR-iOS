@@ -26,8 +26,8 @@ public class RingPublishingGDPRUIConfig: NSObject {
     /// Initializer
     ///
     /// - Parameter themeColor: Theme color used for loading indicator and retry button color
-    /// - Parameter buttonTextColor: Theme color used for loading indicator and retry button color
-    /// - Parameter font: Font used in error view
+    /// - Parameter buttonTextColor: Color used for text on action buttons
+    /// - Parameter font: Font used in native views
     @objc
     public init(themeColor: UIColor, buttonTextColor: UIColor, font: UIFont) {
         self.themeColor = themeColor

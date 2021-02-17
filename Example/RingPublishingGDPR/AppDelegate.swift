@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   font: .systemFont(ofSize: 10))
 
         let attConfig = RingPublishingGDPRATTConfig(appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
-        attConfig.brandLogoImage = UIImage(named: "brangLogo")
+        attConfig.brandLogoImage = UIImage(named: "brandLogo")
         attConfig.attExplanationAllowButtonText = "Allow".uppercased()
         attConfig.attExplanationNotNowButtonText = "Not now".uppercased()
         attConfig.attExplanationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"

@@ -36,12 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // - tenantId: unique identifier assigned to your organization
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
-        // - attConfig: (Optional) configuration used to show explaination screen for Apple App Tracking Transparency
+        // - attConfig: (Optional) configuration used to show explanation screen for Apple App Tracking Transparency
         // and display system alert asking for permission. This requires also entry in your .plist file for
         // NSUserTrackingUsageDescription key
 
         // In RingPublishingGDPRATTConfig (which is optional) you have to provide only boolean flag saying if support
-        // for ATT should be enabled, but realistically you should provide all configuration options so explaination screen
+        // for ATT should be enabled, but realistically you should provide all configuration options so explanation screen
         // in your app looks as expected. See demo below for an example & how this can look like in runtime.
 
         let gdprApplies = true
@@ -55,10 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let attConfig = RingPublishingGDPRATTConfig(appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
         attConfig.brandLogoImage = UIImage(named: "brangLogo")
-        attConfig.attExplainationAllowButtonText = "Allow".uppercased()
-        attConfig.attExplainationNotNowButtonText = "Not now".uppercased()
-        attConfig.attExplainationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
-        attConfig.attExplainationDescription = """
+        attConfig.attExplanationAllowButtonText = "Allow".uppercased()
+        attConfig.attExplanationNotNowButtonText = "Not now".uppercased()
+        attConfig.attExplanationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
+        attConfig.attExplanationDescription = """
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites
             send us from this device.This won’t give us access to new types of information.
             <br><br>
@@ -168,17 +168,17 @@ extension AppDelegate: RingPublishingGDPRDelegate {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
-    func ringPublishingGDPRDidPresentATTExplainationScreen(_ ringPublishingGDPR: RingPublishingGDPR) {
+    func ringPublishingGDPRDidPresentATTExplanationScreen(_ ringPublishingGDPR: RingPublishingGDPR) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
-        print("DEMO - RingPublishingGDPR: didPresentATTExplainationScreen")
+        print("DEMO - RingPublishingGDPR: didPresentATTExplanationScreen")
     }
 
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
-                            userSelectedATTExplainationOptionAllowingTracking allow: Bool) {
+                            userSelectedATTExplanationOptionAllowingTracking allow: Bool) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
-        print("DEMO - RingPublishingGDPR: userSelectedATTExplainationOptionAllowingTracking -> \(allow)")
+        print("DEMO - RingPublishingGDPR: userSelectedATTExplanationOptionAllowingTracking -> \(allow)")
     }
 
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,

@@ -11,8 +11,8 @@ import AppTrackingTransparency
 /// Class handling logic related to Apple AppTrackingTransparency
 class AppTrackingTransparencyManager {
 
-    @ConsentStorage(key: "RingPublishing_AppTrackingTransparencyExplainationShown", logableAsConsent: false)
-    private var appTrackingTransparencyExplainationShown: Bool?
+    @ConsentStorage(key: "RingPublishing_AppTrackingTransparencyExplanationShown", logableAsConsent: false)
+    private var appTrackingTransparencyExplanationShown: Bool?
 
     /// Is support for App Tracking Transparency enabled?
     private let appTrackingTransparencySupportEnabled: Bool
@@ -24,10 +24,10 @@ class AppTrackingTransparencyManager {
             return true
         }
 
-        let explainationShown = appTrackingTransparencyExplainationShown ?? false
+        let explanationShown = appTrackingTransparencyExplanationShown ?? false
         let attStatusDetermined = ATTrackingManager.trackingAuthorizationStatus != .notDetermined
 
-        return explainationShown || attStatusDetermined
+        return explanationShown || attStatusDetermined
     }
 
     // MARK: Init
@@ -41,9 +41,9 @@ class AppTrackingTransparencyManager {
 
     // MARK: Methods
 
-    /// Store info that explaination for App Tracking Transparency was shown to the user
-    func markExplainationAsShown() {
-        appTrackingTransparencyExplainationShown = true
+    /// Store info that explanation for App Tracking Transparency was shown to the user
+    func markExplanationAsShown() {
+        appTrackingTransparencyExplanationShown = true
     }
 
     /// Showsr App Tracking Transparency alert

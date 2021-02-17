@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-/// Explaination view for App Tracking Transparency
+/// Explanation view for App Tracking Transparency
 class AppTrackingTransparencyView: UIView {
 
     @IBOutlet private weak var actionButton: UIButton!
@@ -99,10 +99,10 @@ private extension AppTrackingTransparencyView {
         actionButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
         actionButton.backgroundColor = uiConfig.themeColor
         actionButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
-        actionButton.setTitle(attConfig?.attExplainationAllowButtonText, for: .normal)
+        actionButton.setTitle(attConfig?.attExplanationAllowButtonText, for: .normal)
 
         notNowButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
-        notNowButton.setTitle(attConfig?.attExplainationNotNowButtonText, for: .normal)
+        notNowButton.setTitle(attConfig?.attExplanationNotNowButtonText, for: .normal)
     }
 
     func configureLogo(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
@@ -119,10 +119,10 @@ private extension AppTrackingTransparencyView {
 
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
-        titleTextView.attributedText = attConfig?.attExplainationTitle?.convertfromHTML(using: titleFont,
+        titleTextView.attributedText = attConfig?.attExplanationTitle?.convertfromHTML(using: titleFont,
                                                                                         textColor: textColor)
 
-        configureDescriptionText(attConfig?.attExplainationDescription, textColor: textColor, uiConfig: uiConfig)
+        configureDescriptionText(attConfig?.attExplanationDescription, textColor: textColor, uiConfig: uiConfig)
     }
 
     func configureDescriptionText(_ text: String?,
@@ -147,7 +147,7 @@ private extension AppTrackingTransparencyView {
     // MARK: Actions
 
     @IBAction func onNotNowButtonButtonTouch(_ sender: Any) {
-        delegate?.ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplaination()
+        delegate?.ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplanation()
     }
 
     @IBAction func onActionButtonTouch(_ sender: Any) {

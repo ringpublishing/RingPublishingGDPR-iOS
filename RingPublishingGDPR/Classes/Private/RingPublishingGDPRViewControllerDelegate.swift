@@ -22,7 +22,7 @@ protocol RingPublishingGDPRViewControllerDelegate: class {
     func ringPublishingGDPRViewControllerDidRequestReload()
 
     /// View controller informs that user did not want to answer ATT permission question
-    func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplaination()
+    func ringPublishingGDPRViewControllerDidDismissAppTrackingTransparencyExplanation()
 
     /// View controller wants to show App Tracking Transparency alert
     func ringPublishingGDPRViewControllerDidRequestToShowAppTrackingTransparency()

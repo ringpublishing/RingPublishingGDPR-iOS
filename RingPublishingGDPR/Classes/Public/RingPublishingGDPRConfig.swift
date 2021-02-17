@@ -19,10 +19,10 @@ public class RingPublishingGDPRConfig: NSObject {
     /// App site id used to brand CMP form
     @objc public let brandName: String
 
-    /// RingPublishingGDPR module UI configuration used for error view & App Tracking Transparency explaination view
+    /// RingPublishingGDPR module UI configuration used for error view & App Tracking Transparency explanation view
     @objc public let uiConfig: RingPublishingGDPRUIConfig
 
-    /// RingPublishingGDPR module configuration for App Tracking Transparency explaination screen & Apple ATT
+    /// RingPublishingGDPR module configuration for App Tracking Transparency explanation screen & Apple ATT
     @objc public let attConfig: RingPublishingGDPRATTConfig?
 
     // MARK: Init
@@ -32,8 +32,8 @@ public class RingPublishingGDPRConfig: NSObject {
     /// - Parameter gdprApplies: Does GDPR applies in current context? Defaults to true
     /// - Parameter tenantId: CMP Tenant Id
     /// - Parameter brandName: App site id used to brand CMP form
-    /// - Parameter uiConfig: RingPublishingGDPR module UI configuration used for error view & App Tracking Transparency explaination view
-    /// - Parameter attConfig: RingPublishingGDPR module configuration for App Tracking Transparency explaination screen & Apple ATT
+    /// - Parameter uiConfig: RingPublishingGDPR module UI configuration used for error view & App Tracking Transparency explanation view
+    /// - Parameter attConfig: RingPublishingGDPR module configuration for App Tracking Transparency explanation screen & Apple ATT
     @objc
     public init(gdprApplies: Bool = true,
                 tenantId: String,

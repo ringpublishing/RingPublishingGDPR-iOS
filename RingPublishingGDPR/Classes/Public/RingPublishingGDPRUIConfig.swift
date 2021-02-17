@@ -12,13 +12,13 @@ import UIKit
 /// RingPublishingGDPR module UI configuration
 public class RingPublishingGDPRUIConfig: NSObject {
 
-    /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency explaination screens)
+    /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency explanation screens)
     @objc public let themeColor: UIColor
 
-    /// Color used for action button texts (in error view & App Tracking Transparency explaination screens)
+    /// Color used for action button texts (in error view & App Tracking Transparency explanation screens)
     @objc public let buttonTextColor: UIColor
 
-    /// Font used in error view & App Tracking Transparency explaination screens
+    /// Font used in error view & App Tracking Transparency explanation screens
     @objc public let font: UIFont
 
     // MARK: Init

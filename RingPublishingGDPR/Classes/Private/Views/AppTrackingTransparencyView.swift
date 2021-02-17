@@ -57,6 +57,11 @@ class AppTrackingTransparencyView: UIView {
         ]
         titleTextView.linkTextAttributes = linksAttributes
         descriptionTextView.linkTextAttributes = linksAttributes
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appBecameActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
 
     override func layoutSubviews() {
@@ -79,6 +84,7 @@ class AppTrackingTransparencyView: UIView {
         }
 
         guard #available(iOS 12.0, *),
+              UIApplication.shared.applicationState == .active,
               traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
 
         // Reconfigure texts as style (like bold) is lost when appearance changes
@@ -170,6 +176,14 @@ private extension AppTrackingTransparencyView {
 
         let inset = max(0, appBounds.width - appBounds.height) / 2
         directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
+    }
+
+    // MARK: Life cycle
+
+    @objc
+    func appBecameActive() {
+        // Reconfigure texts as style (like bold) is lost when appearance changes
+        configureTexts(with: uiConfig, attConfig: attConfig)
     }
 
     // MARK: Actions

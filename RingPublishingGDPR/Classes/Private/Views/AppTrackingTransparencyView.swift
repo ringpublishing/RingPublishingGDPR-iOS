@@ -50,6 +50,13 @@ class AppTrackingTransparencyView: UIView {
 
         titleTextView.delegate = self
         descriptionTextView.delegate = self
+
+        let linksAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemBlue,
+            .underlineColor: UIColor.systemBlue
+        ]
+        titleTextView.linkTextAttributes = linksAttributes
+        descriptionTextView.linkTextAttributes = linksAttributes
     }
 
     override func layoutSubviews() {

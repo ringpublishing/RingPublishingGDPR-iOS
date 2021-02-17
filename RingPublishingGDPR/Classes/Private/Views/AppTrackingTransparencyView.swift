@@ -38,6 +38,7 @@ class AppTrackingTransparencyView: UIView {
     private var attConfig: RingPublishingGDPRATTConfig?
 
     private var descriptionTextViewSizeForShrinking: CGSize?
+    private var descriptionSrinkingAttemptsLimit = 5
 
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
@@ -128,7 +129,8 @@ private extension AppTrackingTransparencyView {
     func configureDescriptionText(_ text: String?,
                                   textColor: UIColor?,
                                   uiConfig: RingPublishingGDPRUIConfig?,
-                                  desiredFontSize: CGFloat? = nil) {
+                                  desiredFontSize: CGFloat? = nil,
+                                  attempt: Int = 0) {
         guard let fontSize = desiredFontSize ?? descriptionTextView.font?.pointSize,
               let descriptionFont = uiConfig?.font.withSize(fontSize) else { return }
 
@@ -139,9 +141,12 @@ private extension AppTrackingTransparencyView {
         let textViewSize = descriptionTextView.frame.size
         let expectedSize = descriptionTextView.sizeThatFits(CGSize(width: textViewSize.width, height: CGFloat(MAXFLOAT)))
 
-        guard expectedSize.height > textViewSize.height else { return }
+        guard expectedSize.height > textViewSize.height, attempt <= descriptionSrinkingAttemptsLimit else { return }
 
-        configureDescriptionText(text, textColor: textColor, uiConfig: uiConfig, desiredFontSize: fontSize - 1)
+        configureDescriptionText(text, textColor: textColor,
+                                 uiConfig: uiConfig,
+                                 desiredFontSize: fontSize - 1,
+                                 attempt: attempt + 1)
     }
 
     // MARK: Actions

@@ -62,6 +62,8 @@ class AppTrackingTransparencyView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        adjustViewMargins()
+
         guard descriptionTextViewSizeForShrinking == nil
             || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width else { return }
 
@@ -71,6 +73,10 @@ class AppTrackingTransparencyView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            adjustViewMargins()
+        }
 
         guard #available(iOS 12.0, *),
               traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
@@ -154,6 +160,16 @@ private extension AppTrackingTransparencyView {
                                  uiConfig: uiConfig,
                                  desiredFontSize: fontSize - 1,
                                  attempt: attempt + 1)
+    }
+
+    func adjustViewMargins() {
+        guard let appBounds = UIApplication.shared.keyWindow?.bounds, UIDevice.isDeviceInLandscape else {
+            directionalLayoutMargins = .zero
+            return
+        }
+
+        let inset = max(0, appBounds.width - appBounds.height) / 2
+        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
     }
 
     // MARK: Actions

@@ -9,12 +9,14 @@ import Foundation
 
 /// Enum representing possible view controller state
 ///
-/// - content: WebView content is visible
+/// - gdprConsents: WebView content is visible
+/// - appTrackingTransparency: AppTrackingTransparency view is shown
 /// - loading: Loading view is visible
 /// - error: Error view is visible
 enum ViewState {
 
-    case content
+    case gdprConsents
+    case appTrackingTransparency
     case loading
     case error
 }

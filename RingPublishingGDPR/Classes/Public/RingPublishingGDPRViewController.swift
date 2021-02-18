@@ -23,8 +23,13 @@ public class RingPublishingGDPRViewController: UIViewController {
         return ErrorView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
     }()
 
+    /// App Tracking Transparency View
+    private lazy var appTrackingTransparencyView: AppTrackingTransparencyView = {
+        return AppTrackingTransparencyView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+    }()
+
     /// Current state
-    private var state: ViewState = .content
+    private var state: ViewState = .gdprConsents
 
     /// Currently shown state view
     private weak var currentlyShownStateView: UIView?
@@ -61,8 +66,12 @@ extension RingPublishingGDPRViewController {
         self.state = state
 
         switch state {
-        case .content:
+        case .gdprConsents:
             currentlyShownStateView = nil
+
+        case .appTrackingTransparency:
+            view.addSubviewFullscreen(appTrackingTransparencyView)
+            currentlyShownStateView = appTrackingTransparencyView
 
         case .loading:
             loadingView.startAnimation()
@@ -90,17 +99,19 @@ extension RingPublishingGDPRViewController {
     /// - Parameter delegate: RingPublishingGDPRViewControllerDelegate
     func setInternalDelegate(_ delegate: RingPublishingGDPRViewControllerDelegate?) {
         self.delegate = delegate
+
         errorView.delegate = delegate
+        appTrackingTransparencyView.delegate = delegate
     }
 
-    /// Configure loading view and error view using theme color
+    /// Configure internal views using RingPublishingGDPRUIConfig
     ///
     /// - Parameters:
-    ///   - color: UIColor
-    ///   - buttonTextColor: UIColor
-    ///   - font: UIFont
-    func configure(withThemeColor color: UIColor, buttonTextColor: UIColor, font: UIFont) {
-        loadingView.configure(color)
-        errorView.configure(withThemeColor: color, buttonTextColor: buttonTextColor, font: font)
+    ///   - uiConfig: RingPublishingGDPRUIConfig
+    ///   - attConfig: RingPublishingGDPRATTConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+        loadingView.configure(with: uiConfig)
+        errorView.configure(with: uiConfig)
+        appTrackingTransparencyView.configure(with: uiConfig, attConfig: attConfig)
     }
 }

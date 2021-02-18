@@ -19,8 +19,11 @@ class GDPRManager: NSObject {
     /// Manager delegate
     weak var delegate: GDPRManagerDelegate?
 
+    /// AppTrackingTransparencyManager
+    let appTrackingManager: AppTrackingTransparencyManager
+
     /// CMP API
-    var cmpApi: GDPRApi?
+    let cmpApi: GDPRApi
 
     /// Configuration for given tenant id (fetched from API)
     var tenantConfiguration: TenantConfiguration?
@@ -64,9 +67,28 @@ class GDPRManager: NSObject {
     /// What actions responses must be received from JS to close form
     var actionsRequiredToCloseCMP: [GDPRAction] = []
 
+    /// Is GDPR consents status not determined?
+    var gdprConsentsNotDetermined: Bool {
+        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+        return GDPRStorage.tcString == nil && gdprApplies
+    }
+
+    /// Is App Tracking Transparency status not determined?
+    var attConsentsNotDetermined: Bool {
+        return !appTrackingManager.trackingStatusDetermined
+    }
+
     /// Should we check if stored consents are still valid? (Could be outdated for example)
+    /// Determines if we should check contents status in API
     var shouldCheckConsentStatus: Bool {
-        return GDPRStorage.tcString != nil && GDPRStorage.gdprApplies == 1
+        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+        return !shouldAskUserForConsents && gdprApplies
+    }
+
+    /// Combines GDPR status & App Tracking Trabsparency status
+    /// Determined if app should should consent form at app start
+    var shouldAskUserForConsents: Bool {
+        return gdprConsentsNotDetermined || attConsentsNotDetermined
     }
 
     // MARK: Init
@@ -74,15 +96,18 @@ class GDPRManager: NSObject {
     /// Initializer
     /// 
     /// - Parameters:
-    ///   - tenantId: CMP Tenant Id
-    ///   - brandName: App site id used to brand CMP form
+    ///   - config: RingPublishingGDPRConfig
     ///   - delegate: RingPublishingGDPRManagerDelegate
     ///   - timeoutInterval: WebView and API timeout
-    init(tenantId: String, brandName: String, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval) {
+    init(config: RingPublishingGDPRConfig, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval) {
         self.moduleState = .initialized
         self.delegate = delegate
         self.timeoutInterval = timeoutInterval
-        self.cmpApi = GDPRApi(tenantId: tenantId, brandName: brandName, timeoutInterval: timeoutInterval)
+
+        let attEnabled = config.attConfig?.appTrackingTransparencySupportEnabled ?? false
+        self.appTrackingManager = AppTrackingTransparencyManager(appTrackingTransparencySupportEnabled: attEnabled)
+
+        self.cmpApi = GDPRApi(tenantId: config.tenantId, brandName: config.brandName, timeoutInterval: timeoutInterval)
     }
 
     // MARK: Deinit
@@ -168,6 +193,13 @@ class GDPRManager: NSObject {
         Logger.log("Cancelling CMP loading timer due to loading error...")
         webViewLoadingTimer?.invalidate()
         webViewLoadingTimer = nil
+
+        guard !attConsentsNotDetermined else {
+            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show explanation view...")
+            delegate?.gdprManager(self, isRequestingToChangeViewState: .appTrackingTransparency)
+            moduleState = .initialized
+            return
+        }
 
         if [NSURLErrorNotConnectedToInternet, NSURLErrorDataNotAllowed].contains((error as NSError).code) {
             // Show error state only if we know that there was no Internet access
@@ -261,6 +293,12 @@ class GDPRManager: NSObject {
     func closeCMPFormAfterReceivingConsents() {
         // Remove last stored consents status after consents save
         GDPRStorage.lastAPIConsentsCheckStatus = nil
+
+        guard !attConsentsNotDetermined else {
+            Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show explanation view...")
+            delegate?.gdprManager(self, isRequestingToChangeViewState: .appTrackingTransparency)
+            return
+        }
 
         // Request to close form
         Logger.log("Requesting to close form view controller...")

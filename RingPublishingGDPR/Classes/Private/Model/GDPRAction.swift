@@ -8,6 +8,8 @@
 
 import Foundation
 
+// swiftlint:disable line_length
+
 /// Actions possible to perform with CMP tool
 ///
 /// - showWelcomeScreen: Show consents welcome screen

@@ -29,8 +29,30 @@ protocol GDPRManagerDelegate: class {
     func gdprManager(_ manager: GDPRManager, isRequestingToChangeViewState state: ViewState)
 
     /// Manager is requesting to embed web view inside view controller
+    ///
     /// - Parameters:
     ///   - manager: GDPRManager
     ///   - webView: WKWebView
     func gdprManager(_ manager: GDPRManager, isRequestingToEmbedWebView webView: WKWebView)
+
+    /// Manager is requesting to open url selected inside view controller by the user
+    ///
+    /// - Parameters:
+    ///   - manager: GDPRManager
+    ///   - url: URL
+    func gdprManager(_ manager: GDPRManager, isRequestingToOpenUrl url: URL)
+
+    /// Manager is informing that user selected on of the options on ATT explanation screen
+    ///
+    /// - Parameters:
+    ///   - manager: GDPRManager
+    ///   - trackingAllowed: Bool
+    func gdprManager(_ manager: GDPRManager, userSelectedATTExplanationOptionWithResult trackingAllowed: Bool)
+
+    /// Manager is informing that user selected on of the options on Apple permission alert for ATT
+    ///
+    /// - Parameters:
+    ///   - manager: GDPRManager
+    ///   - trackingAllowed: Bool
+    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool)
 }

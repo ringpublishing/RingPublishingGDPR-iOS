@@ -31,12 +31,10 @@ class ErrorView: UIView {
     /// Configure view using theme color, button color and font
     ///
     /// - Parameters:
-    ///   - color: UIColor
-    ///   - buttonTextColor: UIColor
-    ///   - font: UIFont
-    func configure(withThemeColor color: UIColor, buttonTextColor: UIColor, font: UIFont) {
-        errorRetryButton.layer.borderColor = color.cgColor
-        errorRetryButton.setTitleColor(buttonTextColor, for: .normal)
+    ///   - uiConfig: RingPublishingGDPRUIConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
+        errorRetryButton.backgroundColor = uiConfig.themeColor
+        errorRetryButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
 
         let attributedString = NSMutableAttributedString(string: errorLabel.text ?? "")
         let range = NSRange(location: 0, length: attributedString.length)
@@ -44,11 +42,11 @@ class ErrorView: UIView {
         paragraphStyle.lineSpacing = 6
         paragraphStyle.alignment = .center
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
-        attributedString.addAttribute(.font, value: font.withSize(errorLabel.font.pointSize), range: range)
+        attributedString.addAttribute(.font, value: uiConfig.font.withSize(errorLabel.font.pointSize), range: range)
         errorLabel.attributedText = attributedString
 
         if let label = errorRetryButton.titleLabel {
-            errorRetryButton.titleLabel?.font = font.withSize(label.font.pointSize)
+            errorRetryButton.titleLabel?.font = uiConfig.font.withSize(label.font.pointSize)
         }
     }
 }

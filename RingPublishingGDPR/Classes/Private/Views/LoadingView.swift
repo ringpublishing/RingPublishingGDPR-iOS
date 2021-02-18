@@ -26,9 +26,10 @@ class LoadingView: UIView {
 
     /// Configure loading view with theme color
     ///
-    /// - Parameter color: UIColor
-    func configure(_ color: UIColor) {
-        loadingIndicator.color = color
+    /// - Parameters:
+    ///   - uiConfig: RingPublishingGDPRUIConfig
+    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
+        loadingIndicator.color = uiConfig.themeColor
     }
 
     // MARK: Animation

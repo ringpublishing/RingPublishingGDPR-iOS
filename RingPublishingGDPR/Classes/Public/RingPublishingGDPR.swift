@@ -16,14 +16,12 @@ public class RingPublishingGDPR: NSObject {
     // MARK: Public properties
 
     /// Shared instance
-    @objc
-    public static let shared = RingPublishingGDPR()
+    @objc public static let shared = RingPublishingGDPR()
 
     /// View controller which should be presented by application to the users
     ///
     /// Contains consents form & loading view
-    @objc
-    public let ringPublishingGDPRViewController: RingPublishingGDPRViewController
+    @objc public let ringPublishingGDPRViewController: RingPublishingGDPRViewController
 
     /// Closure which can be used to gather module logs inside host application
     ///
@@ -31,8 +29,7 @@ public class RingPublishingGDPR: NSObject {
     /// For os_log there is defined:
     /// - subsystem: Bundle.main.bundleIdentifier
     /// - category: RingPublishingGDPR
-    @objc
-    public var loggerOutput: ((_ message: String) -> Void)? {
+    @objc public var loggerOutput: ((_ message: String) -> Void)? {
         get {
             return Logger.shared.loggerOutput
         }
@@ -45,8 +42,7 @@ public class RingPublishingGDPR: NSObject {
     ///
     /// Default value is 10s
     /// If you want to change this - set this value before module initialization
-    @objc
-    public var networkingTimeout: TimeInterval = 10 {
+    @objc public var networkingTimeout: TimeInterval = 10 {
         didSet {
             manager?.timeoutInterval = networkingTimeout
         }
@@ -56,25 +52,21 @@ public class RingPublishingGDPR: NSObject {
     ///
     /// Returns true if consents are not stored on the device in UserDefaults and GDPR applies
     /// This flag should be only used to check if initial consents are stored.
+    /// If App Tracking Tracking Transparency is enabled in module config - this flag also includes ATT status.
     /// To know whether or not consents form should be shown again use RingPublishingGDPRDelegate
-    @objc
-    public var shouldAskUserForConsents: Bool {
-        // Nil as true here in case someone uses this property before module initialization
-        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+    @objc public var shouldAskUserForConsents: Bool {
+        return manager?.shouldAskUserForConsents ?? true
+    }
 
-        return GDPRStorage.tcString == nil && gdprApplies
+    /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
+    @objc public var areVendorConsentsGiven: Bool {
+        return GDPRStorage.ringPublishingVendorsConsent == 1
     }
 
     /// Allows you to clear all stored consent data in UserDefaults prefixed with IABTCF_ && RingPublishing_
     @objc
     public func clearConsentsData() {
         GDPRStorage.clearAllConsentData()
-    }
-
-    /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
-    @objc
-    public var areVendorConsentsGiven: Bool {
-        return GDPRStorage.ringPublishingVendorsConsent == 1
     }
 
     // MARK: Private properties
@@ -101,26 +93,17 @@ public extension RingPublishingGDPR {
 
     /// Configure RingPublishingGDPR module
     ///
-    /// - Parameter gdprApplies: Does GDPR applies in current context? Defaults to true
-    /// - Parameter tenantId: CMP Tenant Id
-    /// - Parameter brandName: App site id used to brand CMP form
-    /// - Parameter uiConfig: Module UI config
+    /// - Parameter config: Module config
     /// - Parameter delegate: RingPublishingGDPRDelegate
     @objc
-    func initialize(gdprApplies: Bool = true,
-                    tenantId: String,
-                    brandName: String,
-                    uiConfig: RingPublishingGDPRUIConfig,
-                    delegate: RingPublishingGDPRDelegate) {
+    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate) {
         self.delegate = delegate
-        self.manager = GDPRManager(tenantId: tenantId, brandName: brandName, delegate: self, timeoutInterval: networkingTimeout)
+        self.manager = GDPRManager(config: config, delegate: self, timeoutInterval: networkingTimeout)
 
-        manager?.configure(gdprApplies: gdprApplies)
+        manager?.configure(gdprApplies: config.gdprApplies)
 
         // Configure ringPublishingGDPR view controller
-        ringPublishingGDPRViewController.configure(withThemeColor: uiConfig.themeColor,
-                                                   buttonTextColor: uiConfig.buttonTextColor,
-                                                   font: uiConfig.font)
+        ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)
         ringPublishingGDPRViewController.setInternalDelegate(manager)
 
         // Check if app should show again consents form (if form was already displayed once)
@@ -144,9 +127,25 @@ extension RingPublishingGDPR: GDPRManagerDelegate {
 
     func gdprManager(_ manager: GDPRManager, isRequestingToChangeViewState state: ViewState) {
         ringPublishingGDPRViewController.show(state: state)
+
+        guard state == .appTrackingTransparency else { return }
+
+        delegate?.ringPublishingGDPRDidPresentATTExplanationScreen?(self)
     }
 
     func gdprManager(_ manager: GDPRManager, isRequestingToEmbedWebView webView: WKWebView) {
         ringPublishingGDPRViewController.configure(with: webView)
+    }
+
+    func gdprManager(_ manager: GDPRManager, isRequestingToOpenUrl url: URL) {
+        delegate?.ringPublishingGDPR?(self, didRequestToOpenUrl: url)
+    }
+
+    func gdprManager(_ manager: GDPRManager, userSelectedATTExplanationOptionWithResult trackingAllowed: Bool) {
+        delegate?.ringPublishingGDPR?(self, userSelectedATTExplanationOptionWithResult: trackingAllowed)
+    }
+
+    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool) {
+        delegate?.ringPublishingGDPR?(self, userSelectedATTAlertPermissionWithResult: trackingAllowed)
     }
 }

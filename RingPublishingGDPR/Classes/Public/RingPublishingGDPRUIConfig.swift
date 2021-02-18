@@ -12,25 +12,22 @@ import UIKit
 /// RingPublishingGDPR module UI configuration
 public class RingPublishingGDPRUIConfig: NSObject {
 
-    /// Theme color used for loading indicator and retry button color
-    @objc
-    public let themeColor: UIColor
+    /// Theme color used for loading indicator and actions buttons (in error view & App Tracking Transparency explanation screens)
+    @objc public let themeColor: UIColor
 
-    /// Color used for retry button text
-    @objc
-    public let buttonTextColor: UIColor
+    /// Color used for action button texts (in error view & App Tracking Transparency explanation screens)
+    @objc public let buttonTextColor: UIColor
 
-    /// Font used in error view
-    @objc
-    public let font: UIFont
+    /// Font used in error view & App Tracking Transparency explanation screens
+    @objc public let font: UIFont
 
     // MARK: Init
 
     /// Initializer
     ///
     /// - Parameter themeColor: Theme color used for loading indicator and retry button color
-    /// - Parameter buttonTextColor: Theme color used for loading indicator and retry button color
-    /// - Parameter font: Font used in error view
+    /// - Parameter buttonTextColor: Color used for text on action buttons
+    /// - Parameter font: Font used in native views
     @objc
     public init(themeColor: UIColor, buttonTextColor: UIColor, font: UIFont) {
         self.themeColor = themeColor

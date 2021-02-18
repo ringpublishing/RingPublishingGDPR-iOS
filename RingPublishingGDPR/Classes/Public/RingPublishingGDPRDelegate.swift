@@ -53,15 +53,17 @@ public protocol RingPublishingGDPRDelegate: class {
     ///
     /// - Parameters:
     ///   - ringPublishingGDPR: RingPublishingGDPR
-    ///   - allow: Bool
+    ///   - trackingAllowed: Bool
     @objc optional
-    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTExplanationOptionAllowingTracking allow: Bool)
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
+                            userSelectedATTExplanationOptionWithResult trackingAllowed: Bool)
 
     /// Delegate method saying that  user selected one of the ATT system alert permission options
     ///
     /// - Parameters:
     ///   - ringPublishingGDPR: RingPublishingGDPR
-    ///   - allow: Bool
+    ///   - trackingAllowed: Bool
     @objc optional
-    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermisionAllowingTracking allow: Bool)
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
+                            userSelectedATTAlertPermissionWithResult trackingAllowed: Bool)
 }

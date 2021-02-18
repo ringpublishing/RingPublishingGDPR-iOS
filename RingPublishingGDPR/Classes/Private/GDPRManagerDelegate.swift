@@ -46,13 +46,13 @@ protocol GDPRManagerDelegate: class {
     ///
     /// - Parameters:
     ///   - manager: GDPRManager
-    ///   - allow: Bool
-    func gdprManager(_ manager: GDPRManager, userSelectedATTExplanationOptionAllowingTracking allow: Bool)
+    ///   - trackingAllowed: Bool
+    func gdprManager(_ manager: GDPRManager, userSelectedATTExplanationOptionWithResult trackingAllowed: Bool)
 
     /// Manager is informing that user selected on of the options on Apple permission alert for ATT
     ///
     /// - Parameters:
     ///   - manager: GDPRManager
-    ///   - allow: Bool
-    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermisionAllowingTracking allow: Bool)
+    ///   - trackingAllowed: Bool
+    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool)
 }

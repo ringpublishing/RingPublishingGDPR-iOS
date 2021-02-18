@@ -22,18 +22,18 @@ public class RingPublishingGDPRATTConfig: NSObject {
     /// Text which will be displayed as title for App Tracking Transparency explanation screen
     ///
     /// This can be plain text or text with HTML attributes.
-    @objc public var attExplanationTitle: String?
+    @objc public var explanationTitle: String?
 
     /// Text which will be displayed as description for App Tracking Transparency explanation screen
     ///
     /// This can be plain text or text with HTML attributes.
-    @objc public var attExplanationDescription: String?
+    @objc public var explanationDescription: String?
 
     /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency explanation screen
-    @objc public var attExplanationNotNowButtonText: String?
+    @objc public var explanationNotNowButtonText: String?
 
     /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency explanation screen
-    @objc public var attExplanationAllowButtonText: String?
+    @objc public var explanationAllowButtonText: String?
 
     // MARK: Init
 

@@ -141,11 +141,11 @@ extension RingPublishingGDPR: GDPRManagerDelegate {
         delegate?.ringPublishingGDPR?(self, didRequestToOpenUrl: url)
     }
 
-    func gdprManager(_ manager: GDPRManager, userSelectedATTExplanationOptionAllowingTracking allow: Bool) {
-        delegate?.ringPublishingGDPR?(self, userSelectedATTExplanationOptionAllowingTracking: allow)
+    func gdprManager(_ manager: GDPRManager, userSelectedATTExplanationOptionWithResult trackingAllowed: Bool) {
+        delegate?.ringPublishingGDPR?(self, userSelectedATTExplanationOptionWithResult: trackingAllowed)
     }
 
-    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermisionAllowingTracking allow: Bool) {
-        delegate?.ringPublishingGDPR?(self, userSelectedATTAlertPermisionAllowingTracking: allow)
+    func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool) {
+        delegate?.ringPublishingGDPR?(self, userSelectedATTAlertPermissionWithResult: trackingAllowed)
     }
 }

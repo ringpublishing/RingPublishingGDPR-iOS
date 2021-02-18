@@ -119,10 +119,10 @@ private extension AppTrackingTransparencyView {
         actionButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
         actionButton.backgroundColor = uiConfig.themeColor
         actionButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
-        actionButton.setTitle(attConfig?.attExplanationAllowButtonText, for: .normal)
+        actionButton.setTitle(attConfig?.explanationAllowButtonText, for: .normal)
 
         notNowButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
-        notNowButton.setTitle(attConfig?.attExplanationNotNowButtonText, for: .normal)
+        notNowButton.setTitle(attConfig?.explanationNotNowButtonText, for: .normal)
     }
 
     func configureLogo(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
@@ -139,10 +139,10 @@ private extension AppTrackingTransparencyView {
 
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
-        titleTextView.attributedText = attConfig?.attExplanationTitle?.convertfromHTML(using: titleFont,
-                                                                                        textColor: textColor)
+        titleTextView.attributedText = attConfig?.explanationTitle?.convertfromHTML(using: titleFont,
+                                                                                    textColor: textColor)
 
-        configureDescriptionText(attConfig?.attExplanationDescription, textColor: textColor, uiConfig: uiConfig)
+        configureDescriptionText(attConfig?.explanationDescription, textColor: textColor, uiConfig: uiConfig)
     }
 
     func configureDescriptionText(_ text: String?,

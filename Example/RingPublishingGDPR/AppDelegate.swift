@@ -55,10 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let attConfig = RingPublishingGDPRATTConfig(appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
         attConfig.brandLogoImage = UIImage(named: "brandLogo")
-        attConfig.attExplanationAllowButtonText = "Allow".uppercased()
-        attConfig.attExplanationNotNowButtonText = "Not now".uppercased()
-        attConfig.attExplanationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
-        attConfig.attExplanationDescription = """
+        attConfig.explanationAllowButtonText = "Allow".uppercased()
+        attConfig.explanationNotNowButtonText = "Not now".uppercased()
+        attConfig.explanationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
+        attConfig.explanationDescription = """
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites
             send us from this device.This won’t give us access to new types of information.
             <br><br>
@@ -175,16 +175,16 @@ extension AppDelegate: RingPublishingGDPRDelegate {
     }
 
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
-                            userSelectedATTExplanationOptionAllowingTracking allow: Bool) {
+                            userSelectedATTExplanationOptionWithResult trackingAllowed: Bool) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
-        print("DEMO - RingPublishingGDPR: userSelectedATTExplanationOptionAllowingTracking -> \(allow)")
+        print("DEMO - RingPublishingGDPR: userSelectedATTExplanationOptionWithResult -> \(trackingAllowed)")
     }
 
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
-                            userSelectedATTAlertPermisionAllowingTracking allow: Bool) {
+                            userSelectedATTAlertPermissionWithResult trackingAllowed: Bool) {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
-        print("DEMO - RingPublishingGDPR: userSelectedATTAlertPermisionAllowingTracking -> \(allow)")
+        print("DEMO - RingPublishingGDPR: userSelectedATTAlertPermissionWithResult -> \(trackingAllowed)")
     }
 }

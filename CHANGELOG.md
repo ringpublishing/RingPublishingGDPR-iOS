@@ -1,3 +1,28 @@
+1.3.0 Release notes (2021-02-08)
+=============================================================
+
+### Features
+
+* Added support for Apple App Tracking Transparency & explanation screen before system permission alert is shown.
+* New config class: 'RingPublishingGDPRATTConfig' related to Apple App Tracking Transparency & explanation screen with following options:
+    - appTrackingTransparencySupportEnabled
+    - brandLogoImage
+    - explanationTitle
+    - explanationDescription
+    - explanationNotNowButtonText
+    - explanationAllowButtonText
+* 'RingPublishingGDPRATTConfig' has only one initializer with required 'appTrackingTransparencySupportEnabled' property. Other properties are mutable and can be assigned to config class allowing easier customization.
+* New optional delegate methods in 'RingPublishingGDPRDelegate' related to Apple App Tracking Transparency & explanation screen:
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL)
+    - ringPublishingGDPRDidPresentATTExplanationScreen(_ ringPublishingGDPR: RingPublishingGDPR)
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTExplanationOptionWithResult trackingAllowed: Bool)
+    - ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool)
+
+### Changes
+
+* Module initialization parameters: 'gdprApplies', 'tenantId', 'brandName', 'RingPublishingGDPRUIConfig' moved to 'RingPublishingGDPRConfig' class.
+* 'RingPublishingGDPR.shouldAskUserForConsents' flag takes into consideration App Tracking Transparency status if it is enabled in configuration.
+
 1.2.0 Release notes (2020-11-19)
 =============================================================
 

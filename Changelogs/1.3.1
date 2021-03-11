@@ -1,0 +1,6 @@
+1.3.1 Release notes (2021-03-11)
+=============================================================
+
+### Bugfix
+
+* Delayed Apple App Tracking Transparency explanation screen texts configuration to prevent WebKit crash. This could happen if texts were configured while app was still not in '.active' state. Now those texts will be set during view layout process or when app becomes active.

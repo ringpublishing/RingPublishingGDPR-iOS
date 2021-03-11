@@ -40,6 +40,10 @@ class AppTrackingTransparencyView: UIView {
     private var descriptionTextViewSizeForShrinking: CGSize?
     private var descriptionSrinkingAttemptsLimit = 5
 
+    private var isApplicationInActiveState: Bool {
+        return UIApplication.shared.applicationState == .active
+    }
+
     /// Proxy for parent view delegate
     weak var delegate: RingPublishingGDPRViewControllerDelegate?
 
@@ -70,7 +74,8 @@ class AppTrackingTransparencyView: UIView {
         adjustViewMargins()
 
         guard descriptionTextViewSizeForShrinking == nil
-            || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width else { return }
+            || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width,
+            isApplicationInActiveState else { return }
 
         configureTexts(with: uiConfig, attConfig: attConfig)
         descriptionTextViewSizeForShrinking = descriptionTextView.frame.size
@@ -84,7 +89,7 @@ class AppTrackingTransparencyView: UIView {
         }
 
         guard #available(iOS 12.0, *),
-              UIApplication.shared.applicationState == .active,
+              isApplicationInActiveState,
               traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
 
         // Reconfigure texts as style (like bold) is lost when appearance changes
@@ -98,12 +103,22 @@ class AppTrackingTransparencyView: UIView {
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
     ///   - attConfig: RingPublishingGDPRATTConfig
-    func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+    func configure(with uiConfig: RingPublishingGDPRUIConfig?, attConfig: RingPublishingGDPRATTConfig?) {
         self.uiConfig = uiConfig
         self.attConfig = attConfig
 
+        guard let uiConfig = uiConfig else { return }
+
         configureButtons(with: uiConfig, attConfig: attConfig)
         configureLogo(with: uiConfig, attConfig: attConfig)
+
+        // We do not want to call here "configureTexts(with: uiConfig, attConfig: attConfig)" if app is not in active state
+        // We must be in .active application state in order for WebKit to work correctly.
+        // "configureTexts(with: uiConfig, attConfig: attConfig)" will be called when app becames active
+        // or during layout process if here & now is too early
+
+        guard isApplicationInActiveState else { return }
+
         configureTexts(with: uiConfig, attConfig: attConfig)
     }
 }

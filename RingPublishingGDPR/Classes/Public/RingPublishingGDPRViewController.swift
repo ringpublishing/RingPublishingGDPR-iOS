@@ -15,17 +15,28 @@ public class RingPublishingGDPRViewController: UIViewController {
 
     /// Loading view
     private lazy var loadingView: LoadingView = {
-        return LoadingView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+        let loadingView: LoadingView = LoadingView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+        loadingView.configure(with: uiConfig)
+
+        return loadingView
     }()
 
     /// Error view
     private lazy var errorView: ErrorView = {
-        return ErrorView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+        let errorView: ErrorView = ErrorView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+        errorView.delegate = delegate
+        errorView.configure(with: uiConfig)
+
+        return errorView
     }()
 
     /// App Tracking Transparency View
     private lazy var appTrackingTransparencyView: AppTrackingTransparencyView = {
-        return AppTrackingTransparencyView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+        let attView: AppTrackingTransparencyView = AppTrackingTransparencyView.loadFromNib(bundle: Bundle.ringPublishingGDPRBundle)
+        attView.delegate = delegate
+        attView.configure(with: uiConfig, attConfig: attConfig)
+
+        return attView
     }()
 
     /// Current state
@@ -36,6 +47,12 @@ public class RingPublishingGDPRViewController: UIViewController {
 
     /// Internal module delegate
     private weak var delegate: RingPublishingGDPRViewControllerDelegate?
+
+    /// Module UI config
+    private var uiConfig: RingPublishingGDPRUIConfig?
+
+    /// Module ATT config
+    private var attConfig: RingPublishingGDPRATTConfig?
 }
 
 // MARK: Public interface
@@ -99,9 +116,6 @@ extension RingPublishingGDPRViewController {
     /// - Parameter delegate: RingPublishingGDPRViewControllerDelegate
     func setInternalDelegate(_ delegate: RingPublishingGDPRViewControllerDelegate?) {
         self.delegate = delegate
-
-        errorView.delegate = delegate
-        appTrackingTransparencyView.delegate = delegate
     }
 
     /// Configure internal views using RingPublishingGDPRUIConfig
@@ -110,8 +124,7 @@ extension RingPublishingGDPRViewController {
     ///   - uiConfig: RingPublishingGDPRUIConfig
     ///   - attConfig: RingPublishingGDPRATTConfig
     func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
-        loadingView.configure(with: uiConfig)
-        errorView.configure(with: uiConfig)
-        appTrackingTransparencyView.configure(with: uiConfig, attConfig: attConfig)
+        self.uiConfig = uiConfig
+        self.attConfig = attConfig
     }
 }

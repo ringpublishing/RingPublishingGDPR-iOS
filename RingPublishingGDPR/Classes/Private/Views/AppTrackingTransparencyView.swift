@@ -70,7 +70,8 @@ class AppTrackingTransparencyView: UIView {
         adjustViewMargins()
 
         guard descriptionTextViewSizeForShrinking == nil
-            || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width else { return }
+            || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width,
+            UIApplication.shared.applicationState == .active else { return }
 
         configureTexts(with: uiConfig, attConfig: attConfig)
         descriptionTextViewSizeForShrinking = descriptionTextView.frame.size
@@ -104,7 +105,12 @@ class AppTrackingTransparencyView: UIView {
 
         configureButtons(with: uiConfig, attConfig: attConfig)
         configureLogo(with: uiConfig, attConfig: attConfig)
-        configureTexts(with: uiConfig, attConfig: attConfig)
+
+        // We do not want to call here "configureTexts(with: uiConfig, attConfig: attConfig)" as this could be to early
+        // in app life cycle. We must be in .active application state in order for WebKit to work correctly
+
+        // "configureTexts(with: uiConfig, attConfig: attConfig)" will be called when app becames active
+        // or during layout process
     }
 }
 

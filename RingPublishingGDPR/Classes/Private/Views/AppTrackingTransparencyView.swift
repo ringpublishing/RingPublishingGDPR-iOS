@@ -103,9 +103,11 @@ class AppTrackingTransparencyView: UIView {
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
     ///   - attConfig: RingPublishingGDPRATTConfig
-    func configure(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {
+    func configure(with uiConfig: RingPublishingGDPRUIConfig?, attConfig: RingPublishingGDPRATTConfig?) {
         self.uiConfig = uiConfig
         self.attConfig = attConfig
+
+        guard let uiConfig = uiConfig else { return }
 
         configureButtons(with: uiConfig, attConfig: attConfig)
         configureLogo(with: uiConfig, attConfig: attConfig)

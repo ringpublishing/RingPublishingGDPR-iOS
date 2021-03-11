@@ -32,7 +32,9 @@ class ErrorView: UIView {
     ///
     /// - Parameters:
     ///   - uiConfig: RingPublishingGDPRUIConfig
-    func configure(with uiConfig: RingPublishingGDPRUIConfig) {
+    func configure(with uiConfig: RingPublishingGDPRUIConfig?) {
+        guard let uiConfig = uiConfig else { return }
+
         errorRetryButton.backgroundColor = uiConfig.themeColor
         errorRetryButton.setTitleColor(uiConfig.buttonTextColor, for: .normal)
 

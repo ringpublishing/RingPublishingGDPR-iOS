@@ -138,6 +138,7 @@ private extension AppTrackingTransparencyView {
 
         notNowButton.titleLabel?.font = uiConfig.font.withSize(buttonFontSize ?? uiConfig.font.pointSize)
         notNowButton.setTitle(attConfig?.explanationNotNowButtonText, for: .normal)
+        notNowButton.isHidden = attConfig?.explanationNotNowButtonText == nil
     }
 
     func configureLogo(with uiConfig: RingPublishingGDPRUIConfig, attConfig: RingPublishingGDPRATTConfig?) {

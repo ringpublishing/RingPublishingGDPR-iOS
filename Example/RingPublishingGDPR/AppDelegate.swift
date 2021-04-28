@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attConfig = RingPublishingGDPRATTConfig(appTrackingTransparencySupportEnabled: appTrackingTransparencySupportEnabled)
         attConfig.brandLogoImage = UIImage(named: "brandLogo")
         attConfig.explanationAllowButtonText = "Allow".uppercased()
-        attConfig.explanationNotNowButtonText = "Not now".uppercased()
+        attConfig.explanationNotNowButtonText = "Not now".uppercased() // or nil if don't want to show second option
         attConfig.explanationTitle = "Allow <b>RingPublishing</b> to use your app and website activity?"
         attConfig.explanationDescription = """
             To provide a <b><i>better ads experience</i></b>, we need permission to use future activity that other apps and websites

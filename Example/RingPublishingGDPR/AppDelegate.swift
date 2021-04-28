@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // - config: RingPublishingGDPRUIConfig
         // - delegate: your delegate implementation to react for module events
 
-        // In RingPublishingGDPRUIConfig you have to provide:
+        // In RingPublishingGDPRConfig you have to provide:
         // - tenantId: unique identifier assigned to your organization
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
@@ -44,8 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // in your app looks as expected. See demo below for an example & how this can look like in runtime.
 
         let appTrackingTransparencySupportEnabled = true
-        let tenantId = "1746213"
-        let brandName = "APP_ONET_IOS"
+        let tenantId = "<YOUR_TENANT_ID>"
+        let brandName = "<YOUR_BRAND_NAME>"
 
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .white,

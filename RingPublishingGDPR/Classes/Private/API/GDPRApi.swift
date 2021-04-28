@@ -60,13 +60,14 @@ class GDPRApi {
         let task = session.dataTask(with: url) { (data, _, error) in
             guard let apiData = data,
                   let json = try? JSONSerialization.jsonObject(with: apiData, options: .allowFragments) as? [String: Any],
-                  let cmpUrl = json["webview_url"] as? String else {
+                  let cmpUrl = json["webview_url"] as? String,
+                  let gdprApplies = json["gdpr_applies"] as? Bool else {
                 Logger.log("Tenant configuration from API could not be parsed!", level: .error)
                 completion(nil, error)
                 return
             }
 
-            let configuration = TenantConfiguration(urlString: cmpUrl)
+            let configuration = TenantConfiguration(urlString: cmpUrl, gdprApplies: gdprApplies)
             completion(configuration, nil)
         }
 

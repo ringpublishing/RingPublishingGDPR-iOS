@@ -14,11 +14,15 @@ struct TenantConfiguration {
     /// Url where CMP form is located for given tenant id
     let cmpUrl: URL
 
+    /// Does GDPR applies in current session / context?
+    let gdprApplies: Bool
+
     // MARK: Init
 
-    init?(urlString: String?) {
-        guard let rawUrl = urlString, let url = URL(string: rawUrl) else { return nil }
+    init?(urlString: String, gdprApplies: Bool) {
+        guard let url = URL(string: urlString) else { return nil }
 
         self.cmpUrl = url
+        self.gdprApplies = gdprApplies
     }
 }

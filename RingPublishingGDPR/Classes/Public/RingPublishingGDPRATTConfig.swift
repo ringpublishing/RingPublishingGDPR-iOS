@@ -30,6 +30,7 @@ public class RingPublishingGDPRATTConfig: NSObject {
     @objc public var explanationDescription: String?
 
     /// Text which will be displayed as "cancel" / "not now" button for App Tracking Transparency explanation screen
+    /// If nil is passed or value is not set, this button will be hidden in UI
     @objc public var explanationNotNowButtonText: String?
 
     /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency explanation screen

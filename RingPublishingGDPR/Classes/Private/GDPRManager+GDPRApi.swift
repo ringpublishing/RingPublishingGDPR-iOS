@@ -11,63 +11,70 @@ import Foundation
 /// Functionality related to CMP API
 extension GDPRManager {
 
-    /// Fetch CMP configuration for given tenant
-    ///
-    /// - Parameter completion: Completion handler
-    func fetchCMPConfigurationIfNeeded(completion: @escaping (_ configuration: TenantConfiguration?, _ error: Error?) -> Void) {
-        // Fetch only if don't have it stored already
-        guard tenantConfiguration == nil else {
-            completion(tenantConfiguration, nil)
+    typealias StartupConfigurationCallback = (_ configuration: TenantConfiguration?,
+                                              _ consentsStatus: ConsentsStatus?,
+                                              _ error: Error?) -> Void
+
+    func fetchStartupConfigurationIfNeeded(completion: @escaping StartupConfigurationCallback) {
+        guard tenantConfiguration == nil || lastAPIConsentsCheckStatus == nil else {
+            completion(tenantConfiguration, lastAPIConsentsCheckStatus, nil)
             return
         }
 
-        Logger.log("Asking CMP API for tenant configuration...")
+        var fetchedTenantConfig: TenantConfiguration?
+        var fetchedConsentsStatus: ConsentsStatus?
+        var fetchError: Error?
 
-        cmpApi.getCMPTenantConfiguration(completion: { [weak self] (config, error) in
-            Logger.log("CMP API did return tenant configuration? -> \(config != nil)")
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        dispatchGroup.enter()
 
-            DispatchQueue.main.async {
-                self?.tenantConfiguration = config
-                completion(config, error)
-            }
-        })
-    }
+        fetchCMPConfiguration { (configuration, error) in
+            fetchedTenantConfig = configuration
+            fetchError = fetchError ?? error
 
-    // Check if consents stored on this device are up to date; if not inform about it
-    func checkUserConsentsStatus() {
-        // Check if we have stored consents status in cache
-        let lastAPIStatusValue = GDPRStorage.lastAPIConsentsCheckStatus
-
-        guard let rawStatus = lastAPIStatusValue, let status = ConsentsStatus(rawValue: rawStatus), status != .ok else {
-            Logger.log("Asking CMP API for current user consents status...")
-            checkUserConsentsStatusInAPI()
-            return
+            dispatchGroup.leave()
         }
 
-        // We have invalid status stored for user consents, we don't have to ask API again for it
-        Logger.log("Module has stored invalid user consents status: '\(rawStatus)', informing delegate...")
-        delegate?.gdprManagerDidRequestToShowConsentsController(self)
+        fetchUserConsentsStatus { (consentsStatus, error) in
+            fetchedConsentsStatus = consentsStatus
+            fetchError = fetchError ?? error
+
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            completion(fetchedTenantConfig, fetchedConsentsStatus, fetchError)
+        }
     }
 }
 
 // MARK: Private
 private extension GDPRManager {
 
-    func checkUserConsentsStatusInAPI() {
+    /// Fetch CMP configuration for given tenant
+    ///
+    /// - Parameter completion: Completion handler
+    func fetchCMPConfiguration(completion: @escaping (_ configuration: TenantConfiguration?, _ error: Error?) -> Void) {
+        Logger.log("Asking CMP API for tenant configuration...")
+
+        cmpApi.getCMPTenantConfiguration(completion: { (config, error) in
+            Logger.log("CMP API did return tenant configuration? -> \(config != nil)")
+            completion(config, error)
+        })
+    }
+
+    /// Fetch CMP consents status based on currently stored on the device
+    ///
+    /// - Parameter completion: Completion handler
+    func fetchUserConsentsStatus(completion: @escaping (_ consentsStatus: ConsentsStatus?, _ error: Error?) -> Void) {
+        Logger.log("Asking CMP API for user consents status...")
+
         let ringPublishingConsents = GDPRStorage.ringPublishingConsents
 
-        cmpApi.getConsentsStatus(for: ringPublishingConsents, completion: { [weak self] status in
-            defer {
-                GDPRStorage.lastAPIConsentsCheckStatus = status?.rawValue
-            }
-
+        cmpApi.getConsentsStatus(for: ringPublishingConsents, completion: { (status, error) in
             Logger.log("CMP API did return consents status: \(status.logable)")
-
-            guard let self = self, let status = status, status != .ok else { return }
-
-            DispatchQueue.main.async {
-                self.delegate?.gdprManagerDidRequestToShowConsentsController(self)
-            }
+            completion(status, error)
         })
     }
 }

@@ -28,14 +28,28 @@ class GDPRManager: NSObject {
     /// Configuration for given tenant id (fetched from API)
     var tenantConfiguration: TenantConfiguration?
 
+    /// Last known consents status from API
+    var lastAPIConsentsCheckStatus: ConsentsStatus?
+
     /// Default web view & API timeout
     var timeoutInterval: TimeInterval = 10
+
+    /// Web view loading timer
+    var startupLoadingTimer: Timer? {
+        didSet {
+            oldValue?.invalidate()
+        }
+    }
 
     /// Underlaying "content" view
     var webview: WKWebView?
 
     /// Web view loading timer
-    var webViewLoadingTimer: Timer?
+    var webViewLoadingTimer: Timer? {
+        didSet {
+            oldValue?.invalidate()
+        }
+    }
 
     /// Web view host page loaded?
     var webViewHostPageLoaded = false
@@ -59,7 +73,11 @@ class GDPRManager: NSObject {
     private var actionsQueue: [GDPRAction] = []
 
     /// Timer used to limit waiting for JS CMP consents response
-    var jsConsentResponseTimer: Timer?
+    var jsConsentResponseTimer: Timer? {
+        didSet {
+            oldValue?.invalidate()
+        }
+    }
 
     /// Timeout for waiting for JS CMP consents response
     let jsConsentResponseTimeout: TimeInterval = 2
@@ -67,10 +85,20 @@ class GDPRManager: NSObject {
     /// What actions responses must be received from JS to close form
     var actionsRequiredToCloseCMP: [GDPRAction] = []
 
+    /// Should GDPR apply in current context?
+    private var gdprApplies: Bool {
+        return GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+    }
+
     /// Is GDPR consents status not determined?
     var gdprConsentsNotDetermined: Bool {
-        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
         return GDPRStorage.tcString == nil && gdprApplies
+    }
+
+    /// Are GDPR consents up to date?
+    var consentsNotUpToDate: Bool {
+        let consentsUpToDateInAPI = lastAPIConsentsCheckStatus == .ok || lastAPIConsentsCheckStatus == nil
+        return !consentsUpToDateInAPI && gdprApplies
     }
 
     /// Is App Tracking Transparency status not determined?
@@ -78,17 +106,10 @@ class GDPRManager: NSObject {
         return !appTrackingManager.trackingStatusDetermined
     }
 
-    /// Should we check if stored consents are still valid? (Could be outdated for example)
-    /// Determines if we should check contents status in API
-    var shouldCheckConsentStatus: Bool {
-        let gdprApplies = GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
-        return !shouldAskUserForConsents && gdprApplies
-    }
-
     /// Combines GDPR status & App Tracking Trabsparency status
     /// Determined if app should should consent form at app start
     var shouldAskUserForConsents: Bool {
-        return gdprConsentsNotDetermined || attConsentsNotDetermined
+        return gdprConsentsNotDetermined || consentsNotUpToDate || attConsentsNotDetermined
     }
 
     // MARK: Init
@@ -117,17 +138,52 @@ class GDPRManager: NSObject {
         webview?.navigationDelegate = nil
     }
 
-    // MARK: GDPR Applies
+    // MARK: Startup
 
-    /// Configure manager & module state
-    ///
-    /// This method sets "IABTCF_CmpSdkID" and "IABTCF_gdprApplies" values in User Defaults
-    /// If GDPR does NOT apply in current context, this will also clear all stored consents
-    /// - Parameter gdprApplies: Bool
-    func configure(gdprApplies: Bool) {
+    func determineConsentsStatusOnStartup() {
         // Access cmpSDKId so our default value can be set
         _ = GDPRStorage.cmpSdkID
-        GDPRStorage.gdprApplies = gdprApplies ? 1 : 0
+
+        // Start initialization timer
+        startupLoadingTimer = Timer.scheduledTimer(withTimeInterval: timeoutInterval, repeats: false, block: { [weak self] _ in
+            guard let self = self else { return }
+
+            self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
+            self.startupLoadingTimer = nil
+        })
+
+        // Fetch startup configuration
+        fetchStartupConfigurationIfNeeded { [weak self] (configuration, consentsStatus, error) in
+            // Determine if startup timer fired
+            guard let self = self, self.startupLoadingTimer != nil else { return }
+
+            // Invalidate startup timer & process config
+            self.startupLoadingTimer = nil
+            self.processFetchedStartupConfiguration(configuration: configuration, consentsStatus: consentsStatus, error: error)
+        }
+    }
+
+    func processFetchedStartupConfiguration(configuration: TenantConfiguration?,
+                                            consentsStatus: ConsentsStatus?,
+                                            error: Error?) {
+        guard let config = configuration, let status = consentsStatus, error == nil else {
+            Logger.log("Startup configuration fetch encountered an error! Error: \(error.debugDescription)", level: .error)
+            self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
+            return
+        }
+
+        // Store configuration for further use
+        tenantConfiguration = config
+        lastAPIConsentsCheckStatus = status
+
+        // Store gdprApplies in user defaults
+        Logger.log("Received from configuration GDPR applies = \(config.gdprApplies)")
+        GDPRStorage.gdprApplies = config.gdprApplies ? 1 : 0
+
+        // Determine if consents controller should be shown
+        shouldAskUserForConsents ?
+            delegate?.gdprManagerDidRequestToShowConsentsController(self) :
+            delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
     }
 
     // MARK: WebView
@@ -154,7 +210,6 @@ class GDPRManager: NSObject {
         delegate?.gdprManager(self, isRequestingToChangeViewState: .loading)
 
         // Start loading timer
-        webViewLoadingTimer?.invalidate()
         webViewLoadingTimer = Timer.scheduledTimer(withTimeInterval: timeoutInterval, repeats: false, block: { [weak self] _ in
             guard let self = self else { return }
 
@@ -167,9 +222,17 @@ class GDPRManager: NSObject {
             self.handleError(error)
         })
 
+        // Use stored configuration if we have it already
+        if let configuration = tenantConfiguration, moduleState != .cmpError {
+            // Load web page
+            let request = URLRequest(url: configuration.cmpUrl)
+            webview?.load(request)
+            return
+        }
+
         // Fetch config for tenant and load web page
-        fetchCMPConfigurationIfNeeded { [weak self] (config, error) in
-            guard let strongSelf = self, let tenantConfig = config, strongSelf.moduleState != .cmpError else {
+        fetchStartupConfigurationIfNeeded { [weak self] (configuration, _, error) in
+            guard let strongSelf = self, let tenantConfig = configuration, strongSelf.moduleState != .cmpError else {
                 // Send error manually as we did not even start to load web page
                 let errorToHandle = error ?? GDPRError.tenantConfigError.nsError
                 self?.handleError(errorToHandle)
@@ -191,7 +254,6 @@ class GDPRManager: NSObject {
 
         // Cancel loading timer
         Logger.log("Cancelling CMP loading timer due to loading error...")
-        webViewLoadingTimer?.invalidate()
         webViewLoadingTimer = nil
 
         guard !attConsentsNotDetermined else {
@@ -280,7 +342,6 @@ class GDPRManager: NSObject {
         actionsRequiredToCloseCMP.removeAll()
 
         // Invalidate timer
-        jsConsentResponseTimer?.invalidate()
         jsConsentResponseTimer = nil
 
         // Remove all consents
@@ -292,7 +353,7 @@ class GDPRManager: NSObject {
 
     func closeCMPFormAfterReceivingConsents() {
         // Remove last stored consents status after consents save
-        GDPRStorage.lastAPIConsentsCheckStatus = nil
+        lastAPIConsentsCheckStatus = nil
 
         guard !attConsentsNotDetermined else {
             Logger.log("AppTrackingTransparency consent status is not determined. Requesting to show explanation view...")

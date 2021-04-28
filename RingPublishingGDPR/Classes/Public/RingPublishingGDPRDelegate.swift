@@ -15,6 +15,12 @@ public protocol RingPublishingGDPRDelegate: class {
 
     // MARK: Required methods
 
+    /// Delegate method saying that application does not have to show consents controller.
+    ///
+    /// - Parameter ringPublishingGDPR: RingPublishingGDPR
+    @objc
+    func ringPublishingGDPRDoesNotNeedToUpdateConsents(_ ringPublishingGDPR: RingPublishingGDPR)
+
     /// Delegate method saying that application should show again consents form
     ///
     /// - Parameters:

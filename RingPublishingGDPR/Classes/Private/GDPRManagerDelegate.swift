@@ -11,6 +11,11 @@ import WebKit
 /// GDPRManager internal delegate
 protocol GDPRManagerDelegate: class {
 
+    /// Manager decided that there is no need to show consents controller
+    ///
+    /// - Parameter manager: RingPublishingGDPRManager
+    func gdprManagerDidDetermineThatConsentsAreUpToDate(_ manager: GDPRManager)
+
     /// Manager is requesting to show consents controller
     ///
     /// - Parameter manager: RingPublishingGDPRManager

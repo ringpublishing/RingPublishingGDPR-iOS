@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // - delegate: your delegate implementation to react for module events
 
         // In RingPublishingGDPRUIConfig you have to provide:
-        // - gdprApplies: true if GDPR applies in given context and consents form should be shown to the user
         // - tenantId: unique identifier assigned to your organization
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
@@ -44,10 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // for ATT should be enabled, but realistically you should provide all configuration options so explanation screen
         // in your app looks as expected. See demo below for an example & how this can look like in runtime.
 
-        let gdprApplies = true
         let appTrackingTransparencySupportEnabled = true
-        let tenantId = "<YOUR_TENANT_ID>"
-        let brandName = "<YOUR_BRAND_NAME>"
+        let tenantId = "1746213"
+        let brandName = "APP_ONET_IOS"
 
         let uiConfig = RingPublishingGDPRUIConfig(themeColor: .red,
                                                   buttonTextColor: .white,
@@ -66,34 +64,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if you turn off this device setting, and related settings on <b>RingPublishing</b>.
         """
 
-        let config = RingPublishingGDPRConfig(gdprApplies: gdprApplies,
-                                              tenantId: tenantId,
+        let config = RingPublishingGDPRConfig(tenantId: tenantId,
                                               brandName: brandName,
                                               uiConfig: uiConfig,
                                               attConfig: attConfig)
 
         RingPublishingGDPR.shared.initialize(config: config, delegate: self)
 
-        // At this point you can check if application should show consent form immediately at app launch
-        // This covers use case when on this device user did not saw consent form yet and GDPR applies
+        // At this point you should wait for SDK callback to either show consents controller or resume your normal app start
+        // You could, for example, show here your splash screen
 
-        let shouldAskUserForConsents = RingPublishingGDPR.shared.shouldAskUserForConsents
-
-        switch shouldAskUserForConsents {
-        case false:
-            // User already did see consent form - module will inform host application using delegate, if form
-            // should be presented to the user again (for example when vendor list changed)
-
-            // We can show application's content and initialize vendor SDKs
-            showAppContent()
-
-        case true:
-            // User did not saw consent form yet - it should be shown to him immediately
-
-            // Tell SDK that consent welcome screen should be shown
-            // We can shown welcome screen or detailed view at start
-            showRingPublishingGDPRController(openScreen: .welcome)
-        }
+        let splashController = UIStoryboard(name: "Main", bundle: .main).instantiateInitialViewController()
+        window?.rootViewController = splashController
 
         window?.makeKeyAndVisible()
 
@@ -121,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func showAppContent() {
-        let demoController = UIStoryboard(name: "Main", bundle: .main).instantiateInitialViewController()
+        let demoController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "ViewController")
         window?.rootViewController = demoController
 
         // Here you can check if user agreed for all available vendors
@@ -141,6 +123,14 @@ extension AppDelegate: RingPublishingGDPRDelegate {
 
     // MARK: Required methods
 
+    func ringPublishingGDPRDoesNotNeedToUpdateConsents(_ ringPublishingGDPR: RingPublishingGDPR) {
+        // This will be called when consent form does not have to be shown to the user, either again or because GDPR does not
+        // apply in current context / country
+
+        // At this point you can resume you app launch if you were waiting for SDK callback
+        showAppContent()
+    }
+
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
                             shouldShowConsentsController viewController: RingPublishingGDPRViewController) {
         // This will be called when consent form should be shown again to the user, (for example when vendors list changed)
@@ -156,7 +146,6 @@ extension AppDelegate: RingPublishingGDPRDelegate {
         // - all consents are stored in UserDefaults
         // - form can be closed by host application
         // - content of app can be shown
-
         showAppContent()
     }
 

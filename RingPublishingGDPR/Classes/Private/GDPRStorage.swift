@@ -112,11 +112,6 @@ class GDPRStorage {
     @ConsentStorage(key: "IABTCF_AddtlConsent")
     static var addtlConsent: String?
 
-    // MARK: Last consents status from CMP API
-
-    @ConsentStorage(key: "RingPublishing_LastAPIConsentsCheckStatus", logableAsConsent: false)
-    static var lastAPIConsentsCheckStatus: String?
-
     // MARK: RingPublishing consents
 
     @ConsentStorage(key: "RingPublishing_Consents")

@@ -12,19 +12,6 @@ import RingPublishingGDPR
 /// Demo controller for RingPublishingGDPR module
 class ViewController: UIViewController {
 
-    // MARK: Outlets
-
-    @IBOutlet private weak var didAskForConsentsLabel: UILabel!
-
-    // MARK: Life cycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let shouldAskUserForConsents = RingPublishingGDPR.shared.shouldAskUserForConsents
-        didAskForConsentsLabel.text = "\(!shouldAskUserForConsents)"
-    }
-
     // MARK: Helper methods
 
     func showRingPublishingGDPRController(openScreen: ConsentsFormScreen) {

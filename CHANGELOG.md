@@ -1,3 +1,10 @@
+1.3.2 Release notes (2021-03-28)
+=============================================================
+
+### Changes
+
+* If you pass 'nil' for 'RingPublishingGDPRATTConfig.explanationNotNowButtonText' or don't set this at all, second button on ATT explanation screen will be hidden on UI
+
 1.3.1 Release notes (2021-03-11)
 =============================================================
 

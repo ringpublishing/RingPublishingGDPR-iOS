@@ -69,6 +69,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                               uiConfig: uiConfig,
                                               attConfig: attConfig)
 
+        // In case you want to change default networking timeout, which is used for initial consents check and then for
+        // CMP webview page load, you should override it before initialization.
+        // Default value for timeout is 10 seconds
+
+        RingPublishingGDPR.shared.networkingTimeout = 8
+
+        // Then initialize SDK
+
         RingPublishingGDPR.shared.initialize(config: config, delegate: self)
 
         // At this point you should wait for SDK callback to either show consents controller or resume your normal app start

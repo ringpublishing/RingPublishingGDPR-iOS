@@ -148,8 +148,9 @@ class GDPRManager: NSObject {
         startupLoadingTimer = Timer.scheduledTimer(withTimeInterval: timeoutInterval, repeats: false, block: { [weak self] _ in
             guard let self = self else { return }
 
-            self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
+            Logger.log("Startup loading timer fired. Timeout reached!", level: .error)
             self.startupLoadingTimer = nil
+            self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
         })
 
         // Fetch startup configuration
@@ -181,7 +182,13 @@ class GDPRManager: NSObject {
         GDPRStorage.gdprApplies = config.gdprApplies ? 1 : 0
 
         // Determine if consents controller should be shown
-        shouldAskUserForConsents ?
+        let shouldAsk = shouldAskUserForConsents
+        Logger.log("Checking if consents controller should be shown -> \(shouldAsk)")
+        Logger.log("Check result: GDPR consents NOT stored - \(gdprConsentsNotDetermined)")
+        Logger.log("Check result: GDPR consents NOT up to date - \(consentsNotUpToDate)")
+        Logger.log("Check result: ATT status NOT determined - \(attConsentsNotDetermined)")
+
+        shouldAsk ?
             delegate?.gdprManagerDidRequestToShowConsentsController(self) :
             delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
     }
@@ -225,12 +232,16 @@ class GDPRManager: NSObject {
         // Use stored configuration if we have it already
         if let configuration = tenantConfiguration, moduleState != .cmpError {
             // Load web page
+            Logger.log("Loading CMP site using already fetched configuration.")
+
             let request = URLRequest(url: configuration.cmpUrl)
             webview?.load(request)
             return
         }
 
         // Fetch config for tenant and load web page
+        Logger.log("Loading CMP site - configuration not present - fetching...")
+
         fetchStartupConfigurationIfNeeded { [weak self] (configuration, _, error) in
             guard let strongSelf = self, let tenantConfig = configuration, strongSelf.moduleState != .cmpError else {
                 // Send error manually as we did not even start to load web page

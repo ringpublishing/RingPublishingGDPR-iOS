@@ -29,6 +29,10 @@ extension GDPRManager {
         dispatchGroup.enter()
         dispatchGroup.enter()
 
+        dispatchGroup.notify(queue: .main) {
+            completion(fetchedTenantConfig, fetchedConsentsStatus, fetchError)
+        }
+
         fetchCMPConfiguration { (configuration, error) in
             fetchedTenantConfig = configuration
             fetchError = fetchError ?? error
@@ -41,10 +45,6 @@ extension GDPRManager {
             fetchError = fetchError ?? error
 
             dispatchGroup.leave()
-        }
-
-        dispatchGroup.notify(queue: .main) {
-            completion(fetchedTenantConfig, fetchedConsentsStatus, fetchError)
         }
     }
 }

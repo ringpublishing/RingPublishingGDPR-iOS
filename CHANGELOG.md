@@ -1,3 +1,19 @@
+1.4.0 Release notes (2021-04-29)
+=============================================================
+
+### Features
+
+* Added support for backend configuration (based on geo-ip) for 'gdprApplies' (IABTCF_gdprApplies) flag. This flag can no longer be passed as parameter to the SDK initializer.
+* Interaction with module on app start is now always asynchronous (where previously during first app launch it was synchronous). SDK will always call one of two delegate methods after initialization:
+    - 'ringPublishingGDPRDoesNotNeedToUpdateConsents(_ ringPublishingGDPR: RingPublishingGDPR)' if there is no need to show consents controller (for example ATT is disabled, gdprApplies is false, networking error during initialization, etc.)
+    - 'ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, shouldShowConsentsController viewController: RingPublishingGDPRViewController)' if consents controller should be presenter to the user (for example when gdprApplies is true and consents are not stored on the device or are outdated)
+
+### Changes
+
+* Removed 'gdprApplies' property from 'RingPublishingGDPRConfig' interface
+* Removed 'shouldAskUserForConsents' property from 'RingPublishingGDPR' interface
+* Added required 'ringPublishingGDPRDoesNotNeedToUpdateConsents(_ ringPublishingGDPR: RingPublishingGDPR)' method to 'RingPublishingGDPRDelegate' protocol
+
 1.3.2 Release notes (2021-03-28)
 =============================================================
 

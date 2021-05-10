@@ -59,7 +59,7 @@ private extension GDPRManager {
     func detectUpdateFlowWithAppleAppTransparencyTracking(for action: GDPRAction) {
         // Detect if we have already stored GDPR consents but not Apple tracking consent
         // If this is such case we should only show Apple tracking agreement
-        let shouldAppTrackingTransparencyBePresented = shouldAskUserForConsents && !gdprConsentsNotDetermined
+        let shouldAppTrackingTransparencyBePresented = attConsentsNotDetermined && !gdprConsentsNotDetermined
         Logger.log("RingPublishingGDPRViewController starting consents flow, update to ATT? -> \(shouldAppTrackingTransparencyBePresented)")
 
         guard shouldAppTrackingTransparencyBePresented else {

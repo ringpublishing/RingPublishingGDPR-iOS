@@ -60,13 +60,14 @@ class GDPRApi {
         let task = session.dataTask(with: url) { (data, _, error) in
             guard let apiData = data,
                   let json = try? JSONSerialization.jsonObject(with: apiData, options: .allowFragments) as? [String: Any],
-                  let cmpUrl = json["webview_url"] as? String else {
+                  let cmpUrl = json["webview_url"] as? String,
+                  let gdprApplies = json["gdpr_applies"] as? Bool else {
                 Logger.log("Tenant configuration from API could not be parsed!", level: .error)
                 completion(nil, error)
                 return
             }
 
-            let configuration = TenantConfiguration(urlString: cmpUrl)
+            let configuration = TenantConfiguration(urlString: cmpUrl, gdprApplies: gdprApplies)
             completion(configuration, nil)
         }
 
@@ -78,9 +79,9 @@ class GDPRApi {
     /// - Parameters:
     ///   - consents: RingPublishing consents
     ///   - completion: Completion handler
-    func getConsentsStatus(for consents: [String: Any]?, completion: @escaping (_ status: ConsentsStatus?) -> Void) {
+    func getConsentsStatus(for consents: [String: Any]?, completion: @escaping (_ status: ConsentsStatus?, _ error: Error?) -> Void) {
         guard let consents = consents else {
-            completion(.empty)
+            completion(.empty, nil)
             return
         }
 
@@ -91,21 +92,21 @@ class GDPRApi {
 
         guard let url = urlComponents?.url else {
             Logger.log("Consents status verification url could not be constructed! Used consents: \(consents)", level: .error)
-            completion(.invalid)
+            completion(.invalid, nil)
             return
         }
 
-        let task = session.dataTask(with: url) { (data, _, _) in
+        let task = session.dataTask(with: url) { (data, _, error) in
             guard let apiData = data,
                   let json = try? JSONSerialization.jsonObject(with: apiData, options: .allowFragments) as? [String: Any],
                   let rawStatus = json["status"] as? String else {
                 Logger.log("Consents status from API could not be parsed!", level: .error)
-                completion(nil)
+                completion(nil, error)
                 return
             }
 
             let status = ConsentsStatus(from: rawStatus)
-            completion(status)
+            completion(status, nil)
         }
 
         task.resume()

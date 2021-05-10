@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PhK-he-UjR">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -9,9 +9,39 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="1ja-mw-BWv">
+            <objects>
+                <viewController id="PhK-he-UjR" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5PS-Qe-xyY"/>
+                        <viewControllerLayoutGuide type="bottom" id="6ET-Xl-xJd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qbC-TL-pjp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RingPublishingGDPR" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="Hta-4f-aCH">
+                                <rect key="frame" x="13" y="312" width="349.5" height="43"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                <color key="textColor" systemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Hta-4f-aCH" firstAttribute="centerY" secondItem="qbC-TL-pjp" secondAttribute="centerY" id="KaT-AJ-9KB"/>
+                            <constraint firstItem="Hta-4f-aCH" firstAttribute="centerX" secondItem="qbC-TL-pjp" secondAttribute="centerX" id="T3h-Fi-fXD"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tBy-vz-ksf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-271" y="-600"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="RingPublishingGDPR_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="vXZ-lx-hvc" customClass="ViewController" customModule="RingPublishingGDPR_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -20,19 +50,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did we ask user for consents? (or GDPR does not apply and we don't have to)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rti-Ip-cQa">
-                                <rect key="frame" x="20" y="48" width="335" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="false" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoK-Cw-5aT">
-                                <rect key="frame" x="20" y="105" width="335" height="21"/>
-                                <accessibility key="accessibilityConfiguration" identifier="didAskForUserConsentsFlag"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemBlueColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rcb-Lc-d7H">
                                 <rect key="frame" x="75.5" y="368.5" width="224" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="showSettingsScreenButton"/>
@@ -53,20 +70,11 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0oe-8q-wRf" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="2we-wA-1jL"/>
-                            <constraint firstItem="OoK-Cw-5aT" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="8P1-Jy-lTk"/>
                             <constraint firstItem="0oe-8q-wRf" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="BBT-PF-fel"/>
-                            <constraint firstItem="rti-Ip-cQa" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="48" id="Ce8-9y-dzv"/>
-                            <constraint firstItem="OoK-Cw-5aT" firstAttribute="top" secondItem="rti-Ip-cQa" secondAttribute="bottom" constant="16" id="Uum-pR-FtP"/>
                             <constraint firstItem="Rcb-Lc-d7H" firstAttribute="top" secondItem="0oe-8q-wRf" secondAttribute="bottom" constant="20" id="Zid-0G-9Co"/>
                             <constraint firstItem="Rcb-Lc-d7H" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="bcz-yn-Fuc"/>
-                            <constraint firstAttribute="trailing" secondItem="OoK-Cw-5aT" secondAttribute="trailing" constant="20" id="hmL-Ft-0uz"/>
-                            <constraint firstAttribute="trailing" secondItem="rti-Ip-cQa" secondAttribute="trailing" constant="20" id="i1R-J3-Dwk"/>
-                            <constraint firstItem="rti-Ip-cQa" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="tFV-yy-cgS"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="didAskForConsentsLabel" destination="OoK-Cw-5aT" id="DUZ-NW-BCj"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -74,8 +82,11 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

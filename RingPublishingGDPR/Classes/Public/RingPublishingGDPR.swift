@@ -48,16 +48,6 @@ public class RingPublishingGDPR: NSObject {
         }
     }
 
-    /// Check if user should be asked about consents and tcString is NOT stored on the device.
-    ///
-    /// Returns true if consents are not stored on the device in UserDefaults and GDPR applies
-    /// This flag should be only used to check if initial consents are stored.
-    /// If App Tracking Tracking Transparency is enabled in module config - this flag also includes ATT status.
-    /// To know whether or not consents form should be shown again use RingPublishingGDPRDelegate
-    @objc public var shouldAskUserForConsents: Bool {
-        return manager?.shouldAskUserForConsents ?? true
-    }
-
     /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
     @objc public var areVendorConsentsGiven: Bool {
         return GDPRStorage.ringPublishingVendorsConsent == 1
@@ -100,22 +90,22 @@ public extension RingPublishingGDPR {
         self.delegate = delegate
         self.manager = GDPRManager(config: config, delegate: self, timeoutInterval: networkingTimeout)
 
-        manager?.configure(gdprApplies: config.gdprApplies)
-
         // Configure ringPublishingGDPR view controller
         ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)
         ringPublishingGDPRViewController.setInternalDelegate(manager)
 
-        // Check if app should show again consents form (if form was already displayed once)
-        guard let manager = manager, manager.shouldCheckConsentStatus else { return }
-
-        manager.checkUserConsentsStatus()
+        // Fetch required configuration & determine if consents form should be shown
+        manager?.determineConsentsStatusOnStartup()
     }
 }
 
 // MARK: RingPublishingGDPRManagerDelegate
 
 extension RingPublishingGDPR: GDPRManagerDelegate {
+
+    func gdprManagerDidDetermineThatConsentsAreUpToDate(_ manager: GDPRManager) {
+        delegate?.ringPublishingGDPRDoesNotNeedToUpdateConsents(self)
+    }
 
     func gdprManagerDidRequestToShowConsentsController(_ manager: GDPRManager) {
         delegate?.ringPublishingGDPR(self, shouldShowConsentsController: ringPublishingGDPRViewController)

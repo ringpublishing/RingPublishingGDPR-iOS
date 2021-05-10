@@ -6,7 +6,8 @@ Module which collects and saves user's consent in accordance with the standard T
 
 ## Documentation
 
-The documentation can be found at
+The documentation can be found at:
+
 [https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/index.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/index.html).
 
 Integration tutorial:
@@ -15,7 +16,7 @@ Integration tutorial:
 
 How consents are stored:
 
-[https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-ios-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-mobile-sdk.html).
+[https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-mobile-sdk.html](https://developer.ringpublishing.com/Money/docs/GDPRConsentManager/topics/consent-storage-using-mobile-sdk.html).
 
 Reference guide:
 

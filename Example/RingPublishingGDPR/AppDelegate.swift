@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Then initialize SDK
 
-        RingPublishingGDPR.shared.initialize(config: config, delegate: self)
+        RingPublishingGDPR.shared.initialize(config: config, delegate: self, forcedGDPRApplies: nil)
 
         // At this point you should wait for SDK callback to either show consents controller or resume your normal app start
         // You could, for example, show here your splash screen

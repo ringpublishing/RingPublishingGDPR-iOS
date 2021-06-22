@@ -28,6 +28,9 @@ class GDPRManager: NSObject {
     /// Configuration for given tenant id (fetched from API)
     var tenantConfiguration: TenantConfiguration?
 
+    /// Determines if module was initialized with forced GDPR applies state
+    var forcedGDPRApplies: Bool?
+
     /// Last known consents status from API
     var lastAPIConsentsCheckStatus: ConsentsStatus?
 
@@ -115,15 +118,17 @@ class GDPRManager: NSObject {
     // MARK: Init
 
     /// Initializer
-    /// 
+    ///
     /// - Parameters:
     ///   - config: RingPublishingGDPRConfig
     ///   - delegate: RingPublishingGDPRManagerDelegate
     ///   - timeoutInterval: WebView and API timeout
-    init(config: RingPublishingGDPRConfig, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval) {
+    ///   - forcedGDPRApplies: Determines if module was initialized with forced GDPR applies state
+    init(config: RingPublishingGDPRConfig, delegate: GDPRManagerDelegate, timeoutInterval: TimeInterval, forcedGDPRApplies: Bool?) {
         self.moduleState = .initialized
         self.delegate = delegate
         self.timeoutInterval = timeoutInterval
+        self.forcedGDPRApplies = forcedGDPRApplies
 
         let attEnabled = config.attConfig?.appTrackingTransparencySupportEnabled ?? false
         self.appTrackingManager = AppTrackingTransparencyManager(appTrackingTransparencySupportEnabled: attEnabled)
@@ -154,7 +159,7 @@ class GDPRManager: NSObject {
         })
 
         // Fetch startup configuration
-        fetchStartupConfigurationIfNeeded { [weak self] (configuration, consentsStatus, error) in
+        fetchStartupConfigurationIfNeeded(forcedGDPRApplies: forcedGDPRApplies) { [weak self] (configuration, consentsStatus, error) in
             // Determine if startup timer fired
             guard let self = self, self.startupLoadingTimer != nil else { return }
 
@@ -242,7 +247,7 @@ class GDPRManager: NSObject {
         // Fetch config for tenant and load web page
         Logger.log("Loading CMP site - configuration not present - fetching...")
 
-        fetchStartupConfigurationIfNeeded { [weak self] (configuration, _, error) in
+        fetchStartupConfigurationIfNeeded(forcedGDPRApplies: forcedGDPRApplies) { [weak self] (configuration, _, error) in
             guard let strongSelf = self, let tenantConfig = configuration, strongSelf.moduleState != .cmpError else {
                 // Send error manually as we did not even start to load web page
                 let errorToHandle = error ?? GDPRError.tenantConfigError.nsError

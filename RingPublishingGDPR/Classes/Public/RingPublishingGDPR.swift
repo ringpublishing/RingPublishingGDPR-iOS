@@ -83,12 +83,19 @@ public extension RingPublishingGDPR {
 
     /// Configure RingPublishingGDPR module
     ///
+    /// If you want to ignore geo-ip detection for 'gdprApplies', pass as 'forcedGDPRApplies' param either true of false.
+    /// Passing nil leaves default behaviour intact.
+    ///
     /// - Parameter config: Module config
     /// - Parameter delegate: RingPublishingGDPRDelegate
+    /// - Parameter forcedGDPRApplies: NSNumber?
     @objc
-    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate) {
+    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate, forcedGDPRApplies: NSNumber? = nil) {
         self.delegate = delegate
-        self.manager = GDPRManager(config: config, delegate: self, timeoutInterval: networkingTimeout)
+        self.manager = GDPRManager(config: config,
+                                   delegate: self,
+                                   timeoutInterval: networkingTimeout,
+                                   forcedGDPRApplies: forcedGDPRApplies as? Bool)
 
         // Configure ringPublishingGDPR view controller
         ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)

@@ -50,10 +50,11 @@ public class RingPublishingGDPR: NSObject {
 
     /// Should GDPR apply in current context?
     ///
-    /// This property at module initialization has value saved from last app session.
+    /// This property at module initialization (and before) has value saved from last app session.
     /// This property will be populated with fresh value somewhere between:
     /// - after module initialization
-    /// - before module calls one of the delegate with consents status (either 'shouldShowConsentsController' or 'doesNotNeedToUpdateConsents')
+    /// - before module calls one of the delegate methods with consents status,
+    /// either 'shouldShowConsentsController' or 'doesNotNeedToUpdateConsents'
     @objc public var gdprApplies: Bool {
         return GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
     }
@@ -93,7 +94,7 @@ public extension RingPublishingGDPR {
 
     /// Configure RingPublishingGDPR module
     ///
-    /// If you want to ignore geo-ip detection for 'gdprApplies', pass as 'forcedGDPRApplies' param either true of false.
+    /// If you want to ignore geo-ip based detection for 'gdprApplies', pass as 'forcedGDPRApplies' param either true of false.
     /// Passing nil leaves default behaviour intact.
     ///
     /// - Parameter config: Module config

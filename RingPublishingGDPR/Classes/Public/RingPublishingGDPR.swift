@@ -48,6 +48,16 @@ public class RingPublishingGDPR: NSObject {
         }
     }
 
+    /// Should GDPR apply in current context?
+    ///
+    /// This property at module initialization has value saved from last app session.
+    /// This property will be populated with fresh value somewhere between:
+    /// - after module initialization
+    /// - before module calls one of the delegate with consents status (either 'shouldShowConsentsController' or 'doesNotNeedToUpdateConsents')
+    @objc public var gdprApplies: Bool {
+        return GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+    }
+
     /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
     @objc public var areVendorConsentsGiven: Bool {
         return GDPRStorage.ringPublishingVendorsConsent == 1

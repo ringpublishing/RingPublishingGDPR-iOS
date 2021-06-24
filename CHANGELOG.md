@@ -1,3 +1,16 @@
+1.5.0 Release notes (2021-06-23)
+=============================================================
+
+### Features
+
+* Added support for optional parameter in module initializer: 'forcedGDPRApplies'.
+    - If you want to ignore geo-ip based detection for 'gdprApplies', pass as 'forcedGDPRApplies' param either true of false. This parameter is optional.
+* Added public module property: 'gdprApplies'. This contains information if GDPR applies in current context.
+    - This property at module initialization (and before) has value saved from last app session.
+    - This property will be populated with fresh value somewhere between:
+        - after module initialization
+        - before module calls one of the delegate methods with consents status, either 'shouldShowConsentsController' or 'doesNotNeedToUpdateConsents'
+
 1.4.0 Release notes (2021-04-29)
 =============================================================
 

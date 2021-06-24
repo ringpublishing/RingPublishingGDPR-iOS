@@ -86,11 +86,37 @@ public class RingPublishingGDPR: NSObject {
 
         super.init()
     }
+
+    private func initializeModule(config: RingPublishingGDPRConfig,
+                                  delegate: RingPublishingGDPRDelegate,
+                                  forcedGDPRApplies: Bool?) {
+        self.delegate = delegate
+        self.manager = GDPRManager(config: config,
+                                   delegate: self,
+                                   timeoutInterval: networkingTimeout,
+                                   forcedGDPRApplies: forcedGDPRApplies)
+
+        // Configure ringPublishingGDPR view controller
+        ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)
+        ringPublishingGDPRViewController.setInternalDelegate(manager)
+
+        // Fetch required configuration & determine if consents form should be shown
+        manager?.determineConsentsStatusOnStartup()
+    }
 }
 
 // MARK: Public interface
 
 public extension RingPublishingGDPR {
+
+    /// Configure RingPublishingGDPR module
+    ///
+    /// - Parameter config: Module config
+    /// - Parameter delegate: RingPublishingGDPRDelegate
+    @objc
+    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate) {
+        initializeModule(config: config, delegate: delegate, forcedGDPRApplies: nil)
+    }
 
     /// Configure RingPublishingGDPR module
     ///
@@ -101,19 +127,8 @@ public extension RingPublishingGDPR {
     /// - Parameter delegate: RingPublishingGDPRDelegate
     /// - Parameter forcedGDPRApplies: NSNumber?
     @objc
-    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate, forcedGDPRApplies: NSNumber? = nil) {
-        self.delegate = delegate
-        self.manager = GDPRManager(config: config,
-                                   delegate: self,
-                                   timeoutInterval: networkingTimeout,
-                                   forcedGDPRApplies: forcedGDPRApplies as? Bool)
-
-        // Configure ringPublishingGDPR view controller
-        ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)
-        ringPublishingGDPRViewController.setInternalDelegate(manager)
-
-        // Fetch required configuration & determine if consents form should be shown
-        manager?.determineConsentsStatusOnStartup()
+    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate, forcedGDPRApplies: Bool) {
+        initializeModule(config: config, delegate: delegate, forcedGDPRApplies: forcedGDPRApplies)
     }
 }
 

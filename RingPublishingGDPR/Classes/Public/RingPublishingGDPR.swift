@@ -121,7 +121,7 @@ public extension RingPublishingGDPR {
     /// Configure RingPublishingGDPR module
     ///
     /// If you want to ignore geo-ip based detection for 'gdprApplies', pass as 'forcedGDPRApplies' param either true of false.
-    /// Passing nil leaves default behaviour intact.
+    /// This parameter is optional.
     ///
     /// - Parameter config: Module config
     /// - Parameter delegate: RingPublishingGDPRDelegate

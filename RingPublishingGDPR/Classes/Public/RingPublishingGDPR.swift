@@ -48,6 +48,17 @@ public class RingPublishingGDPR: NSObject {
         }
     }
 
+    /// Should GDPR apply in current context?
+    ///
+    /// This property at module initialization (and before) has value saved from last app session.
+    /// This property will be populated with fresh value somewhere between:
+    /// - after module initialization
+    /// - before module calls one of the delegate methods with consents status,
+    /// either 'shouldShowConsentsController' or 'doesNotNeedToUpdateConsents'
+    @objc public var gdprApplies: Bool {
+        return GDPRStorage.gdprApplies == 1 || GDPRStorage.gdprApplies == nil
+    }
+
     /// Returns boolean value which determines whether consent for vendors and theirs purposes for processing data was established
     @objc public var areVendorConsentsGiven: Bool {
         return GDPRStorage.ringPublishingVendorsConsent == 1
@@ -75,6 +86,23 @@ public class RingPublishingGDPR: NSObject {
 
         super.init()
     }
+
+    private func initializeModule(config: RingPublishingGDPRConfig,
+                                  delegate: RingPublishingGDPRDelegate,
+                                  forcedGDPRApplies: Bool?) {
+        self.delegate = delegate
+        self.manager = GDPRManager(config: config,
+                                   delegate: self,
+                                   timeoutInterval: networkingTimeout,
+                                   forcedGDPRApplies: forcedGDPRApplies)
+
+        // Configure ringPublishingGDPR view controller
+        ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)
+        ringPublishingGDPRViewController.setInternalDelegate(manager)
+
+        // Fetch required configuration & determine if consents form should be shown
+        manager?.determineConsentsStatusOnStartup()
+    }
 }
 
 // MARK: Public interface
@@ -87,15 +115,20 @@ public extension RingPublishingGDPR {
     /// - Parameter delegate: RingPublishingGDPRDelegate
     @objc
     func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate) {
-        self.delegate = delegate
-        self.manager = GDPRManager(config: config, delegate: self, timeoutInterval: networkingTimeout)
+        initializeModule(config: config, delegate: delegate, forcedGDPRApplies: nil)
+    }
 
-        // Configure ringPublishingGDPR view controller
-        ringPublishingGDPRViewController.configure(with: config.uiConfig, attConfig: config.attConfig)
-        ringPublishingGDPRViewController.setInternalDelegate(manager)
-
-        // Fetch required configuration & determine if consents form should be shown
-        manager?.determineConsentsStatusOnStartup()
+    /// Configure RingPublishingGDPR module
+    ///
+    /// If you want to ignore geo-ip based detection for 'gdprApplies', pass as 'forcedGDPRApplies' param either true of false.
+    /// This parameter is optional.
+    ///
+    /// - Parameter config: Module config
+    /// - Parameter delegate: RingPublishingGDPRDelegate
+    /// - Parameter forcedGDPRApplies: NSNumber?
+    @objc
+    func initialize(config: RingPublishingGDPRConfig, delegate: RingPublishingGDPRDelegate, forcedGDPRApplies: Bool) {
+        initializeModule(config: config, delegate: delegate, forcedGDPRApplies: forcedGDPRApplies)
     }
 }
 

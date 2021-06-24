@@ -15,7 +15,7 @@ extension GDPRManager {
                                               _ consentsStatus: ConsentsStatus?,
                                               _ error: Error?) -> Void
 
-    func fetchStartupConfigurationIfNeeded(completion: @escaping StartupConfigurationCallback) {
+    func fetchStartupConfigurationIfNeeded(forcedGDPRApplies: Bool?, completion: @escaping StartupConfigurationCallback) {
         guard tenantConfiguration == nil || lastAPIConsentsCheckStatus == nil else {
             completion(tenantConfiguration, lastAPIConsentsCheckStatus, nil)
             return
@@ -33,7 +33,7 @@ extension GDPRManager {
             completion(fetchedTenantConfig, fetchedConsentsStatus, fetchError)
         }
 
-        fetchCMPConfiguration { (configuration, error) in
+        fetchCMPConfiguration(forcedGDPRApplies: forcedGDPRApplies) { (configuration, error) in
             fetchedTenantConfig = configuration
             fetchError = fetchError ?? error
 
@@ -54,11 +54,13 @@ private extension GDPRManager {
 
     /// Fetch CMP configuration for given tenant
     ///
+    /// - Parameter forcedGDPRApplies: Bool
     /// - Parameter completion: Completion handler
-    func fetchCMPConfiguration(completion: @escaping (_ configuration: TenantConfiguration?, _ error: Error?) -> Void) {
+    func fetchCMPConfiguration(forcedGDPRApplies: Bool?,
+                               completion: @escaping (_ configuration: TenantConfiguration?, _ error: Error?) -> Void) {
         Logger.log("Asking CMP API for tenant configuration...")
 
-        cmpApi.getCMPTenantConfiguration(completion: { (config, error) in
+        cmpApi.getCMPTenantConfiguration(forcedGDPRApplies: forcedGDPRApplies, completion: { (config, error) in
             Logger.log("CMP API did return tenant configuration? -> \(config != nil)")
             completion(config, error)
         })

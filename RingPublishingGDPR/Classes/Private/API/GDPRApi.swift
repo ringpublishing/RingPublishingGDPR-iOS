@@ -45,11 +45,16 @@ class GDPRApi {
 
     // MARK: Methods
 
-    func getCMPTenantConfiguration(completion: @escaping (_ configuration: TenantConfiguration?, _ error: Error?) -> Void) {
+    func getCMPTenantConfiguration(forcedGDPRApplies: Bool?,
+                                   completion: @escaping (_ configuration: TenantConfiguration?, _ error: Error?) -> Void) {
         var urlComponents = URLComponents(string: "\(apiBaseUrl)/\(tenantId)/mobile")
         urlComponents?.queryItems = [
             URLQueryItem(name: "site", value: brandName)
         ]
+
+        if let forcedGDPR = forcedGDPRApplies {
+            urlComponents?.queryItems?.append(URLQueryItem(name: "forced_gdpr", value: forcedGDPR ? "1" : "0"))
+        }
 
         guard let url = urlComponents?.url else {
             Logger.log("Configuration url could not be constructed!", level: .error)

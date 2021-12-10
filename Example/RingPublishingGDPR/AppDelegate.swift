@@ -161,7 +161,7 @@ extension AppDelegate: RingPublishingGDPRDelegate {
         showAppContent()
     }
 
-    // MARK: Optional methods
+    // MARK: Optional methods (ATT)
 
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didRequestToOpenUrl url: URL) {
         // In demo app we are just opening url in Safari - in your app you can show it inside you app navigation hierarchy
@@ -187,5 +187,13 @@ extension AppDelegate: RingPublishingGDPRDelegate {
         // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
 
         print("DEMO - RingPublishingGDPR: userSelectedATTAlertPermissionWithResult -> \(trackingAllowed)")
+    }
+
+    // MARK: Optional methods (Error)
+
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didEncounterError error: RingPublishingGDPRError) {
+        // In demo app we are just printing this information to console - in your app you can use this for analytics purpose
+
+        print("DEMO - RingPublishingGDPR: didEncounterError -> \(error)")
     }
 }

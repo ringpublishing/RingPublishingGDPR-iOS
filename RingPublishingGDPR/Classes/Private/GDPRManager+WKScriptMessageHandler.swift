@@ -66,12 +66,14 @@ extension GDPRManager: WKScriptMessageHandler {
             Logger.log("CMP: JavaScript listeners for CMP were not added - error was returned.", level: .error)
 
             handleError(GDPRError.javascriptListenersError.nsError)
+            delegate?.gdprManager(self, didEncounterError: .webViewJavaScriptFailed)
 
         case .consentsError:
             let payload = messageDictionary?[Self.cmpEventPayloadKey] as? String
             Logger.log("CMP: JavaScript consents fetch failed - error was returned in function: \(payload.logable)", level: .error)
 
             handleConsentsFetchError()
+            delegate?.gdprManager(self, didEncounterError: .webViewJavaScriptFailed)
         }
     }
 }

@@ -171,4 +171,8 @@ extension RingPublishingGDPR: GDPRManagerDelegate {
     func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool) {
         delegate?.ringPublishingGDPR?(self, userSelectedATTAlertPermissionWithResult: trackingAllowed)
     }
+
+    func gdprManager(_ manager: GDPRManager, didEncounterError error: RingPublishingGDPRError) {
+        delegate?.ringPublishingGDPR?(self, didEncounterError: error)
+    }
 }

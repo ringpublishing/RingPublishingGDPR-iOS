@@ -11,7 +11,7 @@ import UIKit
 
 /// RingPublishingGDPR module delegate
 @objc
-public protocol RingPublishingGDPRDelegate: class {
+public protocol RingPublishingGDPRDelegate: AnyObject {
 
     // MARK: Required methods
 
@@ -39,7 +39,7 @@ public protocol RingPublishingGDPRDelegate: class {
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
                             shouldHideConsentsController viewController: RingPublishingGDPRViewController)
 
-    // MARK: Optional methods
+    // MARK: Optional methods (ATT)
 
     /// Delegate method saying that application should open url selected by the user
     ///
@@ -72,4 +72,15 @@ public protocol RingPublishingGDPRDelegate: class {
     @objc optional
     func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR,
                             userSelectedATTAlertPermissionWithResult trackingAllowed: Bool)
+
+    // MARK: Optional methods (Error)
+
+    /// Delegate method saying that something unexpected happening during "normal" consents state check
+    /// This is only returned for informational purpose and application does not need to handle it in any way
+    ///
+    /// - Parameters:
+    ///   - ringPublishingGDPR: RingPublishingGDPR
+    ///   - error: RingPublishingGDPRError
+    @objc optional
+    func ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didEncounterError error: RingPublishingGDPRError)
 }

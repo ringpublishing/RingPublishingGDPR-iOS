@@ -27,7 +27,7 @@ public enum RingPublishingGDPRError: Int {
     /// SDK could not load consents form in WebView
     case webViewLoadingFailed = 5
 
-    /// SDK did detect error in of the JavaScript functions inside consent form
+    /// SDK did detect error in one of the JavaScript functions inside consent form
     case webViewJavaScriptFailed = 6
 }
 

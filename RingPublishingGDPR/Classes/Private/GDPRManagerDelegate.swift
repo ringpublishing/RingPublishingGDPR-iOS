@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 
 /// GDPRManager internal delegate
-protocol GDPRManagerDelegate: class {
+protocol GDPRManagerDelegate: AnyObject {
 
     /// Manager decided that there is no need to show consents controller
     ///
@@ -60,4 +60,7 @@ protocol GDPRManagerDelegate: class {
     ///   - manager: GDPRManager
     ///   - trackingAllowed: Bool
     func gdprManager(_ manager: GDPRManager, userSelectedATTAlertPermissionWithResult trackingAllowed: Bool)
+
+    /// Manager is informing about error that occured during initialization or consents check / update operations
+    func gdprManager(_ manager: GDPRManager, didEncounterError error: RingPublishingGDPRError)
 }

@@ -21,10 +21,12 @@ extension GDPRManager: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         handleError(error)
+        delegate?.gdprManager(self, didEncounterError: .webViewLoadingFailed)
     }
 
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         handleError(error)
+        delegate?.gdprManager(self, didEncounterError: .webViewLoadingFailed)
     }
 
     public func webView(_ webView: WKWebView,

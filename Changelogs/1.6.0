@@ -1,0 +1,12 @@
+1.6.0 Release notes (2021-12-13)
+=============================================================
+
+### Features
+
+* Added optional 'ringPublishingGDPR(_ ringPublishingGDPR: RingPublishingGDPR, didEncounterError error: RingPublishingGDPRError)' method to 'RingPublishingGDPRDelegate' protocol
+    - This method informs about something unexpected happening during "normal" consents state check
+    - This is only returned for informational purpose and application does not need to handle it in any way
+
+### Changes
+
+* Removed deprecated 'class' protocols conformance in place of 'AnyObject'

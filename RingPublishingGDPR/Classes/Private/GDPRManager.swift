@@ -155,6 +155,7 @@ class GDPRManager: NSObject {
 
             Logger.log("Startup loading timer fired. Timeout reached!", level: .error)
             self.startupLoadingTimer = nil
+            self.delegate?.gdprManager(self, didEncounterError: .configurationFetchTimeout)
             self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
         })
 
@@ -174,6 +175,15 @@ class GDPRManager: NSObject {
                                             error: Error?) {
         guard let config = configuration, let status = consentsStatus, error == nil else {
             Logger.log("Startup configuration fetch encountered an error! Error: \(error.debugDescription)", level: .error)
+
+            if configuration == nil {
+                self.delegate?.gdprManager(self, didEncounterError: .tenantConfigurationFetchFailed)
+            }
+
+            if consentsStatus == nil {
+                self.delegate?.gdprManager(self, didEncounterError: .consentsStatusFetchFailed)
+            }
+
             self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
             return
         }
@@ -226,6 +236,7 @@ class GDPRManager: NSObject {
             guard let self = self else { return }
 
             self.webview?.stopLoading()
+            self.delegate?.gdprManager(self, didEncounterError: .webViewLoadingTimeout)
 
             guard self.webViewHostPageLoaded else { return }
 

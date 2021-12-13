@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Internal protocol used to communicate between RingPublishingGDPR module and ViewController
-protocol RingPublishingGDPRViewControllerDelegate: class {
+protocol RingPublishingGDPRViewControllerDelegate: AnyObject {
 
     /// View controller wants to show CMP welcome screen
     func ringPublishingGDPRViewControllerDidRequestToShowWelcomeScreen()

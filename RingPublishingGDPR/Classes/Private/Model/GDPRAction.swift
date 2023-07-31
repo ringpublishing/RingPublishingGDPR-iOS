@@ -8,8 +8,6 @@
 
 import Foundation
 
-// swiftlint:disable line_length
-
 /// Actions possible to perform with CMP tool
 ///
 /// - showWelcomeScreen: Show consents welcome screen
@@ -55,7 +53,10 @@ enum GDPRAction {
             return """
             window.dlApi.getCompleteConsentData(function(error, data) {
                 if (error) {
-                    webkit.messageHandlers.cmpEvents.postMessage({"cmpEventStatus": "consentsError", "cmpEventPayload": "getCompleteConsentData"});
+                    webkit.messageHandlers.cmpEvents.postMessage({
+                        "cmpEventStatus": "consentsError",
+                        "cmpEventPayload": "getCompleteConsentData"
+                    });
                 } else {
                     webkit.messageHandlers.cmpEvents.postMessage({"cmpEventStatus": "getCompleteConsentData", "cmpEventPayload": data});
                 }

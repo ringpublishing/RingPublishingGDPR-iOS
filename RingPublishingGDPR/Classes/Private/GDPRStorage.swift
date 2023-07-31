@@ -6,8 +6,6 @@
 //  Copyright © 2020 Ringier Axel Springer Polska. All rights reserved.
 //
 
-// swiftlint:disable identifier_name
-
 import Foundation
 
 class GDPRStorage {

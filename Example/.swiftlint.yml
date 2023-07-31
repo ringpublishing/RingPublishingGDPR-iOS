@@ -37,6 +37,8 @@ type_name:
 identifier_name:
   min_length:
     error: 3
+  max_length:
+    warning: 45
 disabled_rules:
 - todo
 - block_based_kvo

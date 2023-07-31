@@ -8,8 +8,6 @@
 
 import Foundation
 
-// swiftlint:disable identifier_name
-
 /// Enum representing status for user consents data returned by CMP API
 ///
 /// - empty: Contents are empty
@@ -21,7 +19,12 @@ enum ConsentsStatus: String {
     case empty
     case invalid
     case outdated
+
+    // swiftlint:disable identifier_name
+
     case ok
+
+    // swiftlint:enable identifier_name
 
     // MARK: Init
 

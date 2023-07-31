@@ -203,9 +203,11 @@ class GDPRManager: NSObject {
         Logger.log("Check result: GDPR consents NOT up to date - \(consentsNotUpToDate)")
         Logger.log("Check result: ATT status NOT determined - \(attConsentsNotDetermined)")
 
-        shouldAsk ?
-            delegate?.gdprManagerDidRequestToShowConsentsController(self) :
+        if shouldAsk {
+            delegate?.gdprManagerDidRequestToShowConsentsController(self)
+        } else {
             delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
+        }
     }
 
     // MARK: WebView

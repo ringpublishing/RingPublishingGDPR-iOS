@@ -1,3 +1,10 @@
+1.6.1 Release notes (2023-08-01)
+=============================================================
+
+### Changes
+
+* Enhanced module logs with full 'Error' description from WkWebView and data like url loaded in WkWebView
+
 1.6.0 Release notes (2021-12-13)
 =============================================================
 

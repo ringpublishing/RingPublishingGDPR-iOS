@@ -153,7 +153,7 @@ class GDPRManager: NSObject {
         startupLoadingTimer = Timer.scheduledTimer(withTimeInterval: timeoutInterval, repeats: false, block: { [weak self] _ in
             guard let self = self else { return }
 
-            Logger.log("Startup loading timer fired. Timeout reached!", level: .error)
+            Logger.log("Startup loading timer fired. Timeout of '\(self.timeoutInterval)'s reached!", level: .error)
             self.startupLoadingTimer = nil
             self.delegate?.gdprManager(self, didEncounterError: .configurationFetchTimeout)
             self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
@@ -187,6 +187,9 @@ class GDPRManager: NSObject {
             self.delegate?.gdprManagerDidDetermineThatConsentsAreUpToDate(self)
             return
         }
+
+        Logger.log("Fetched startup configuration: \(config)")
+        Logger.log("Startup consents status determined as: '\(status)'")
 
         // Store configuration for further use
         tenantConfiguration = config
@@ -250,7 +253,7 @@ class GDPRManager: NSObject {
         // Use stored configuration if we have it already
         if let configuration = tenantConfiguration, moduleState != .cmpError {
             // Load web page
-            Logger.log("Loading CMP site using already fetched configuration.")
+            Logger.log("Loading CMP site using already fetched configuration. Loading url: \(configuration.cmpUrl)")
 
             let request = URLRequest(url: configuration.cmpUrl)
             webview?.load(request)
@@ -269,6 +272,8 @@ class GDPRManager: NSObject {
             }
 
             // Load web page
+            Logger.log("Loading CMP site using freshly fetched configuration. Loading url: \(tenantConfig.cmpUrl)")
+
             let request = URLRequest(url: tenantConfig.cmpUrl)
             strongSelf.webview?.load(request)
         }
@@ -278,8 +283,7 @@ class GDPRManager: NSObject {
     ///
     /// - Parameter error: Error
     func handleError(_ error: Error) {
-        let errorMessage = "CMP loading error: \(error.localizedDescription)"
-        Logger.log(errorMessage, level: .error)
+        Logger.log("CMP loading error: \(error)", level: .error)
 
         // Cancel loading timer
         Logger.log("Cancelling CMP loading timer due to loading error...")

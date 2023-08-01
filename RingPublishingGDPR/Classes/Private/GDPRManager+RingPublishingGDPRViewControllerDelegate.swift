@@ -48,7 +48,7 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
     }
 
     func ringPublishingGDPRViewControllerDidRequestToOpenURL(_ url: URL) {
-        Logger.log("RingPublishingGDPRViewController is requesting to open URL selected by the user.")
+        Logger.log("RingPublishingGDPRViewController is requesting to open URL (\(url.absoluteString)) selected by the user.")
         delegate?.gdprManager(self, isRequestingToOpenUrl: url)
     }
 }

@@ -20,3 +20,5 @@ extension UIViewController {
         return view!
     }
 }
+
+// swiftlint:enable force_unwrapping

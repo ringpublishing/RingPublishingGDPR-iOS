@@ -57,7 +57,7 @@ class GDPRApi {
         }
 
         guard let url = urlComponents?.url else {
-            Logger.log("Configuration url could not be constructed!", level: .error)
+            Logger.log("Configuration url could not be constructed from components: \(urlComponents.logable)!", level: .error)
             completion(nil, nil)
             return
         }
@@ -90,13 +90,16 @@ class GDPRApi {
             return
         }
 
+        Logger.log("Checking consents status for consents: \(consents)")
+
         var urlComponents = URLComponents(string: "\(apiBaseUrl)/\(tenantId)/func/verify")
         urlComponents?.queryItems = consents.sorted(by: { $0.key <= $1.key }).map { (key, value) in
             return URLQueryItem(name: key, value: "\(value)")
         }
 
         guard let url = urlComponents?.url else {
-            Logger.log("Consents status verification url could not be constructed! Used consents: \(consents)", level: .error)
+            Logger.log("Consents status verification url could not be constructed from components: \(urlComponents.logable)!",
+                       level: .error)
             completion(.invalid, nil)
             return
         }

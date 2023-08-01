@@ -24,3 +24,5 @@ extension UIView {
         return view!
     }
 }
+
+// swiftlint:enable force_unwrapping

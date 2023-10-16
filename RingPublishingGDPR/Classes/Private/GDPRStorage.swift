@@ -53,8 +53,8 @@ class GDPRStorage {
     @ConsentStorage(key: "IABTCF_PurposeOneTreatment")
     static var purposeOneTreatment: Int?
 
-    @ConsentStorage(key: "IABTCF_UseNonStandardStacks")
-    static var useNonStandardStacks: Int?
+    @ConsentStorage(key: "IABTCF_UseNonStandardTexts")
+    static var useNonStandardTexts: Int?
 
     @ConsentStorage(key: "IABTCF_TCString")
     static var tcString: String?

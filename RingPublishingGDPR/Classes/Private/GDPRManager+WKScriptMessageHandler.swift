@@ -117,7 +117,7 @@ private extension GDPRManager {
         GDPRStorage.gdprApplies = dictionary?.value(byKey: "gdprApplies")
         GDPRStorage.publisherCC = dictionary?.value(byKey: "publisherCC")
         GDPRStorage.purposeOneTreatment = dictionary?.value(byKey: "purposeOneTreatment")
-        GDPRStorage.useNonStandardStacks = dictionary?.value(byKey: "useNonStandardStacks")
+        GDPRStorage.useNonStandardTexts = dictionary?.value(byKey: "useNonStandardTexts")
         GDPRStorage.tcString = dictionary?.value(byKey: "tcString")
         GDPRStorage.vendorConsents = dictionary?.value(byKeyPath: "vendor.consents")
         GDPRStorage.vendorLegitimateInterests = dictionary?.value(byKeyPath: "vendor.legitimateInterests")

@@ -1,3 +1,11 @@
+1.7.0 Release notes (2023-10-16)
+=============================================================
+
+### Changes
+
+* Added support for TCF2.2:
+    - replaced 'UserDefaults' field: 'IABTCF_UseNonStandardStacks' with 'IABTCF_UseNonStandardTexts'
+
 1.6.1 Release notes (2023-08-01)
 =============================================================
 

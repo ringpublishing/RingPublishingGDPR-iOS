@@ -75,6 +75,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         RingPublishingGDPR.shared.networkingTimeout = 8
 
+        // If you want to disable console logs output, you can change it
+
+        RingPublishingGDPR.shared.consoleLogsEnabled = true
+
         // Then initialize SDK
 
         RingPublishingGDPR.shared.initialize(config: config, delegate: self)

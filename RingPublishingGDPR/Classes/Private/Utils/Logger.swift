@@ -18,6 +18,9 @@ class Logger {
     /// Logger instance
     private let logger: OSLog
 
+    /// Are console logs enabled?
+    var consoleLogsEnabled: Bool = true
+
     /// Closure which can be used to gather module logs inside host application
     var loggerOutput: ((_ message: String) -> Void)?
 
@@ -41,7 +44,10 @@ class Logger {
         let fileName = (file as NSString).lastPathComponent
         let messageWithMetadata = "[\(fileName):\(lineNumber) \(functionName)] \(message)"
 
-        os_log("%{public}@", log: Self.shared.logger, type: level, messageWithMetadata)
+        if Self.shared.consoleLogsEnabled {
+            os_log("%{public}@", log: Self.shared.logger, type: level, messageWithMetadata)
+        }
+
         Self.shared.loggerOutput?(messageWithMetadata)
     }
 }

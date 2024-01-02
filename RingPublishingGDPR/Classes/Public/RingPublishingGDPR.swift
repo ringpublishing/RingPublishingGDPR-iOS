@@ -38,6 +38,18 @@ public class RingPublishingGDPR: NSObject {
         }
     }
 
+    /// Should console logs from module be enabled?
+    /// This settings doesn't disable logs output to 'loggerOutput' function
+    /// Defaults to true
+    @objc public var consoleLogsEnabled: Bool {
+        get {
+            return Logger.shared.consoleLogsEnabled
+        }
+        set {
+            Logger.shared.consoleLogsEnabled = newValue
+        }
+    }
+
     /// Web view & API timeout (in seconds)
     ///
     /// Default value is 10s

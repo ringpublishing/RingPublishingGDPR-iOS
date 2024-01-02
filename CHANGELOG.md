@@ -1,3 +1,10 @@
+1.7.1 Release notes (2023-12-22)
+=============================================================
+
+### Changes
+
+* Added property 'consoleLogsEnabled' to 'RingPublishingGDPR.shared' as possibility to disable console logs output from module
+
 1.7.0 Release notes (2023-10-16)
 =============================================================
 

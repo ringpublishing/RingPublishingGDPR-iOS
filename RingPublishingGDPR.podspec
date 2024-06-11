@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
     s.swift_version = '5.1'
     s.frameworks = 'UIKit', 'WebKit'
 
-    s.source_files = ['RingPublishingGDPR/Classes/**/*.{swift}']
-    s.resource_bundles = { 'RingPublishingGDPR' => ['RingPublishingGDPR/Resources/**/*.{strings,xib,js,xcassets}'] }
+    s.source_files = ['Sources/RingPublishingGDPR/Classes/**/*.{swift}']
+    s.resource_bundles = { 'RingPublishingGDPR_RingPublishingGDPR' => ['Sources/RingPublishingGDPR/Resources/**/*.{strings,xib,js,xcassets}'] }
 
 end

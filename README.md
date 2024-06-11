@@ -25,7 +25,7 @@ Reference guide:
 ## Requirements
 
 - iOS 11.0+
-- Xcode 11+
+- Xcode 12+
 - Swift 5.1+
 
 ## Installation
@@ -39,6 +39,26 @@ Additions to your Podfile:
 source 'https://github.com/ringpublishing/RingPublishing-CocoaPods-Specs.git'
 
 pod 'RingPublishingGDPR'
+```
+
+### Using [Swift Package Manager](https://swift.org/package-manager/)
+
+To install it into a project, add it as a dependency within your project settings using Xcode:
+
+```swift
+Package URL: "https://github.com/ringpublishing/RingPublishingGDPR-iOS"
+```
+
+or if you are using manifest file, add it as a dependency there:
+
+```swift
+let Package = Package(
+    ...
+    dependencies: [
+        .package(url: "https://github.com/ringpublishing/RingPublishingGDPR-iOS.git", .upToNextMinor(from: "1.8.0"))
+    ],
+    ...
+)
 ```
 
 ## Usage

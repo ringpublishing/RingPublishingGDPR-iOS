@@ -12,7 +12,7 @@ import Foundation
 extension Bundle {
 
     static var ringPublishingGDPRBundle: Bundle {
-        guard let bundlePath = Bundle.main.path(forResource: "RingPublishingGDPR", ofType: "bundle") else { return Bundle.main }
+        guard let bundlePath = Bundle.main.path(forResource: "RingPublishingGDPR_RingPublishingGDPR", ofType: "bundle") else { return Bundle.main }
 
         return Bundle(path: bundlePath) ?? .main
     }

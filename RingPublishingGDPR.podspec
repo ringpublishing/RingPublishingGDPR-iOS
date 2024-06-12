@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "RingPublishingGDPR"
-    s.version      = "1.7.1"
+    s.version      = "1.8.0"
     s.homepage     = "https://github.com/ringpublishing/RingPublishingGDPR-iOS"
     s.summary      = "Collects and saves user's consent in accordance with the standard TCF2.0"
     s.license      = { :type => 'Copyright. Ringier Axel Springer Polska', :file => 'LICENSE' }
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
     s.swift_version = '5.1'
     s.frameworks = 'UIKit', 'WebKit'
 
-    s.source_files = ['RingPublishingGDPR/Classes/**/*.{swift}']
-    s.resource_bundles = { 'RingPublishingGDPR' => ['RingPublishingGDPR/Resources/**/*.{strings,xib,js,xcassets}'] }
+    s.source_files = ['Sources/RingPublishingGDPR/Classes/**/*.{swift}']
+    s.resource_bundles = { 'RingPublishingGDPR_RingPublishingGDPR' => ['Sources/RingPublishingGDPR/Resources/**/*.{strings,xib,js,xcassets}'] }
 
 end

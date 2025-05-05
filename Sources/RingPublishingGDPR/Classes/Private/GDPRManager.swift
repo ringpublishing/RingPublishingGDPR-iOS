@@ -221,6 +221,14 @@ class GDPRManager: NSObject {
         webview.configuration.userContentController.add(WKScriptMessageHandlerWrapper(delegate: self), name: Self.cmpMessageHandlerName)
         webview.navigationDelegate = self
 
+        // Set background color
+        let bgColor = UIColor(named: "ringPublishingGDPRBackground", in: Bundle.ringPublishingGDPRBundle, compatibleWith: nil)
+        webview.backgroundColor = bgColor
+
+        if #available(iOS 15.0, *) {
+            webview.underPageBackgroundColor = bgColor
+        }
+
         self.webview = webview
 
         delegate?.gdprManager(self, isRequestingToEmbedWebView: webview)

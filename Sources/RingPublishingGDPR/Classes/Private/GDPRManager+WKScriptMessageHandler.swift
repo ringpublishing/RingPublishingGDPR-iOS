@@ -43,7 +43,10 @@ extension GDPRManager: WKScriptMessageHandler {
 
             moduleState = .cmpShown
 
-            delegate?.gdprManager(self, isRequestingToChangeViewState: .gdprConsents)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                // Slight delay to hide loading view so webview can fully render
+                self.delegate?.gdprManager(self, isRequestingToChangeViewState: .gdprConsents)
+            }
 
         case .userInteractionComplete:
             Logger.log("CMP: User did finish interacting with the WebView form.")

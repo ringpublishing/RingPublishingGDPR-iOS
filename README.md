@@ -55,7 +55,7 @@ or if you are using manifest file, add it as a dependency there:
 let Package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/ringpublishing/RingPublishingGDPR-iOS.git", .upToNextMinor(from: "1.8.0"))
+        .package(url: "https://github.com/ringpublishing/RingPublishingGDPR-iOS.git", .upToNextMinor(from: "1.8.1"))
     ],
     ...
 )

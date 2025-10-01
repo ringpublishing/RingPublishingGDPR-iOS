@@ -21,13 +21,10 @@ extension UIDevice {
             lastKnownDeviceLandscapeStatus = landscape
         }
 
-        let device = UIDevice.current
-        let app = UIApplication.shared
+        guard let orientation = UIApplication.keyWindow?.windowScene?.interfaceOrientation else { return landscape }
 
-        if app.statusBarOrientation != .unknown {
-            landscape = app.statusBarOrientation.isLandscape
-        } else if device.orientation.isValidInterfaceOrientation {
-            landscape = device.orientation.isLandscape
+        if orientation != .unknown {
+            landscape = orientation.isLandscape
         } else {
             // If device is flat on the table orientation is not returned (not portrait or landscape)
             landscape = lastKnownDeviceLandscapeStatus

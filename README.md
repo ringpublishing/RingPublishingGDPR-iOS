@@ -24,8 +24,8 @@ Reference guide:
 
 ## Requirements
 
-- iOS 11.0+
-- Xcode 12+
+- iOS 15.0+
+- Xcode 16+
 - Swift 5.1+
 
 ## Installation

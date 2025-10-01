@@ -19,7 +19,7 @@ class AppTrackingTransparencyManager {
 
     /// Returns true if tracking status is determined & we do not have to ask for permissions
     var trackingStatusDetermined: Bool {
-        guard #available(iOS 14, *), appTrackingTransparencySupportEnabled else {
+        guard appTrackingTransparencySupportEnabled else {
             // If we can't show permission question, assume status is determined
             return true
         }
@@ -50,9 +50,7 @@ class AppTrackingTransparencyManager {
     ///
     /// - Parameter completion: Completion handler
     func showAppTrackingTransparencyAlert(completion: @escaping (_ trackingAllowed: Bool) -> Void) {
-        guard #available(iOS 14, *), appTrackingTransparencySupportEnabled else {
-            // This should never happen
-            Logger.log("Requests to show AppTrackingTransparency alert was performed below iOS 14!", level: .error)
+        guard appTrackingTransparencySupportEnabled else {
             completion(false)
             return
         }

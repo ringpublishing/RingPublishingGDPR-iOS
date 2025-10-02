@@ -7,7 +7,7 @@ let package = Package(
     name: "RingPublishingGDPR",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v15)
     ],
     products: [
         .library(

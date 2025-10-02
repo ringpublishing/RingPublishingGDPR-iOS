@@ -88,8 +88,7 @@ class AppTrackingTransparencyView: UIView {
             adjustViewMargins()
         }
 
-        guard #available(iOS 12.0, *),
-              isApplicationInActiveState,
+        guard isApplicationInActiveState,
               traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
 
         // Reconfigure texts as style (like bold) is lost when appearance changes
@@ -185,7 +184,7 @@ private extension AppTrackingTransparencyView {
     }
 
     func adjustViewMargins() {
-        guard let appBounds = UIApplication.shared.keyWindow?.bounds, UIDevice.isDeviceInLandscape else {
+        guard let appBounds = UIApplication.keyWindow?.bounds, UIDevice.isDeviceInLandscape else {
             directionalLayoutMargins = .zero
             return
         }

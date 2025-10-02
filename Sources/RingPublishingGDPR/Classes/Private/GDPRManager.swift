@@ -224,10 +224,7 @@ class GDPRManager: NSObject {
         // Set background color
         let bgColor = UIColor(named: "ringPublishingGDPRBackground", in: Bundle.ringPublishingGDPRBundle, compatibleWith: nil)
         webview.backgroundColor = bgColor
-
-        if #available(iOS 15.0, *) {
-            webview.underPageBackgroundColor = bgColor
-        }
+        webview.underPageBackgroundColor = bgColor
 
         self.webview = webview
 

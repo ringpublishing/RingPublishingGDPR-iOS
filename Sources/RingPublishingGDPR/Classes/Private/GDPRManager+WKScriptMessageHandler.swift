@@ -124,6 +124,7 @@ private extension GDPRManager {
         GDPRStorage.tcString = dictionary?.value(byKey: "tcString")
         GDPRStorage.vendorConsents = dictionary?.value(byKeyPath: "vendor.consents")
         GDPRStorage.vendorLegitimateInterests = dictionary?.value(byKeyPath: "vendor.legitimateInterests")
+        GDPRStorage.disclosedVendors = dictionary?.value(byKeyPath: "vendor.vendorsDisclosed")
         GDPRStorage.purposeConsents = dictionary?.value(byKeyPath: "purpose.consents")
         GDPRStorage.purposeLegitimateInterests = dictionary?.value(byKeyPath: "purpose.legitimateInterests")
         GDPRStorage.specialFeaturesOptIns = dictionary?.value(byKey: "specialFeatureOptins")

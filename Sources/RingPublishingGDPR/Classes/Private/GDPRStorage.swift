@@ -65,6 +65,9 @@ class GDPRStorage {
     @ConsentStorage(key: "IABTCF_VendorLegitimateInterests")
     static var vendorLegitimateInterests: String?
 
+    @ConsentStorage(key: "IABTCF_DisclosedVendors")
+    static var disclosedVendors: String?
+
     @ConsentStorage(key: "IABTCF_PurposeConsents")
     static var purposeConsents: String?
 

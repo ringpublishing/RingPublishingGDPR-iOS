@@ -17,6 +17,9 @@ extension GDPRManager: RingPublishingGDPRViewControllerDelegate {
     }
 
     func ringPublishingGDPRViewControllerDidRequestToShowSetingsScreen() {
+        // Force content reset to default state and then load settings page
+        // This prevents invalid state when showing setting on the same webview instance more then once
+        detectUpdateFlowWithAppleAppTransparencyTracking(for: .showWelcomeScreen)
         detectUpdateFlowWithAppleAppTransparencyTracking(for: .showSettingsScreen)
     }
 

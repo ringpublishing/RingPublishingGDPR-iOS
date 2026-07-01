@@ -49,6 +49,16 @@ extension GDPRManager: WKNavigationDelegate {
             return
         }
 
+        // Links pointing at the same host as the currently loaded CMP page are internal
+        // navigations (for example same-page anchors used to reveal the vendor list) and
+        // should stay inside the webview instead of being sent to an external browser
+        if let linkUrl = navigationAction.request.url, linkUrl.host == webView.url?.host {
+            Logger.log("CMP: WebView decide policy - allow for same host url: \(navigationUrl.logable)")
+
+            decisionHandler(.allow)
+            return
+        }
+
         // Open link in Safari browser
         if let linkUrl = navigationAction.request.url, UIApplication.shared.canOpenURL(linkUrl) {
             Logger.log("CMP: WebView decide policy - opening in Safari: \(linkUrl)")

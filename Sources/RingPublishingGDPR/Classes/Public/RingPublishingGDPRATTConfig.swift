@@ -36,6 +36,30 @@ public class RingPublishingGDPRATTConfig: NSObject {
     /// Text which will be displayed as "allow" / "continue" button for App Tracking Transparency explanation screen
     @objc public var explanationAllowButtonText: String?
 
+    // MARK: Optional styling overrides (App Tracking Transparency explanation screen)
+    //
+    // All properties below are opt-in. When left `nil` the screen renders exactly as before
+    // (values baked into the bundled xib), so existing integrations are unaffected.
+
+    /// Corner radius applied to the "allow" / "continue" action button.
+    ///
+    /// When `nil`, the default value from the xib is used. The value is clamped to half of the
+    /// button height at layout time, so passing a large value (e.g. a very big number) yields a
+    /// fully rounded "capsule" button regardless of its height.
+    public var actionButtonCornerRadius: CGFloat?
+
+    /// Horizontal margin (in points) between the screen edges and its content
+    /// (logo, texts and buttons).
+    ///
+    /// When `nil`, the default value from the xib is used.
+    public var contentHorizontalMargin: CGFloat?
+
+    /// Base font size (in points) used for the explanation description text.
+    ///
+    /// When `nil`, the default value from the xib is used. The description may still be shrunk
+    /// automatically if it does not fit the available space.
+    public var descriptionFontSize: CGFloat?
+
     // MARK: Init
 
     /// Initializer

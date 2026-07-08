@@ -17,6 +17,8 @@ class AppTrackingTransparencyView: UIView {
     @IBOutlet private weak var titleTextView: UITextView!
     @IBOutlet private weak var logoImageView: UIImageView!
     @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentTrailingConstraint: NSLayoutConstraint!
 
     private var realLogoSizeConstrainedToHeight: CGSize {
         guard let image = logoImageView.image, image.size.width > 0 && image.size.height > 0 else {
@@ -72,6 +74,7 @@ class AppTrackingTransparencyView: UIView {
         super.layoutSubviews()
 
         adjustViewMargins()
+        applyActionButtonCornerRadiusIfNeeded()
 
         guard descriptionTextViewSizeForShrinking == nil
             || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width,
@@ -110,6 +113,7 @@ class AppTrackingTransparencyView: UIView {
 
         configureButtons(with: uiConfig, attConfig: attConfig)
         configureLogo(with: uiConfig, attConfig: attConfig)
+        applyContentMargins(with: attConfig)
 
         // We do not want to call here "configureTexts(with: uiConfig, attConfig: attConfig)" if app is not in active state
         // We must be in .active application state in order for WebKit to work correctly.
@@ -157,7 +161,10 @@ private extension AppTrackingTransparencyView {
         titleTextView.attributedText = attConfig?.explanationTitle?.convertfromHTML(using: titleFont,
                                                                                     textColor: textColor)
 
-        configureDescriptionText(attConfig?.explanationDescription, textColor: textColor, uiConfig: uiConfig)
+        configureDescriptionText(attConfig?.explanationDescription,
+                                 textColor: textColor,
+                                 uiConfig: uiConfig,
+                                 desiredFontSize: attConfig?.descriptionFontSize)
     }
 
     func configureDescriptionText(_ text: String?,
@@ -181,6 +188,20 @@ private extension AppTrackingTransparencyView {
                                  uiConfig: uiConfig,
                                  desiredFontSize: fontSize - 1,
                                  attempt: attempt + 1)
+    }
+
+    func applyContentMargins(with attConfig: RingPublishingGDPRATTConfig?) {
+        guard let margin = attConfig?.contentHorizontalMargin else { return }
+
+        contentLeadingConstraint.constant = margin
+        contentTrailingConstraint.constant = margin
+    }
+
+    func applyActionButtonCornerRadiusIfNeeded() {
+        guard let cornerRadius = attConfig?.actionButtonCornerRadius else { return }
+
+        actionButton.layer.cornerRadius = min(cornerRadius, actionButton.bounds.height / 2)
+        actionButton.layer.masksToBounds = true
     }
 
     func adjustViewMargins() {

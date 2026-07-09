@@ -118,6 +118,7 @@
                 <outlet property="titleTextView" destination="gLW-6X-Gea" id="OO6-PX-gbu"/>
                 <outlet property="contentLeadingConstraint" destination="SPw-f6-axX" id="SA1-lc-001"/>
                 <outlet property="contentTrailingConstraint" destination="qfu-pp-pGn" id="SA2-tc-002"/>
+                <outlet property="logoLeadingConstraint" destination="UOM-sE-YNp" id="SA3-ll-003"/>
             </connections>
             <point key="canvasLocation" x="138" y="129"/>
         </view>

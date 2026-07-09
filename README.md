@@ -76,3 +76,24 @@ RingPublishingGDPR.shared
 ```
 
 For detailed example see demo project in `Example` directory or check our documentation.
+
+## Customizing the App Tracking Transparency explanation screen
+
+When App Tracking Transparency support is enabled, the SDK shows a native explanation screen before the system ATT prompt. Its content and appearance are configured through `RingPublishingGDPRATTConfig`:
+
+```swift
+let attConfig = RingPublishingGDPRATTConfig(appTrackingTransparencySupportEnabled: true)
+attConfig.brandLogoImage = UIImage(named: "MyLogo")
+attConfig.explanationTitle = "..."        // plain text or text with HTML attributes
+attConfig.explanationDescription = "..."  // plain text or text with HTML attributes
+attConfig.explanationAllowButtonText = "Allow"
+
+// Optional styling. Every property below is opt-in — when left at its default value the
+// screen renders exactly as in previous SDK versions, so existing integrations are unaffected.
+attConfig.contentAlignment = .center          // .topLeft (default) or .center
+attConfig.actionButtonCornerRadius = 24       // a large value yields a fully rounded "capsule" button
+attConfig.contentHorizontalMargin = 16        // screen-edge inset for the logo, texts and buttons
+attConfig.descriptionFontSize = 16            // base font size for the description text
+```
+
+`contentAlignment` controls the layout of the logo and texts on the explanation screen: `.topLeft` (the default) keeps them aligned to the leading edge, `.center` centers them horizontally.

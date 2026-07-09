@@ -60,6 +60,21 @@ public class RingPublishingGDPRATTConfig: NSObject {
     /// automatically if it does not fit the available space.
     public var descriptionFontSize: CGFloat?
 
+    /// Layout of the content (logo and texts) on the App Tracking Transparency explanation screen.
+    public enum ContentAlignment {
+
+        /// Logo and texts are aligned to the leading edge. This is the default layout.
+        case topLeft
+
+        /// Logo and texts are centered horizontally.
+        case center
+    }
+
+    /// Layout of the content (logo and texts) on the App Tracking Transparency explanation screen.
+    ///
+    /// Defaults to `.topLeft`, which matches the layout used by previous SDK versions.
+    public var contentAlignment: ContentAlignment = .topLeft
+
     // MARK: Init
 
     /// Initializer

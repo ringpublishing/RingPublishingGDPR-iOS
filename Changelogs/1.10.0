@@ -1,0 +1,7 @@
+1.10.0 Release notes (2026-07-10)
+=============================================================
+
+### Changes
+
+* Added optional styling overrides to `RingPublishingGDPRATTConfig` (`actionButtonCornerRadius`, `contentHorizontalMargin`, `descriptionFontSize`) for customizing the App Tracking Transparency explanation screen. All default to `nil`, so existing integrations render exactly as before.
+* Added `contentAlignment` (`.topLeft` / `.center`) to `RingPublishingGDPRATTConfig`, controlling the layout of the logo and texts on the App Tracking Transparency explanation screen. Defaults to `.topLeft`, matching the previous layout.

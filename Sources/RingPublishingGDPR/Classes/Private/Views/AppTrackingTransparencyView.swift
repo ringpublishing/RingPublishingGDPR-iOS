@@ -17,6 +17,10 @@ class AppTrackingTransparencyView: UIView {
     @IBOutlet private weak var titleTextView: UITextView!
     @IBOutlet private weak var logoImageView: UIImageView!
     @IBOutlet private weak var logoImageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var contentTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var logoLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var logoTopConstraint: NSLayoutConstraint!
 
     private var realLogoSizeConstrainedToHeight: CGSize {
         guard let image = logoImageView.image, image.size.width > 0 && image.size.height > 0 else {
@@ -36,6 +40,10 @@ class AppTrackingTransparencyView: UIView {
 
     private var uiConfig: RingPublishingGDPRUIConfig?
     private var attConfig: RingPublishingGDPRATTConfig?
+    private var logoCenterXConstraint: NSLayoutConstraint?
+    private var logoTitleGapConstraint: NSLayoutConstraint?
+    private var logoTopMinConstraint: NSLayoutConstraint?
+    private var logoTopPreferredConstraint: NSLayoutConstraint?
 
     private var descriptionTextViewSizeForShrinking: CGSize?
     private var descriptionSrinkingAttemptsLimit = 5
@@ -72,6 +80,7 @@ class AppTrackingTransparencyView: UIView {
         super.layoutSubviews()
 
         adjustViewMargins()
+        applyActionButtonCornerRadiusIfNeeded()
 
         guard descriptionTextViewSizeForShrinking == nil
             || descriptionTextViewSizeForShrinking?.width != descriptionTextView.frame.width,
@@ -110,6 +119,8 @@ class AppTrackingTransparencyView: UIView {
 
         configureButtons(with: uiConfig, attConfig: attConfig)
         configureLogo(with: uiConfig, attConfig: attConfig)
+        applyContentMargins(with: attConfig)
+        applyContentAlignment(with: attConfig)
 
         // We do not want to call here "configureTexts(with: uiConfig, attConfig: attConfig)" if app is not in active state
         // We must be in .active application state in order for WebKit to work correctly.
@@ -154,21 +165,30 @@ private extension AppTrackingTransparencyView {
 
         let titleFontSize = titleTextView.font?.pointSize
         let titleFont = uiConfig.font.withSize(titleFontSize ?? uiConfig.font.pointSize)
+        let textAlignment: NSTextAlignment? = attConfig?.contentAlignment == .center ? .center : nil
         titleTextView.attributedText = attConfig?.explanationTitle?.convertfromHTML(using: titleFont,
-                                                                                    textColor: textColor)
+                                                                                    textColor: textColor,
+                                                                                    alignment: textAlignment)
 
-        configureDescriptionText(attConfig?.explanationDescription, textColor: textColor, uiConfig: uiConfig)
+        configureDescriptionText(attConfig?.explanationDescription,
+                                 textColor: textColor,
+                                 uiConfig: uiConfig,
+                                 desiredFontSize: attConfig?.descriptionFontSize,
+                                 alignment: textAlignment)
     }
 
     func configureDescriptionText(_ text: String?,
                                   textColor: UIColor?,
                                   uiConfig: RingPublishingGDPRUIConfig?,
                                   desiredFontSize: CGFloat? = nil,
+                                  alignment: NSTextAlignment? = nil,
                                   attempt: Int = 0) {
         guard let fontSize = desiredFontSize ?? descriptionTextView.font?.pointSize,
               let descriptionFont = uiConfig?.font.withSize(fontSize) else { return }
 
-        descriptionTextView.attributedText = text?.convertfromHTML(using: descriptionFont, textColor: textColor)
+        descriptionTextView.attributedText = text?.convertfromHTML(using: descriptionFont,
+                                                                   textColor: textColor,
+                                                                   alignment: alignment)
         descriptionTextView.layoutIfNeeded()
 
         // Check if we have to shrink description font
@@ -180,7 +200,76 @@ private extension AppTrackingTransparencyView {
         configureDescriptionText(text, textColor: textColor,
                                  uiConfig: uiConfig,
                                  desiredFontSize: fontSize - 1,
+                                 alignment: alignment,
                                  attempt: attempt + 1)
+    }
+
+    func applyContentMargins(with attConfig: RingPublishingGDPRATTConfig?) {
+        guard let margin = attConfig?.contentHorizontalMargin else { return }
+
+        contentLeadingConstraint.constant = margin
+        contentTrailingConstraint.constant = margin
+    }
+
+    func applyContentAlignment(with attConfig: RingPublishingGDPRATTConfig?) {
+        let alignment = attConfig?.contentAlignment ?? .topLeft
+
+        switch alignment {
+        case .topLeft:
+            logoCenterXConstraint?.isActive = false
+            logoLeadingConstraint.isActive = true
+            logoTitleGapConstraint?.isActive = false
+            logoTopMinConstraint?.isActive = false
+            logoTopPreferredConstraint?.isActive = false
+            logoTopConstraint.isActive = true
+
+        case .center:
+            logoLeadingConstraint.isActive = false
+            logoTopConstraint.isActive = false
+
+            if logoCenterXConstraint == nil {
+                logoCenterXConstraint = logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            }
+            logoCenterXConstraint?.isActive = true
+
+            if logoTitleGapConstraint == nil {
+                logoTitleGapConstraint = titleTextView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor,
+                                                                            constant: Constants.centeredLogoTitleSpacing)
+            }
+            logoTitleGapConstraint?.isActive = true
+
+            // Flexible top margin: matches the design on large screens but yields below its
+            // minimum on smaller screens so all content still fits.
+            if logoTopMinConstraint == nil {
+                logoTopMinConstraint = logoImageView.topAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.topAnchor,
+                                                                          constant: Constants.defaultLogoTopMargin)
+            }
+            logoTopMinConstraint?.isActive = true
+
+            if logoTopPreferredConstraint == nil {
+                let preferred = logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor,
+                                                                   constant: Constants.centeredLogoTopMargin)
+                preferred.priority = .defaultLow
+                logoTopPreferredConstraint = preferred
+            }
+            logoTopPreferredConstraint?.isActive = true
+        }
+    }
+
+    enum Constants {
+        /// Logo top margin baked into the xib (leading/top-left layout); also the centered-layout minimum.
+        static let defaultLogoTopMargin: CGFloat = 44
+        /// Preferred logo top margin for the centered layout on large screens (matches SuperApp design).
+        static let centeredLogoTopMargin: CGFloat = 185
+        /// Spacing between logo and title for the centered layout.
+        static let centeredLogoTitleSpacing: CGFloat = 12
+    }
+
+    func applyActionButtonCornerRadiusIfNeeded() {
+        guard let cornerRadius = attConfig?.actionButtonCornerRadius else { return }
+
+        actionButton.layer.cornerRadius = min(cornerRadius, actionButton.bounds.height / 2)
+        actionButton.layer.masksToBounds = true
     }
 
     func adjustViewMargins() {

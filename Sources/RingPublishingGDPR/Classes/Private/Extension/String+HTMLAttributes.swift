@@ -10,7 +10,7 @@ import UIKit
 
 extension String {
 
-    func convertfromHTML(using font: UIFont, textColor color: UIColor?) -> NSAttributedString? {
+    func convertfromHTML(using font: UIFont, textColor color: UIColor?, alignment: NSTextAlignment? = nil) -> NSAttributedString? {
         let textData = Data(self.utf8)
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
@@ -37,6 +37,13 @@ extension String {
 
         // We have to override color so it looks good in dark mode
         modifiedString.addAttribute(.foregroundColor, value: color ?? .black, range: wholeRange)
+
+        // Optionally override text alignment (HTML rendering defaults to left alignment)
+        if let alignment = alignment {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = alignment
+            modifiedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: wholeRange)
+        }
 
         return modifiedString
     }

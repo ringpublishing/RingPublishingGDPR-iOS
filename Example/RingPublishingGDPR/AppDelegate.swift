@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // - tenantId: unique identifier assigned to your organization
         // - brandName: unique identifier assigned for specific app/brand
         // - uiConfig: simple configuration class in order to style native views show from module
+        // - additionalQueryParameters: (Optional) query parameters appended to the URL loaded by the consent form webview
         // - attConfig: (Optional) configuration used to show explanation screen for Apple App Tracking Transparency
         // and display system alert asking for permission. This requires also entry in your .plist file for
         // NSUserTrackingUsageDescription key

@@ -28,6 +28,9 @@ class GDPRManager: NSObject {
     /// Configuration for given tenant id (fetched from API)
     var tenantConfiguration: TenantConfiguration?
 
+    /// Query parameters appended to the CMP url
+    let additionalQueryParameters: [String: String]
+
     /// Determines if module was initialized with forced GDPR applies state
     var forcedGDPRApplies: Bool?
 
@@ -129,6 +132,7 @@ class GDPRManager: NSObject {
         self.delegate = delegate
         self.timeoutInterval = timeoutInterval
         self.forcedGDPRApplies = forcedGDPRApplies
+        self.additionalQueryParameters = config.additionalQueryParameters
 
         let attEnabled = config.attConfig?.appTrackingTransparencySupportEnabled ?? false
         self.appTrackingManager = AppTrackingTransparencyManager(appTrackingTransparencySupportEnabled: attEnabled)
@@ -258,9 +262,10 @@ class GDPRManager: NSObject {
         // Use stored configuration if we have it already
         if let configuration = tenantConfiguration, moduleState != .cmpError {
             // Load web page
-            Logger.log("Loading CMP site using already fetched configuration. Loading url: \(configuration.cmpUrl)")
+            let cmpUrl = configuration.cmpUrl(appending: additionalQueryParameters)
+            Logger.log("Loading CMP site using already fetched configuration. Loading url: \(cmpUrl)")
 
-            let request = URLRequest(url: configuration.cmpUrl)
+            let request = URLRequest(url: cmpUrl)
             webview?.load(request)
             return
         }
@@ -277,9 +282,10 @@ class GDPRManager: NSObject {
             }
 
             // Load web page
-            Logger.log("Loading CMP site using freshly fetched configuration. Loading url: \(tenantConfig.cmpUrl)")
+            let cmpUrl = tenantConfig.cmpUrl(appending: strongSelf.additionalQueryParameters)
+            Logger.log("Loading CMP site using freshly fetched configuration. Loading url: \(cmpUrl)")
 
-            let request = URLRequest(url: tenantConfig.cmpUrl)
+            let request = URLRequest(url: cmpUrl)
             strongSelf.webview?.load(request)
         }
     }

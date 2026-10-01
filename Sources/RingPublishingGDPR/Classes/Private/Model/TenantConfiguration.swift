@@ -25,4 +25,19 @@ struct TenantConfiguration {
         self.cmpUrl = url
         self.gdprApplies = gdprApplies
     }
+
+    // MARK: Methods
+
+    /// CMP url with additional query parameters appended.
+    /// A parameter replaces a same-named one already present in the url. Values are percent-encoded once.
+    func cmpUrl(appending additionalQueryParameters: [String: String]) -> URL {
+        guard !additionalQueryParameters.isEmpty,
+              var components = URLComponents(url: cmpUrl, resolvingAgainstBaseURL: false) else { return cmpUrl }
+
+        var queryItems = (components.queryItems ?? []).filter { additionalQueryParameters[$0.name] == nil }
+        queryItems += additionalQueryParameters.sorted(by: { $0.key < $1.key }).map { URLQueryItem(name: $0.key, value: $0.value) }
+        components.queryItems = queryItems
+
+        return components.url ?? cmpUrl
+    }
 }

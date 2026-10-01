@@ -1,0 +1,6 @@
+1.11.0 Release notes (2026-09-30)
+=============================================================
+
+### Changes
+
+* Added `additionalQueryParameters` (`[String: String]`) to `RingPublishingGDPRConfig` via a new initializer, appended to the URL loaded by the consent form webview. Values are percent-encoded once; a parameter replaces a same-named one already in the URL. The existing initializer keeps working (no extra parameters).

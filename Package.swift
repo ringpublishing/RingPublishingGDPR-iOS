@@ -21,6 +21,10 @@ let package = Package(
             resources: [
                 .process("Resources")
             ]
+        ),
+        .testTarget(
+            name: "RingPublishingGDPRTests",
+            dependencies: ["RingPublishingGDPR"]
         )
     ],
     swiftLanguageVersions: [

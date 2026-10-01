@@ -77,6 +77,20 @@ RingPublishingGDPR.shared
 
 For detailed example see demo project in `Example` directory or check our documentation.
 
+## Additional query parameters for the consent form
+
+To append your own query parameters to the URL loaded by the consent form webview, pass them in `RingPublishingGDPRConfig`:
+
+```swift
+let config = RingPublishingGDPRConfig(tenantId: tenantId,
+                                      brandName: brandName,
+                                      uiConfig: uiConfig,
+                                      attConfig: attConfig,
+                                      additionalQueryParameters: ["app_is": "value"])
+```
+
+Values are percent-encoded by the SDK. A parameter replaces a same-named one already present in the URL; other existing parameters are kept.
+
 ## Customizing the App Tracking Transparency explanation screen
 
 When App Tracking Transparency support is enabled, the SDK shows a native explanation screen before the system ATT prompt. Its content and appearance are configured through `RingPublishingGDPRATTConfig`:
